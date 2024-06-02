@@ -12,53 +12,31 @@
 
 #include "cub3D.h"
 
-int	init_u_map()
+int	assign_default(t_main *cub)
 {
-	
-}
-
-
-int	map_val(t_main *cubed, char *map_path)
-{
-	// file name/type checks??
-	// path checks??
-	// open
-	int	fd;
-	char *tmp;
-
-	fd = open(map_path, O_RDONLY);
-	if (fd == -1)
-		return (perror("open"), -1);
-	// read the 4 textures and 2 colors
-	errno = 0;
-	while (1)
-	{
-		tmp = get_next_line(fd, 0);
-		if (!tmp && errno)
-		{
-			// start cleaning and exit process
-		}
-		if (is_color()) // color
-		{
-			init_u_map();
-		}
-		else if (is_texture())
-		{
-			init_u_map();
-		}
-		free(tmp);
-	}
+	// u_map
+	cub->u_map.fd = -1;
+	cub->u_map.c_color = -1;
+	cub->u_map.f_color = -1;
+	cub->u_map.no = NULL;
+	cub->u_map.so = NULL;
+	cub->u_map.we = NULL;
+	cub->u_map.ea = NULL;
+	cub->u_map.splited_line = NULL;
+	// other cub members; unknown now
+	// ...
 }
 
 int	main(int ac, char *av[])
 {
-	t_main	cubed;
+	t_main	cub; // info: no allocation needed for cubed, because declared in main
 	if (ac != 2)
-		return (printf("Usage:\n./cub3D *.cub"), 1);
+		return (write(2, "Usage:\n./cub3D path_to_map_file\n", 33), 1); // ?!maybe write into stderr!?
+	assign_default(&cub);
 	// are there checks for the map file ending?
-	// open the map file
-	if (map_val(&cubed, av[1]) == -1);
-		return (2);
+	if (map_val(&cub, av[1]) == -1) // maybe 'exit' already inside the functions, instead of returning in the main!?
+		return (write(2, "invalid map\n", 13), 2);
 	// read / get_next_line() to fill a string array / map
-	// close as soon as not needed anymore --> after get_next_line();
+
+	return (SUCCESS);
 }

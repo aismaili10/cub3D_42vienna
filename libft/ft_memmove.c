@@ -30,7 +30,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	{
 		destination += n;
 		source += n;
-		while (n--)
+		while (n-- && source && destination)
 			*(--destination) = *(--source);
 	}
 	return (dest);
