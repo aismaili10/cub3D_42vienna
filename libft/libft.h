@@ -51,5 +51,6 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	**ft_split(char const *s, char c);
+char	**ft_split_md(char const *s, char *deli);
 
 #endif

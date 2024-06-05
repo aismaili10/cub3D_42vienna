@@ -53,14 +53,15 @@ char	**ft_split(char const *s, char c)
 	size_t	i;
 
 	begin = 0;
-	i = 0;
+	i = -1;
+	if (!s)
+		return (NULL);
 	result = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
 	if (result == NULL)
 		return (NULL);
-	while (i < count_words(s, c))
+	while (++i < count_words(s, c))
 	{
-		while (s[begin] == c)
-			begin++;
+		while (s[begin++] == c)
 		end = begin;
 		while (s[end] != c && s[end] != '\0')
 			end++;
@@ -68,7 +69,6 @@ char	**ft_split(char const *s, char c)
 		if (!result[i])
 			return (freeing(result, i));
 		begin = end;
-		i++;
 	}
 	result[i] = 0;
 	return (result);
