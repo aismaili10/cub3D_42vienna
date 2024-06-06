@@ -33,6 +33,8 @@ static size_t	count_words(char const *s, char c)
 
 	i = 0;
 	j = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 	{
 		while (s[i] == c)
@@ -54,14 +56,13 @@ char	**ft_split(char const *s, char c)
 
 	begin = 0;
 	i = -1;
-	if (!s)
-		return (NULL);
 	result = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
 	if (result == NULL)
 		return (NULL);
 	while (++i < count_words(s, c))
 	{
-		while (s[begin++] == c)
+		while (s[begin] == c)
+			begin++;
 		end = begin;
 		while (s[end] != c && s[end] != '\0')
 			end++;
@@ -81,7 +82,7 @@ int	main(void)
 	int	i = 0;
 	char	s[] = "hello!  WOrld";
 	char	c = ' ';
-	char	**res = ft_split("^^^1^^2a,^^^^3^^^^--h^^^^", '^');
+	char	**res = ft_split("ABC abc 123", ' ');
 	while (res[i])
 	{
 		printf("%s\n", res[i]);

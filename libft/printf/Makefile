@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fPIC
+CFLAGS = -Wall -Wextra -Werror -fPIC -g
 
 RM = /bin/rm -f
 

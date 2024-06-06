@@ -47,8 +47,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 int	main(void)
 {
-	char	s1[] = "abcdefgh";
-	char	s2[] = "abcdwxyz";
-	printf("%i\n", ft_strncmp(s1, s2, 4));
-	printf("%i", strncmp(s1, s2, 4));
+	char	s1[] = "NO";
+	char	s2[] = "NOP";
+	printf("%i\n", ft_strncmp(s1, s2, strlen(s1)));
+	printf("%i\n", strncmp(s1, s2, strlen(s2)));
 }*/

@@ -49,9 +49,10 @@ char	**ft_split_md(char const *s, char *deli)
 		return (NULL);
 	while (++i < count_words(s, deli))
 	{
-		while (ft_strchr(deli, s[begin++]))
+		while (s[begin] && ft_strchr(deli, s[begin]))
+			begin++;
 		end = begin;
-		while (!ft_strchr(deli, s[begin]) && s[end] != '\0')
+		while (!ft_strchr(deli, s[end]) && s[end] != '\0')
 			end++;
 		result[i] = ft_substr(s, begin, (end - begin));
 		if (!result[i])
@@ -69,7 +70,7 @@ int	main(void)
 	int	i = 0;
 	char	s[] = "hello!  WOrld";
 	char	c = ' ';
-	char	**res = ft_split("^^^1^^2a,^^^^3^^^^--h^^^^", '^');
+	char	**res = ft_split_md("ABC abc 123", " \t");
 	while (res[i])
 	{
 		printf("%s\n", res[i]);
