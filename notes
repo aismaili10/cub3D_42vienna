@@ -1,0 +1,27 @@
+# NOTES
+
+## MAP VALIDITY
+
+### TODO
+- Dublicate as last element before the map --> must handle at map read section
+- anything regarding map
+	- reading
+	- Player Position - only one
+	- only 1 and 0
+	- spaces inside the map (within walls) are not valid
+	- spaces outside the map (outside walls) are valid
+	- 
+
+### DONE
+
+- Dublicates of Textures
+- Dublicates of Colors
+- whitespace before identifier
+- whitespace after specifier
+- line with more than the identifier and specifier
+- line with less than the identifier and specifier
+- 
+
+## command options
+
+--leak-check=full --show-leak-kinds=all

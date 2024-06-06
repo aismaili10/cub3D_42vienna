@@ -37,9 +37,13 @@ void	cleanup(t_main *cub, int stage)
 {
 	(void)cub;
 	(void)stage;
+	if (stage != 0)
+		get_next_line(cub->u_map.fd, 1);
 	printf("in cleanup; stage: %i\n", stage);
 	print_map_elements(&cub->u_map);
 	free_map_elements(cub);
+	if (stage == 10)
+		printf(COLOR_GREEN"map is valid\n"COLOR_RESET);
 	exit(1);
 	/*if (stage == 1)
 		cleanup_1();

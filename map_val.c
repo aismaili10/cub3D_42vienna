@@ -141,8 +141,8 @@ int	prep_for_init(char *line, t_main *cub)
 	cub->u_map.splited_line = ft_split_md(line, " \t"); // todo: test the new split
 	if (!cub->u_map.splited_line && errno)
 		return (perror("malloc"), SYS_FAIL);
-	if (str_array_len(cub->u_map.splited_line) > 2)
-		return (INV_MAP);
+	if (str_array_len(cub->u_map.splited_line) != 2 && ft_strncmp(line, "\n", ft_strlen(line)))
+		return (write(2, COLOR_YELLOW"warning: map element syntax: IDENTIFIER SPECIFIER\n"COLOR_RESET, 61), INV_MAP);
 	return (SUCCESS);
 }
 
@@ -168,12 +168,12 @@ int	map_val(t_main *cub, char *map_path)
 		if (!tmp && errno)
 		{
 			// start cleaning and exit process
-			get_next_line(cub->u_map.fd, 1);
-			cleanup(cub, 1);
+			//get_next_line(cub->u_map.fd, 1);
+			cleanup(cub, -1);
 		}
 		if (!tmp)
 		{
-			write(2, COLOR_RED"Incomplete Map file!\n"COLOR_RESET, 22);
+			write(2, COLOR_RED"Incomplete Map file\n"COLOR_RESET, 32);
 			cleanup(cub, 0);
 		}
 		// if anything besides the first 6 map elements --> INVALID
@@ -193,8 +193,9 @@ int	map_val(t_main *cub, char *map_path)
 		free_str_array(&cub->u_map.splited_line);
 		free(tmp);
 	}
-	print_map_elements(&cub->u_map);
-	// read to fill cub->u_map.map
+	//print_map_elements(&cub->u_map);
+
+	// last p
 	/*while (1)
 	{
 		tmp = get_next_line(cub->u_map.fd, 0);
@@ -204,6 +205,8 @@ int	map_val(t_main *cub, char *map_path)
 			get_next_line(cub->u_map.fd, 1);
 
 		}
+		// if anything besides map characters --> INV_MAP
+		// two or more newlines in series --> INV_MAP
 		// 
 	}*/
 	

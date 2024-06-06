@@ -48,9 +48,9 @@ int	main(int ac, char *av[])
 	assign_default(&cub);
 	if (map_val(&cub, av[1]) == -1) // maybe 'exit' already inside the functions, instead of returning in the main!?
 		return (write(2, COLOR_GREEN"invalid map\n"COLOR_GREEN, 27), 2);
-
 	//print_map_elements(&cub.u_map);
 	//printf("map %s is valid\n", av[1]);
 	printf(COLOR_GREEN"map %s is valid\n"COLOR_RESET, av[1]);
+	cleanup(&cub, 10);
 	return (SUCCESS);
 }
