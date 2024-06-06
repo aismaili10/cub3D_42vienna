@@ -25,24 +25,30 @@
 #include "libft/gnl/get_next_line.h"
 #include "libft/printf/ft_printf.h"
 
+// return values
 #define	INV_MAP		-2
 #define	SYS_FAIL	-1
 #define	SUCCESS		0
 #define	FAILURE		1
 
 
-
+// colors
+#define COLOR_GREEN		"\033[0;32m"	// len: 7
+#define COLOR_RED		"\033[0;31m"	// len: 7
+#define COLOR_YELLOW	"\033[0;33m"	// len: 7
+#define COLOR_RESET		"\033[0m"		// len: 4
 typedef	struct	s_map
 {
-	int		fd;
-	char	**map;
-	char	*no; //NO
+	int		fd; // close directly after done with the map file
+	char	**map; // !! should be null terminated to free easily
+	char	*no;
 	char	*so;
 	char	*we;
 	char	*ea;
 	int		f_color;
 	int		c_color;
-	char	**splited_line;
+	char	**splited_line; // free diretly after no using anymore
+	bool	id_ed;
 }	t_map;
 
 typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the project
@@ -52,13 +58,18 @@ typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the pro
 }	t_main;
 
 // cleanup
-int		cleanup(t_main *cub, int stage);
+void		cleanup(t_main *cub, int stage);
 
 // map_val
 int		map_val(t_main *cub, char *map_path);
 
 // map_val_utils
 int		str_array_len(char **str_array);
-void	free_str_array(char **str_array);
+void	free_str_array(char ***str_array);
+bool	is_whitespace(char c);
+bool	txts_clrs_found(t_map *u_map);
+
+// debuging
+void	print_map_elements(t_map* u_map);
 
 #endif
