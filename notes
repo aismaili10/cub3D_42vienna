@@ -3,7 +3,15 @@
 ## MAP VALIDITY
 
 ### TODO
-[] Dublicate as last element before the map --> must handle at map read section
+
+[] Establish a cleaning strategy
+[] A Dublicate as last element before the map --> must handle at map read section
+[] convert tabs to spaces, for correct map_checking
+[] lines with only spaces before main map
+[] checks for color assigning
+	[] overflow
+	[] in the correct range 0 - 255
+	[] characters other then numeric and comma in SPECIFIER
 [] anything regarding map
 	[] reading
 	[] no newlines/empty lines in between actual map
@@ -11,7 +19,7 @@
 	[] Player Position only one
 	[] spaces inside the map (within walls) are not valid
 	[] spaces outside the map (outside walls) are valid
-	[]
+	[] 
 
 - libft
 	[] ft_split_md() - norminette
@@ -26,6 +34,11 @@
 [x] line with more than the identifier and specifier
 [x] line with less than the identifier and specifier
 [x] 
+
+### UNSURE
+
+[] file name/type checks??
+[] path checks??
 
 ## command options
 

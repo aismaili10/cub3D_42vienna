@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/05/31 16:04:00 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:14:33 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ typedef	struct	s_map
 	char	*ea;
 	int		f_color;
 	int		c_color;
-	char	**splited_line; // free diretly after no using anymore
+	char	**splited_line; // free diretly after no using anymore // maybe better name
+	char	*joined_lines;
 	bool	id_ed;
 }	t_map;
 
@@ -63,12 +64,18 @@ void		cleanup(t_main *cub, int stage);
 
 // map_val
 int		map_val(t_main *cub, char *map_path);
+int		handle_color(char *line, t_main *cub);
+int		handle_texture(char *line, t_main *cub);
+int		read_map_element(t_main *cub);
+
 
 // map_val_utils
-int		str_array_len(char **str_array);
+int		str_ary_len(char **str_array);
 void	free_str_array(char ***str_array);
 bool	is_whitespace(char c);
 bool	txts_clrs_found(t_map *u_map);
+
+// 
 
 // debuging
 void	print_map_elements(t_map* u_map);

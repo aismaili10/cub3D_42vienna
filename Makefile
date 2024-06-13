@@ -8,7 +8,11 @@ HEADER = cub3D.h
 SRC =	cub3D.c \
 		map_val.c \
 		map_val_utils.c \
-		cleanup.c
+		cleanup.c \
+		read_map_element.c \
+		map_handle_color.c \
+		map_handle_texture.c \
+		debug.c
 
 OBJDIR = obj/
 OBJ =  $(SRC:%.c=$(OBJDIR)%.o)

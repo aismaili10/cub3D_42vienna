@@ -23,11 +23,11 @@ static size_t	count_words(char const *s, char *deli)
 	j = 0;
 	while (s[i] != '\0')
 	{
-		while (ft_strchr(deli, s[i]))
+		while (s[i] && ft_strchr(deli, s[i]))
 			i++;
 		if (s[i] != '\0')
 			j++;
-		while (!ft_strchr(deli, s[i]) && s[i] != '\0')
+		while (s[i] && !ft_strchr(deli, s[i]))
 			i++;
 	}
 	return (j);
@@ -68,9 +68,8 @@ char	**ft_split_md(char const *s, char *deli)
 int	main(void)
 {
 	int	i = 0;
-	char	s[] = "hello!  WOrld";
-	char	c = ' ';
-	char	**res = ft_split_md("ABC abc 123", " \t");
+	char	s[] = "hello!\n    	  		WOrld\n  		";
+	char	**res = ft_split_md(s, " \t");
 	while (res[i])
 	{
 		printf("%s\n", res[i]);
