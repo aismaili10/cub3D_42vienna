@@ -95,10 +95,6 @@ int	handle_color(char *line, t_main *cub)
 
 int	is_texture(char *type, t_map *u_map)
 {
-	//int	len;
-
-	//len = ft_strlen(type);//NOPE
-	//printf("in is_texture\n");
 	if (!ft_strncmp(type, "NO", 3) && !u_map->no)
 		return (true);
 	else if (!ft_strncmp(type, "NO", 3) && u_map->no)
@@ -146,11 +142,76 @@ int	prep_for_init(char *line, t_main *cub)
 	return (SUCCESS);
 }
 
+int	inv_char(char c)
+{
+	if (!ft_strchr("\n10NSWE ", c)) // anything besides valid ones
+	{
+		write(2, COLOR_RED"Invalid Character in Map\n"COLOR_RESET, 37);
+		return (INV_MAP);
+	}
+	return (SUCCESS);
+}
+
+bool	map_ended(char *str, int i)
+{
+	while (str[i])
+	{
+		if (str[i] != '\n')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+int	nline(char *one_line)
+{
+	int	i;
+
+	i = 0;
+	while (one_line[i] == '\n')
+		i++;
+	while (one_line[i])
+	{
+		if (one_line[i] == '\n' && !map_ended(one_line, i))
+			return (INV_MAP);
+		if (inv_char(one_line[i]) == INV_MAP)
+			return (INV_MAP);
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int	read_map_element(t_main *cub)
+{
+	char	*tmp;
+	char	*one_line;
+
+	while (1)
+	{
+		tmp = get_next_line(cub->u_map.fd, 0);
+		if (!tmp && errno)
+		{
+			// handle malloc fail
+			get_next_line(cub->u_map.fd, 1);
+			cleanup(cub, 1);
+		}
+		if (!tmp)
+			break ;
+		one_line = ft_strjoin(one_line, tmp);
+		if (!one_line)
+		{
+			free(tmp);
+			cleanup(cub, 1);
+		}
+		free(tmp);
+	}
+	return (nline(one_line));
+}
+
 int	map_val(t_main *cub, char *map_path)
 {
 	// file name/type checks??
 	// path checks??
-	// !!!if the file doesn't exist, open should fail!!!
 	char	*tmp;
 	//int 	ret;
 
@@ -176,14 +237,13 @@ int	map_val(t_main *cub, char *map_path)
 			write(2, COLOR_RED"Incomplete Map file\n"COLOR_RESET, 32);
 			cleanup(cub, 0);
 		}
-		// if anything besides the first 6 map elements --> INVALID
 		if (prep_for_init(tmp, cub) != SUCCESS)
 			return (free(tmp), cleanup(cub, 1), -2);
 		if (handle_color(tmp, cub) != SUCCESS)
 			return (free(tmp), cleanup(cub, 2), -2);
 		if (handle_texture(tmp, cub) != SUCCESS)
 			return (free(tmp), cleanup(cub, 3), -2);
-		if (!cub->u_map.id_ed && ft_strncmp("\n", tmp, ft_strlen(tmp))) // not just an empty line // a line that isn't an element
+		if (!cub->u_map.id_ed && ft_strncmp("\n", tmp, 2)) // not just an empty line // a line that isn't an element
 		{
 			printf("tmp: %s\n", tmp);
 			write(2, COLOR_RED"Invalid Identifier\n"COLOR_RESET, 20);
@@ -194,22 +254,8 @@ int	map_val(t_main *cub, char *map_path)
 		free(tmp);
 	}
 	//print_map_elements(&cub->u_map);
-
-	// last p
-	/*while (1)
-	{
-		tmp = get_next_line(cub->u_map.fd, 0);
-		if (!tmp && errno)
-		{
-			// handle malloc fail
-			get_next_line(cub->u_map.fd, 1);
-
-		}
-		// if anything besides map characters --> INV_MAP
-		// two or more newlines in series --> INV_MAP
-		// 
-	}*/
-	
+	if (read_map_element(cub) != SUCCESS)
+		cleanup(cub, 1);
 	return (SUCCESS);
 }
 

@@ -37,6 +37,7 @@
 #define COLOR_RED		"\033[0;31m"	// len: 7
 #define COLOR_YELLOW	"\033[0;33m"	// len: 7
 #define COLOR_RESET		"\033[0m"		// len: 4
+
 typedef	struct	s_map
 {
 	int		fd; // close directly after done with the map file
