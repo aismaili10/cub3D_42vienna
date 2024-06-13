@@ -3,24 +3,29 @@
 ## MAP VALIDITY
 
 ### TODO
-- Dublicate as last element before the map --> must handle at map read section
-- anything regarding map
-	- reading
-	- Player Position - only one
-	- only 1 and 0
-	- spaces inside the map (within walls) are not valid
-	- spaces outside the map (outside walls) are valid
-	- 
+[] Dublicate as last element before the map --> must handle at map read section
+[] anything regarding map
+	[] reading
+	[] no newlines/empty lines in between actual map
+	[] only 1 and 0 and Player Position
+	[] Player Position only one
+	[] spaces inside the map (within walls) are not valid
+	[] spaces outside the map (outside walls) are valid
+	[]
+
+- libft
+	[] ft_split_md() - norminette
+
 
 ### DONE
 
-- Dublicates of Textures
-- Dublicates of Colors
-- whitespace before identifier
-- whitespace after specifier
-- line with more than the identifier and specifier
-- line with less than the identifier and specifier
-- 
+[x] Dublicates of Textures
+[x] Dublicates of Colors
+[x] whitespace before identifier
+[x] whitespace after specifier
+[x] line with more than the identifier and specifier
+[x] line with less than the identifier and specifier
+[x] 
 
 ## command options
 
