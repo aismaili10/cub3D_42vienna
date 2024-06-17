@@ -1,7 +1,9 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
+
+MLX_FLAGS = -lbsd -lX11 -lmlx -lXext
 
 HEADER = cub3D.h
 
@@ -12,7 +14,8 @@ SRC =	cub3D.c \
 		read_map_element.c \
 		map_handle_color.c \
 		map_handle_texture.c \
-		debug.c
+		mlx_init.c \
+		debug.c \
 
 OBJDIR = obj/
 OBJ =  $(SRC:%.c=$(OBJDIR)%.o)
@@ -32,7 +35,7 @@ $(OBJDIR)%.o : %.c
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF_LIB) $(INCLUDES)
+	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF_LIB) $(INCLUDES) $(MLX_FLAGS)
 
 # Rule for making the libft library
 $(LIBFT):

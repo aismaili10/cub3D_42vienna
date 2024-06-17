@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/17 11:36:42 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/17 11:48:33 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	free_str_array(char ***str_array);
 bool	is_whitespace(char c);
 bool	txts_clrs_found(t_map *u_map);
 
-// 
+//mlx_init
+int		init_mlx(t_main *cub);
 
 // debuging
 void	print_map_elements(t_map* u_map);
