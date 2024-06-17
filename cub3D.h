@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/13 14:14:33 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:36:42 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include <errno.h>
-//#include <mlx.h>
+#include <mlx.h>
+#include <math.h>
+#include <X11/keysym.h>
+#include <X11/X.h>
 
 #include "libft/libft.h"
 #include "libft/gnl/get_next_line.h"
@@ -53,9 +56,22 @@ typedef	struct	s_map
 	bool	id_ed;
 }	t_map;
 
+typedef struct s_img
+{
+	void	*img_ptr;
+	char	*addr;
+	int		bpp; //bits_per_pixel
+	int		line_length;
+	int		endian;
+}	t_img;
+
+
 typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the project
 {
 	// mlx init and window
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	mlx_img;
 	t_map	u_map;
 }	t_main;
 
