@@ -12,15 +12,15 @@
 	[] overflow
 	[] in the correct range 0 - 255
 	[] characters other then numeric and comma in SPECIFIER
-[] anything regarding map
-	[] map postfix check; careful about "" as map or just ".cub"
-	[x] reading
-	[] no newlines/empty lines in between actual map
-	[] only 1 and 0 and Player Position
-	[] Player Position only one
-	[] spaces inside the map (within walls) are not valid
-	[] spaces outside the map (outside walls) are valid
-	[] 
+
+#### anything regarding 2D map
+[x] map postfix check; careful about "" as map or just ".cub"
+[x] reading
+[] no newlines/empty lines in between actual map
+[] only 1 and 0 and Player Position
+[] Player Position only one
+[] spaces inside the map (within walls) are not valid
+[] spaces outside the map (outside walls) are valid
 
 - libft
 	[] ft_split_md() - norminette
@@ -34,7 +34,6 @@
 [x] whitespace after specifier
 [x] line with more than the identifier and specifier
 [x] line with less than the identifier and specifier
-[x] 
 
 ### UNSURE
 

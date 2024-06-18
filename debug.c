@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 12:55:08 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/13 15:17:35 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:14:41 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_map(char **map)
 {
-	int	i;
+	int	i;	
 
 	i = -1;
 	while (map[++i])

@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:03:20 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/13 16:02:51 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:17:28 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	inv_char_in_map(char c)
 {
-	if (!ft_strchr("\n10NSWE \t", c)) // anything besides valid ones
+	if (!ft_strchr("\n10NSWE ", c)) // anything besides valid ones
 	{
 		write(2, COLOR_RED"Invalid Character in Map\n"COLOR_RESET, 37);
 		return (INV_MAP);
@@ -26,7 +26,7 @@ bool	map_ended(char *str, int i)
 {
 	while (str[i])
 	{
-		if (str[i] != '\n')
+		if (str[i] != '\n' && str[i] != ' ')
 			return (false);
 		i++;
 	}
@@ -53,7 +53,7 @@ int	nline(char *one_line)
 	{
 		if (empty_line(one_line, i) && !map_ended(one_line, i))
 		{
-			printf("i value in nline: %i\n", i);
+			//printf("i value in nline: %i\n", i);
 			write(2, COLOR_RED"Empty Line inside Map\n"COLOR_RESET, 34);
 			return (INV_MAP);
 		}
@@ -63,7 +63,7 @@ int	nline(char *one_line)
 		if (one_line[i] == '\n')
 			line_counter++;
 	}
-	printf("l value in nline: %i\n", line_counter);
+	//printf("line_counter value in nline: %i\n", line_counter);
 	if (line_counter < 3)
 	{
 		write(2, COLOR_RED"Less than 3 Lines In Map\n"COLOR_RESET, 37);
