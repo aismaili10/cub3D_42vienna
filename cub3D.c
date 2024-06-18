@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:48:01 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/17 11:22:45 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/18 18:48:42 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	main(int ac, char *av[])
 	if (ac != 2)
 		return (write(2, COLOR_YELLOW"Usage:\n./cub3D path_to_map_file\n"COLOR_RESET, 44), 1); // ?!maybe write into stderr!?
 	assign_default(&cub);
-	if (map_val(&cub, av[1]) == -1) // maybe 'exit' already inside the functions, instead of returning in the main!?
-		return (write(2, COLOR_GREEN"Invalid Map\n"COLOR_GREEN, 27), 2);
+	if (map_val(&cub, av[1]) == -1)
+		return (write(2, COLOR_RED"Invalid Map\n"COLOR_RESET, 27), 2);
 	if (init_mlx(&cub) == -1)
 		return (write(2, COLOR_GREEN"MLX Initialization Failed\n"COLOR_RESET, 32), 3);
 	printf(COLOR_GREEN"Map %s is Valid\n"COLOR_RESET, av[1]);

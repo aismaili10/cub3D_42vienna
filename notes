@@ -13,7 +13,8 @@
 	[] in the correct range 0 - 255
 	[] characters other then numeric and comma in SPECIFIER
 [] anything regarding map
-	[] reading
+	[] map postfix check; careful about "" as map or just ".cub"
+	[x] reading
 	[] no newlines/empty lines in between actual map
 	[] only 1 and 0 and Player Position
 	[] Player Position only one

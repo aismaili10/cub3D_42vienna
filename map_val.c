@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/13 18:21:11 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:47:05 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,23 @@ int	check_map_element(t_main *cub, char *lines)
 	return (SUCCESS);
 }
 
+bool	is_cub_postfix(char *path)
+{
+	int	len;
+
+	len = ft_strlen(path) - 1;
+	if (len < 4)
+		return (false);
+	if (path[len] == 'b' && path[len - 1] == 'u'
+		&& path[len - 2] == 'c' && path[len - 3] == '.')
+		return (true);
+	return (false);
+}
+
 int	map_val(t_main *cub, char *map_path)
 {
+	if (!is_cub_postfix(map_path))
+		return (write (2, COLOR_RED"Invalid Map Postfix\n"COLOR_RESET, 31), -1);
 	cub->u_map.fd = open(map_path, O_RDONLY);
 	if (cub->u_map.fd == -1)
 		return (perror("open"), -1); // nothing to free / clean at this stage
