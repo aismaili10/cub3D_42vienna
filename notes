@@ -5,8 +5,7 @@
 ### TODO
 
 [] Establish a cleaning strategy
-[] A Dublicate as last element before the map --> must handle at map read section
-[] convert tabs to spaces, for correct map_checking
+[x] A Dublicate as last element before the map --> must handle at map read section
 [] lines with only spaces before main map
 [] checks for color assigning
 	[] overflow
@@ -16,14 +15,18 @@
 #### anything regarding 2D map
 [x] map postfix check; careful about "" as map or just ".cub"
 [x] reading
-[] no newlines/empty lines in between actual map
-[] only 1 and 0 and Player Position
-[] Player Position only one
-[] spaces inside the map (within walls) are not valid
-[] spaces outside the map (outside walls) are valid
+[x] no newlines/empty lines in between actual map
+[x] only 1 and 0 and Player Position
+[x] Player Position only one
+[x] spaces inside the map (within walls) are not valid
+[x] spaces outside the map (outside walls) are valid
+[] accept newlines/empty lines at the begin and end of actual map
+[] remove upper and lower empty lines (contenting only spaces)
+	---> use substring after having read and joined into one line
 
 - libft
 	[] ft_split_md() - norminette
+	// we won't use this function, because we don't accept tabs
 
 
 ### DONE

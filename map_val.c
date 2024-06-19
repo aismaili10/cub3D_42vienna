@@ -6,23 +6,23 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/18 22:37:37 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/19 22:35:00 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	invalid_element(char *line)
+int invalid_element(char *line)
 {
 	if (is_whitespace(line[0]) || is_whitespace(line[ft_strlen(line) - 1]))
 	{
-		write(2, COLOR_RED"Whitespace at Line-Beginning/End\n"COLOR_RESET, 48);
+		write(2, COLOR_RED "Whitespace at Line-Beginning/End\n" COLOR_RESET, 48);
 		return (INV_MAP);
 	}
 	return (SUCCESS);
 }
 
-int	prep_for_init(char *line, t_main *cub)
+int prep_for_init(char *line, t_main *cub)
 {
 	errno = 0;
 	if (invalid_element(line) == INV_MAP)
@@ -32,17 +32,17 @@ int	prep_for_init(char *line, t_main *cub)
 		return (free(line), perror("malloc"), SYS_FAIL);
 	if (str_ary_len(cub->u_map.splited_line) != 2 && ft_strncmp(line, "\n", 2))
 	{
-		write(2, COLOR_YELLOW"WARNING: Map Element Syntax: ", 37);
-		write(2, "IDENTIFIER SPECIFIER\n"COLOR_RESET, 26);
+		write(2, COLOR_YELLOW "WARNING: Map Element Syntax: ", 37);
+		write(2, "IDENTIFIER SPECIFIER\n" COLOR_RESET, 26);
 		return (free(line), INV_MAP);
 	}
 	free(line);
 	return (SUCCESS);
 }
 
-int	read_check_txts_clrs(t_main *cub)
+int read_check_txts_clrs(t_main *cub)
 {
-	char	*tmp;
+	char *tmp;
 
 	errno = 0;
 	while (!txts_clrs_found(&cub->u_map))
@@ -53,7 +53,7 @@ int	read_check_txts_clrs(t_main *cub)
 			cleanup(cub, 1);
 		if (!tmp)
 		{
-			write(2, COLOR_RED"Incomplete Map File\n"COLOR_RESET, 32);
+			write(2, COLOR_RED "Incomplete Map File\n" COLOR_RESET, 32);
 			cleanup(cub, 0);
 		}
 		if (prep_for_init(tmp, cub) != SUCCESS)
@@ -64,7 +64,7 @@ int	read_check_txts_clrs(t_main *cub)
 			cleanup(cub, 1);*/
 		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.splited_line[0], 2)) // not just an empty line // a line that isn't an element
 		{
-			write(2, COLOR_RED"Invalid Identifier\n"COLOR_RESET, 20);
+			write(2, COLOR_RED "Invalid Identifier\n" COLOR_RESET, 20);
 			cleanup(cub, 1);
 		}
 		free_str_array(&cub->u_map.splited_line);
@@ -72,7 +72,7 @@ int	read_check_txts_clrs(t_main *cub)
 	return (SUCCESS);
 }
 
-bool	only_space_so_empty(char *line) // only spaces
+bool only_space_so_empty(char *line) // only spaces
 {
 	while (*line)
 	{
@@ -84,7 +84,7 @@ bool	only_space_so_empty(char *line) // only spaces
 	return (true);
 }
 
-bool	lower_wall(char **map, int i)
+bool lower_wall(char **map, int i)
 {
 	if (only_space_so_empty(map[i]))
 		return (false);
@@ -93,7 +93,7 @@ bool	lower_wall(char **map, int i)
 	return (true);
 }
 
-bool	upper_wall(char **map, int i)
+bool upper_wall(char **map, int i)
 {
 	if (only_space_so_empty(map[i]))
 		return (false);
@@ -102,45 +102,183 @@ bool	upper_wall(char **map, int i)
 	return (true);
 }
 
-int	gap_in_wall(char **map, int i)
+/* int	gap_in_wall(char **map, int l)
 {
-	//must check / cmp with previous and next line in map
-	while ()
+	int	c;
+
+	c = 0;
+	// take each 0 and the Player and see whether it is within walls
+	while (map[l][c])
 	{
-		
+
 	}
+} */
+
+/*
+
+1 1 1 1
+
+ 1111111
+100000001
+10N000001
+100000001
+11111111
+
+   1 1 1
+
+*/
+
+// int	outside_checks(char **map, int i)
+// {
+// 	if (/* upperwall(map, i) &&  */gap_in_wall(map, i) == INV_MAP)
+// 		return (INV_MAP);
+// 	if (/* lower_wall(map, i) &&  */gap_in_wall(map, i) == INV_MAP)
+// 		return (INV_MAP);
+// 	check_sides();
+// 	return (SUCCESS);
+// }
+
+int check_right(char *horiz, char c)
+{
+	int i;
+
+	i = c;
+	while (horiz[i])
+	{
+		if (horiz[i] == '1')
+			return (true);
+		if (ft_strchr("0NSWE", horiz[i]) && !ft_strchr("0NSWE1", horiz[i + 1])) // tricky here
+		{
+			printf("check_right: horiz[%i] = %c\n", i + 1, horiz[i + 1]);
+			printf("check_right: horiz[%i] = %c\n", i, horiz[i]);
+			return (false);
+		}
+		i++;
+	}
+	return (false);
 }
 
-int	outside_checks(char **map, int i)
+int check_left(char *horiz, char c)
 {
-	if (upperwall(map, i) && gap_in_wall(map, i) == INV_MAP)
+	int i;
+
+	if (c < 1)
+		return (false);
+	i = c;
+	while (i >= 0)
+	{
+		if (horiz[i] == '1')
+			return (true);
+		if (ft_strchr("0NSWE", horiz[i]) && (i == 0 || !ft_strchr("0NSWE1", horiz[i - 1])))
+		{
+			printf("check_left: horiz[%i] = %c\n", i - 1, horiz[i - 1]);
+			printf("check_left: horiz[%i] = %c\n", i, horiz[i]);
+			return (false);
+		}
+		i--;
+	}
+	return (false);
+}
+
+int check_up(char **vert, int r, int c)
+{
+	int i;
+
+	i = r;
+	while (i >= 0)
+	{
+		if (vert[i][c] == '1')
+			return (true);
+		if (ft_strchr("0NSWE", vert[i][c]) && (i == 0 || !ft_strchr("0NSWE1", vert[i - 1][c])))
+		{
+			printf("check_up: vert[%i][%i]: %c\n", i-1, c, vert[i-1][c]);
+			printf("check_up: vert[%i][%i]: %c\n", i, c, vert[i][c]);
+			return (false);
+		}
+		i--;
+	}
+	return (false);
+}
+
+int check_down(char **vert, int r, int c)
+{
+	int i;
+
+	i = r;
+	while (vert[i])
+	{
+		if (vert[i][c] == '1')
+			return (true);
+		if (ft_strchr("0NSWE", vert[i][c]) && (!vert[i + 1] || !ft_strchr("0NSWE1", vert[i + 1][c])))
+		{
+			printf("check_down: vert[%i][%i]: %c\n", i-1, c, vert[i-1][c]);
+			printf("check_down: vert[%i][%i]: %c\n", i, c, vert[i][c]);
+			printf("check_down: vert[%i][%i]: %c\n", i+1, c, vert[i+1][c]);
+			return (false);
+		}
+		i++;
+	}
+	return (false);
+}
+
+int check_pos(char **map, int r, int c) // we send all 0s and the Player Position here
+{
+	if (!check_left(map[r], c))
+	{
+		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
-	if (lower_wall(map, i) && gap_in_wall(map, i) == INV_MAP)
+	}
+	if (!check_right(map[r], c))
+	{
+		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
-	check_sides();
+	}
+	if (!check_up(map, r, c))
+	{
+		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
+		return (INV_MAP);
+	}
+	if (!check_down(map, r, c))
+	{
+		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
+		return (INV_MAP);
+	}
 	return (SUCCESS);
 }
 
-int	closed_walls(char **map)
+int closed_walls(char **map)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
+	int p_counter;
 
+	p_counter = 0;
 	i = 0;
 	while (map[i])
 	{
-		if (outside_checks(map, i) == INV_MAP)
-			return (INV_MAP);
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr("NSWE", map[i][j]))
+				p_counter++;
+			if (ft_strchr("0NSWE", map[i][j]) && check_pos(map, i, j) != SUCCESS)
+				return (INV_MAP);
+			j++;
+		}
+		i++;
 	}
+	if (p_counter != 1)
+		return (write(2, COLOR_RED "ERROR: PLAYER PLACEMENT\n" COLOR_RESET, 36), INV_MAP);
+	return (SUCCESS);
 }
 
-int	space_within_wall(char **map, int i, int j)
+/* int	space_within_wall(char **map, int i, int j)
 {
 	//this is more complex then imagined
-	
-}
 
-int	inv_space(char **map)
+} */
+
+/* int	inv_space(char **map)
 {
 	int	i;
 	int	j;
@@ -156,27 +294,173 @@ int	inv_space(char **map)
 		}
 		i++;
 	}
+} */
+
+int get_max_len(char **map)
+{
+	int max;
+	int r;
+
+	r = 0;
+	max = 0;
+	while (map[r])
+	{
+		if (ft_strlen(map[r]) > (size_t)max)
+			max = ft_strlen(map[r]);
+		r++;
+	}
+	return (max);
 }
 
-int	check_map_element(t_main *cub, char *lines)
-{	
-	cub->u_map.map = ft_split(lines, '\n');
-	if (!cub->u_map.map)
-		return (perror("malloc"), FAILURE);
-	if (closed_walls(cub->u_map.map) != SUCCESS)
+int add_spaces(char *str, int max)
+{
+	int i;
+	int len;
+
+	i = 0;
+	len = ft_strlen(str);
+	while (len < max)
 	{
-		write(2, COLOR_RED"Walls Not Closed!\n"COLOR_RESET, 30);
-		return (INV_MAP);
+		str[len] = ' ';
+		len++;
 	}
-	if (inv_space(cub->u_map.map) != SUCCESS)
+	str[len] = 0;
+	return (SUCCESS);
+}
+
+int add_generic_spaces(char **map)
+{
+	char *temp;
+	int r;
+	int max_len;
+
+	r = 0;
+	max_len = get_max_len(map) + 1;
+	while (map[r])
 	{
-		write(2, COLOR_RED"Whitespace Inside Map!\n"COLOR_RESET, 35);
-		return (INV_MAP);
+		temp = malloc(max_len + 1);
+		if (!temp)
+			return (perror("malloc"), SYS_FAIL);
+		ft_strlcpy(temp, map[r], ft_strlen(map[r]) + 1);
+		// printf("temp: %s\n", temp);
+		// printf(" map: %s\n", map[r]);
+		add_spaces(temp, max_len);
+		free(map[r]);
+		map[r] = temp;
+		r++;
 	}
 	return (SUCCESS);
 }
 
-int	map_val(t_main *cub, char *map_path)
+bool	has_only_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+int	l_only_space(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+	{
+		if (has_only_space(map[i]) /*&& and is not at the end */)
+		{
+			write(2, COLOR_RED"LINE WITH ONLY SPACES IN 2D-MAP DETECTED\n"COLOR_RESET, 53);
+			return (INV_MAP);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int	first_map_char(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (ft_strchr("10NSWE", line[i]))
+		{
+			// retract to the previous newline
+			while (i >= 0 && line[i] != '\n')
+				i--;
+			return (i);
+		}
+		i++;
+	}
+	return (i);
+}
+
+int	last_map_char(char *line)
+{
+	int	i;
+
+	i = ft_strlen(line);
+	while (i >= 0)
+	{
+		if (ft_strchr("10NSWE", line[i]))
+			return (i);
+		i--;
+	}
+	return (i);
+}
+
+char	*rm_empty_top_bottom(char *line)
+{
+	//rm upper and lower lines, that only contain spaces
+	int	first;
+	int	last;
+
+	first = first_map_char(line);
+	last = last_map_char(line) + 1;
+
+	char	*n_line = ft_substr(line, first, last - first);
+	if (!n_line)
+		return (NULL);
+	printf("line:\n%s\n", line);
+	printf("n_line:\n%s\n", n_line);
+	return (n_line);
+}
+
+int check_map_element(t_main *cub, char *lines)
+{
+	char *n_lines = rm_empty_top_bottom(lines);
+	if (!n_lines)
+		return (FAILURE);
+	cub->u_map.map = ft_split(lines, '\n');
+	if (!cub->u_map.map)
+		return (perror("malloc"), free(n_lines), FAILURE);
+	free(n_lines);
+	// if we DON'T ACCEPT lines with only spaces in the actual map, we look for them here after split
+	if (l_only_space(cub->u_map.map) != SUCCESS)
+		return (FAILURE);
+	add_generic_spaces(cub->u_map.map);
+	//print_map_elements(&cub->u_map);
+	if (closed_walls(cub->u_map.map) != SUCCESS)
+	{
+		write(2, COLOR_RED "Walls Not Closed!\n" COLOR_RESET, 30);
+		return (INV_MAP);
+	}
+	/* if (inv_space(cub->u_map.map) != SUCCESS)
+	{
+		write(2, COLOR_RED"Whitespace Inside Map!\n"COLOR_RESET, 35);
+		return (INV_MAP);
+	} */
+	return (SUCCESS);
+}
+
+int map_val(t_main *cub, char *map_path)
 {
 	cub->u_map.fd = open(map_path, O_RDONLY);
 	if (cub->u_map.fd == -1)
@@ -184,13 +468,13 @@ int	map_val(t_main *cub, char *map_path)
 	// read the 4 textures and 2 colors
 	if (read_check_txts_clrs(cub) != SUCCESS)
 		cleanup(cub, 1);
-	//print_map_elements(&cub->u_map);
+	// print_map_elements(&cub->u_map);
 	if (read_map_element(cub) != SUCCESS)
 		cleanup(cub, 2);
-	check_map_element(cub, cub->u_map.joined_lines);
+	if (check_map_element(cub, cub->u_map.joined_lines) != SUCCESS)
+		cleanup(cub, 2);
 	return (SUCCESS);
 }
-
 
 /*
 
@@ -198,9 +482,10 @@ int	map_val(t_main *cub, char *map_path)
 	lines = add_generic_space(lines);
 	if (!lines)
 		return (perror(malloc), FAILURE);
-int	ft_count_char(char *str, char c)
+
+int ft_count_char(char *str, char c)
 {
-	int	counter;
+	int counter;
 
 	counter = 0;
 	if (!str)
