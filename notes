@@ -24,6 +24,9 @@
 [] remove upper and lower empty lines (contenting only spaces)
 	---> use substring after having read and joined into one line
 
+[] test extremely small maps
+[] test extremely big maps
+
 - libft
 	[] ft_split_md() - norminette
 	// we won't use this function, because we don't accept tabs

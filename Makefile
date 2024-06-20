@@ -14,8 +14,8 @@ SRC =	cub3D.c \
 		read_map_element.c \
 		map_handle_color.c \
 		map_handle_texture.c \
-		mlx_init.c \
 		debug.c \
+		# mlx_init.c
 
 OBJDIR = obj/
 OBJ =  $(SRC:%.c=$(OBJDIR)%.o)
@@ -35,7 +35,9 @@ $(OBJDIR)%.o : %.c
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF_LIB) $(INCLUDES) $(MLX_FLAGS)
+	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF_LIB) $(INCLUDES)
+
+#$(MLX_FLAGS)
 
 # Rule for making the libft library
 $(LIBFT):

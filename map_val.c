@@ -16,7 +16,7 @@ int invalid_element(char *line)
 {
 	if (is_whitespace(line[0]) || is_whitespace(line[ft_strlen(line) - 1]))
 	{
-		write(2, COLOR_RED "Whitespace at Line-Beginning/End\n" COLOR_RESET, 48);
+		write(2, COLOR_RED "Whitespace at Line-Beginning/End\n" COLOR_RESET, 45);
 		return (INV_MAP);
 	}
 	return (SUCCESS);
@@ -60,8 +60,8 @@ int read_check_txts_clrs(t_main *cub)
 			cleanup(cub, 1);
 		if (handle_color(tmp, cub) != SUCCESS || handle_texture(tmp, cub) != SUCCESS)
 			cleanup(cub, 1);
-		/*if (handle_texture(tmp, cub) != SUCCESS)
-			cleanup(cub, 1);*/
+		if (handle_texture(tmp, cub) != SUCCESS)
+			cleanup(cub, 1);
 		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.splited_line[0], 2)) // not just an empty line // a line that isn't an element
 		{
 			write(2, COLOR_RED "Invalid Identifier\n" COLOR_RESET, 20);
@@ -71,72 +71,6 @@ int read_check_txts_clrs(t_main *cub)
 	}
 	return (SUCCESS);
 }
-
-bool only_space_so_empty(char *line) // only spaces
-{
-	while (*line)
-	{
-		if (*line == ' ')
-			line++;
-		else
-			return (false);
-	}
-	return (true);
-}
-
-bool lower_wall(char **map, int i)
-{
-	if (only_space_so_empty(map[i]))
-		return (false);
-	else if (i < str_ary_len(map) && only_space_so_empty(map[i + 1]))
-		return (true);
-	return (true);
-}
-
-bool upper_wall(char **map, int i)
-{
-	if (only_space_so_empty(map[i]))
-		return (false);
-	else if (i > 0 && only_space_so_empty(map[i - 1]))
-		return (true);
-	return (true);
-}
-
-/* int	gap_in_wall(char **map, int l)
-{
-	int	c;
-
-	c = 0;
-	// take each 0 and the Player and see whether it is within walls
-	while (map[l][c])
-	{
-
-	}
-} */
-
-/*
-
-1 1 1 1
-
- 1111111
-100000001
-10N000001
-100000001
-11111111
-
-   1 1 1
-
-*/
-
-// int	outside_checks(char **map, int i)
-// {
-// 	if (/* upperwall(map, i) &&  */gap_in_wall(map, i) == INV_MAP)
-// 		return (INV_MAP);
-// 	if (/* lower_wall(map, i) &&  */gap_in_wall(map, i) == INV_MAP)
-// 		return (INV_MAP);
-// 	check_sides();
-// 	return (SUCCESS);
-// }
 
 int check_right(char *horiz, char c)
 {
@@ -272,30 +206,6 @@ int closed_walls(char **map)
 	return (SUCCESS);
 }
 
-/* int	space_within_wall(char **map, int i, int j)
-{
-	//this is more complex then imagined
-
-} */
-
-/* int	inv_space(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while(map[i][j])
-		{
-			if (map[i][j] == ' ' && space_within_wall(map, i, j))
-				return (INV_MAP);
-		}
-		i++;
-	}
-} */
-
 int get_max_len(char **map)
 {
 	int max;
@@ -314,10 +224,8 @@ int get_max_len(char **map)
 
 int add_spaces(char *str, int max)
 {
-	int i;
 	int len;
 
-	i = 0;
 	len = ft_strlen(str);
 	while (len < max)
 	{
@@ -522,3 +430,70 @@ char	*add_generic_space(char *lines)
 	return (free(store_l), store_nl);
 }
 */
+
+/*
+bool only_space_so_empty(char *line) // only spaces
+{
+	while (*line)
+	{
+		if (*line == ' ')
+			line++;
+		else
+			return (false);
+	}
+	return (true);
+}
+
+bool lower_wall(char **map, int i)
+{
+	if (only_space_so_empty(map[i]))
+		return (false);
+	else if (i < str_ary_len(map) && only_space_so_empty(map[i + 1]))
+		return (true);
+	return (true);
+}
+
+bool upper_wall(char **map, int i)
+{
+	if (only_space_so_empty(map[i]))
+		return (false);
+	else if (i > 0 && only_space_so_empty(map[i - 1]))
+		return (true);
+	return (true);
+}*/
+
+/* int	gap_in_wall(char **map, int l)
+{
+	int	c;
+
+	c = 0;
+	// take each 0 and the Player and see whether it is within walls
+	while (map[l][c])
+	{
+
+	}
+} */
+
+/*
+
+1 1 1 1
+
+ 1111111
+100000001
+10N000001
+100000001
+11111111
+
+   1 1 1
+
+*/
+
+// int	outside_checks(char **map, int i)
+// {
+// 	if (/* upperwall(map, i) &&  */gap_in_wall(map, i) == INV_MAP)
+// 		return (INV_MAP);
+// 	if (/* lower_wall(map, i) &&  */gap_in_wall(map, i) == INV_MAP)
+// 		return (INV_MAP);
+// 	check_sides();
+// 	return (SUCCESS);
+// }

@@ -19,7 +19,7 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include <errno.h>
-#include <mlx.h>
+//#include <mlx.h>
 #include <math.h>
 #include <X11/keysym.h>
 #include <X11/X.h>
