@@ -6,7 +6,8 @@
 
 [] Establish a cleaning strategy
 [x] A Dublicate as last element before the map --> must handle at map read section
-[] lines with only spaces before main map
+[x] lines with only spaces before main map
+[] must check for valid path for the texture
 [] checks for color assigning
 	[] overflow
 	[] in the correct range 0 - 255

@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/19 22:35:00 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:37:26 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,7 @@ int	l_only_space(char **map)
 	{
 		if (has_only_space(map[i]) /*&& and is not at the end */)
 		{
+			printf("l_only_space: map[%i]: %s\n", i, map[i]);
 			write(2, COLOR_RED"LINE WITH ONLY SPACES IN 2D-MAP DETECTED\n"COLOR_RESET, 53);
 			return (INV_MAP);
 		}
@@ -336,8 +337,8 @@ char	*rm_empty_top_bottom(char *line)
 	char	*n_line = ft_substr(line, first, last - first);
 	if (!n_line)
 		return (NULL);
-	printf("line:\n%s\n", line);
-	printf("n_line:\n%s\n", n_line);
+	// printf("line:\n%s\n", line);
+	// printf("n_line:\n%s\n", n_line);
 	return (n_line);
 }
 
@@ -346,7 +347,7 @@ int check_map_element(t_main *cub, char *lines)
 	char *n_lines = rm_empty_top_bottom(lines);
 	if (!n_lines)
 		return (FAILURE);
-	cub->u_map.map = ft_split(lines, '\n');
+	cub->u_map.map = ft_split(n_lines, '\n');
 	if (!cub->u_map.map)
 		return (perror("malloc"), free(n_lines), FAILURE);
 	free(n_lines);
@@ -360,11 +361,6 @@ int check_map_element(t_main *cub, char *lines)
 		write(2, COLOR_RED "Walls Not Closed!\n" COLOR_RESET, 30);
 		return (INV_MAP);
 	}
-	/* if (inv_space(cub->u_map.map) != SUCCESS)
-	{
-		write(2, COLOR_RED"Whitespace Inside Map!\n"COLOR_RESET, 35);
-		return (INV_MAP);
-	} */
 	return (SUCCESS);
 }
 

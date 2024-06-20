@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:03:20 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/18 21:17:28 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:36:51 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	map_ended(char *str, int i)
 	return (true);
 }
 
-bool	empty_line(char *line, int i)
+bool	nl_nl(char *line, int i)
 {
 	if (line[i] == '\n' && line[i + 1] == '\n')
 		return (true);
@@ -51,20 +51,20 @@ int	nline(char *one_line)
 		i++;
 	while (one_line[i])
 	{
-		if (empty_line(one_line, i) && !map_ended(one_line, i))
+		if (inv_char_in_map(one_line[i]) == INV_MAP)
+			return (INV_MAP);
+		if (nl_nl(one_line, i) && !map_ended(one_line, i))
 		{
-			//printf("i value in nline: %i\n", i);
+			printf("i value in nline: %i\n", i);
 			write(2, COLOR_RED"Empty Line inside Map\n"COLOR_RESET, 34);
 			return (INV_MAP);
 		}
-		if (inv_char_in_map(one_line[i]) == INV_MAP)
-			return (INV_MAP);
 		i++;
 		if (one_line[i] == '\n')
 			line_counter++;
 	}
 	//printf("line_counter value in nline: %i\n", line_counter);
-	if (line_counter < 3)
+	if (line_counter < 3) // this check is not enough to exclude to small maps
 	{
 		write(2, COLOR_RED"Less than 3 Lines In Map\n"COLOR_RESET, 37);
 		return (INV_MAP);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/17 11:48:33 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/20 17:34:28 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_img
 	int		line_length;
 	int		endian;
 }	t_img;
-
 
 typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the project
 {
