@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/20 20:37:26 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/21 14:16:22 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,16 +193,19 @@ int closed_walls(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (ft_strchr("NSWE", map[i][j]))
-				p_counter++;
 			if (ft_strchr("0NSWE", map[i][j]) && check_pos(map, i, j) != SUCCESS)
 				return (INV_MAP);
+			if (ft_strchr("NSWE", map[i][j]))
+				p_counter++;
 			j++;
 		}
 		i++;
 	}
 	if (p_counter != 1)
+	{
+		printf("Player count: %i\n", p_counter);
 		return (write(2, COLOR_RED "ERROR: PLAYER PLACEMENT\n" COLOR_RESET, 36), INV_MAP);
+	}
 	return (SUCCESS);
 }
 
@@ -292,70 +295,18 @@ int	l_only_space(char **map)
 	return (SUCCESS);
 }
 
-int	first_map_char(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (ft_strchr("10NSWE", line[i]))
-		{
-			// retract to the previous newline
-			while (i >= 0 && line[i] != '\n')
-				i--;
-			return (i);
-		}
-		i++;
-	}
-	return (i);
-}
-
-int	last_map_char(char *line)
-{
-	int	i;
-
-	i = ft_strlen(line);
-	while (i >= 0)
-	{
-		if (ft_strchr("10NSWE", line[i]))
-			return (i);
-		i--;
-	}
-	return (i);
-}
-
-char	*rm_empty_top_bottom(char *line)
-{
-	//rm upper and lower lines, that only contain spaces
-	int	first;
-	int	last;
-
-	first = first_map_char(line);
-	last = last_map_char(line) + 1;
-
-	char	*n_line = ft_substr(line, first, last - first);
-	if (!n_line)
-		return (NULL);
-	// printf("line:\n%s\n", line);
-	// printf("n_line:\n%s\n", n_line);
-	return (n_line);
-}
-
 int check_map_element(t_main *cub, char *lines)
 {
-	char *n_lines = rm_empty_top_bottom(lines);
-	if (!n_lines)
-		return (FAILURE);
-	cub->u_map.map = ft_split(n_lines, '\n');
+	// printf("lines: %s\n", lines);
+	// printf("n_lines: %s\n", lines);
+	cub->u_map.map = ft_split(lines, '\n');
 	if (!cub->u_map.map)
-		return (perror("malloc"), free(n_lines), FAILURE);
-	free(n_lines);
+		return (perror("malloc"), FAILURE);
 	// if we DON'T ACCEPT lines with only spaces in the actual map, we look for them here after split
+	//print_map_elements(&cub->u_map);
 	if (l_only_space(cub->u_map.map) != SUCCESS)
 		return (FAILURE);
 	add_generic_spaces(cub->u_map.map);
-	//print_map_elements(&cub->u_map);
 	if (closed_walls(cub->u_map.map) != SUCCESS)
 	{
 		write(2, COLOR_RED "Walls Not Closed!\n" COLOR_RESET, 30);

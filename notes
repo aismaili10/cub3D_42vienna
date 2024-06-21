@@ -7,7 +7,7 @@
 [] Establish a cleaning strategy
 [x] A Dublicate as last element before the map --> must handle at map read section
 [x] lines with only spaces before main map
-[] must check for valid path for the texture
+[] must check for valid path for the texture --> if open/execution fails
 [] checks for color assigning
 	[] overflow
 	[] in the correct range 0 - 255
@@ -21,8 +21,8 @@
 [x] Player Position only one
 [x] spaces inside the map (within walls) are not valid
 [x] spaces outside the map (outside walls) are valid
-[] accept newlines/empty lines at the begin and end of actual map
-[] remove upper and lower empty lines (contenting only spaces)
+[x] accept newlines/empty lines only at the begin and end of actual map
+[x] remove upper and lower empty lines (contenting only spaces or nothing)
 	---> use substring after having read and joined into one line
 
 [] test extremely small maps

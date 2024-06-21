@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/20 17:34:28 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:25:43 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include <errno.h>
-//#include <mlx.h>
+#include <mlx.h>
 #include <math.h>
 #include <X11/keysym.h>
 #include <X11/X.h>
@@ -40,6 +40,9 @@
 #define COLOR_RED		"\033[0;31m"	// len: 7
 #define COLOR_YELLOW	"\033[0;33m"	// len: 7
 #define COLOR_RESET		"\033[0m"		// len: 4
+
+// keycode
+#define	ESC		65307
 
 typedef	struct	s_map
 {
