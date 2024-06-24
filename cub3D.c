@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:48:01 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/21 17:00:53 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/22 22:25:32 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	main(int ac, char *av[])
 	assign_default(&cub);
 	if (map_val(&cub, av[1]) != SUCCESS)
 		return (write(2, COLOR_RED"Invalid Map\n"COLOR_RESET, 24), 2);
-	if (init_mlx(&cub) == -1)
-		return (write(2, COLOR_GREEN"MLX Initialization Failed\n"COLOR_RESET, 32), 3);
+	/* if (init_mlx(&cub) == -1)
+		return (write(2, COLOR_GREEN"MLX Initialization Failed\n"COLOR_RESET, 32), 3); */
 	printf(COLOR_GREEN"Map %s is Valid\n"COLOR_RESET, av[1]);
 	cleanup(&cub, 10);
 	return (SUCCESS);
