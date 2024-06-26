@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/06/26 14:18:08 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/26 16:54:13 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,38 @@ void	init_player(t_player *player, t_main *cub, t_map u_map)
 		x = -1;
 		while (u_map.map[y][++x])
 		{
-			if (u_map.map[y][x] == 'N')
+			if (u_map.map[y][x] == 'N' || u_map.map[y][x] == 'S' || u_map.map[y][x] == 'E' || u_map.map[y][x] == 'W')
 			{
 				player->posX = x + 0.5;
 				player->posY = y + 0.5;
-				player->dirX = -1;
-				player->dirY = 0;
-				player->planeX = 0;
-				player->planeY = 0.66;
+				if (u_map.map[y][x] == 'E')
+				{
+					player->dirX = -1;
+					player->dirY = 0;
+					player->planeX = 0;
+					player->planeY = 0.66;
+				}
+				if (u_map.map[y][x] == 'W')
+				{
+					player->dirX = 1;
+					player->dirY = 0;
+					player->planeX = 0;
+					player->planeY = -0.66;
+				}
+				if (u_map.map[y][x] == 'S')
+				{
+					player->dirX = 0;
+					player->dirY = 1;
+					player->planeX = 0.66;
+					player->planeY = 0;
+				}
+				if (u_map.map[y][x] == 'N')
+				{
+					player->dirX = 0;
+					player->dirY = -1;
+					player->planeX = -0.66;
+					player->planeY = 0;
+				}
 				printf("Player initialized at position: (%f, %f)\n", player->posX, player->posY);
                 return;
 			}
@@ -100,7 +124,7 @@ void	move_player(t_main *cub, double moveX, double moveY)
 		}
 	mapCell = cub->u_map.map[newPosY][newPosX];
 
-	if (mapCell == '0' || mapCell == 'N') //here we also need check for N,S,E,W
+	if (mapCell == '0' || mapCell == 'N' || mapCell == 'S' || mapCell == 'W' ||  mapCell == 'E') //here we also need check for N,S,E,W
 	{
 		cub->player->posX += moveX;
 		cub->player->posY += moveY;	
