@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 08:42:16 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/26 17:54:50 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,16 @@ typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the pro
 }	t_main;
 
 // cleanup
-void		cleanup(t_main *cub, int stage);
+void	cleanup(t_main *cub, int stage);
 
 // map_val
 int		map_val(t_main *cub, char *map_path);
-int		handle_color(char *line, t_main *cub);
-int		handle_texture(char *line, t_main *cub);
+int		handle_color(t_main *cub);
+int		handle_texture(t_main *cub);
 int		read_map_element(t_main *cub);
 
 // game
-int game(t_main *cub);
+int		game(t_main *cub);
 
 // map_val_utils
 int		str_ary_len(char **str_array);

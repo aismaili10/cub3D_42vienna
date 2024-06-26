@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:08:12 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/13 14:46:51 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:54:25 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ int	is_texture(char *type, t_map *u_map)
 	return (false);
 }
 
-int	handle_texture(char *line, t_main *cub)
+int	handle_texture(t_main *cub)
 {
 	int	ret;
 
-	(void)line;
 	if (cub->u_map.id_ed)
 		return (SUCCESS);
 	ret = is_texture(cub->u_map.splited_line[0], &cub->u_map);

@@ -6,25 +6,64 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:05:58 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/13 14:46:42 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:22:45 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	init_u_map_clr(char *line, t_map *u_map)
+static int	rgb_valid(char *rgb)
+{
+	int	j;
+
+	j = 0;
+	while (rgb[j] && rgb[j] != '\n')
+	{
+		if (!ft_isdigit(rgb[j]))
+		{
+			//printf("rgb: %s --> rgb[%i]: %c\n", rgb, j, rgb[j]);
+			return (false);
+		}
+		j++;
+	}
+	return (true);
+}
+
+static int	inv_clr_specifier(char **str_rgb)
+{
+	int	i;
+
+	i = 0;
+	while (str_rgb[i])
+	{
+		if (!rgb_valid(str_rgb[i]))
+		{
+			//printf("inv_clr_specifier(): str_rgb[%i]: %s\n", i, str_rgb[i]);
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
+
+int	init_u_map_clr(t_map *u_map)
 {
 	char	**str_rgb;
 	int		rgb[3];
 	int		i;
 
-	(void)line;
 	errno = 0;
+	//printf("in init_mapclr: %s\n", u_map->splited_line[1]);
 	str_rgb = ft_split(u_map->splited_line[1], ',');
 	if (!str_rgb && errno)
 		return (perror("malloc"), SYS_FAIL);
-	if (str_ary_len(str_rgb) != 3)
+	/* i = -1;
+	while (++i < 3)
+		printf("%s\n", str_rgb[i]); */
+	if (str_ary_len(str_rgb) != 3 || inv_clr_specifier(str_rgb))
 		return (write(2, COLOR_RED"RGB Invalid Map\n"COLOR_RESET, 28), INV_MAP);
+	/* if (inv_clr_specifier(str_rgb))
+		return (write(2, COLOR_RED"RGB Invalid Map\n"COLOR_RESET, 28), INV_MAP); */
 	i = -1;
 	while (++i < 3)
 		rgb[i] = ft_atoi(str_rgb[i]); // handle overflow!!
@@ -51,7 +90,7 @@ int	is_color(char *id, t_map *u_map)
 	return (false);
 }
 
-int	handle_color(char *line, t_main *cub)
+int	handle_color(t_main *cub)
 {
 	int	ret;
 
@@ -62,7 +101,7 @@ int	handle_color(char *line, t_main *cub)
 	}
 	if (ret)
 	{
-		return (init_u_map_clr(line, &cub->u_map));
+		return (init_u_map_clr(&cub->u_map));
 	}
 	return (SUCCESS);
 }

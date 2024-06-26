@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:03:20 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/21 14:16:05 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:12:02 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,47 @@ int	nline(char *n_lines)
 	return (SUCCESS);
 }
 
+bool	contains_inv_char(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+	{
+		if (!ft_strchr("10NSWE \n", str[i]))
+		{
+		write(2, COLOR_RED"LINE WITH INVALID CHAR\n"COLOR_RESET, 35);
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
+
+bool	contains_only_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	/* if (ft_strlen(str) == 1 && str[i] == '\n')
+	{
+		// write(2, COLOR_RED"LINE WITH ONLY SPACES\n"COLOR_RESET, 34);
+		return (false);
+	} */
+	//printf("str: %s\nstr: %i\nlen: %zu\n", str, *str, ft_strlen(str));
+	while (str[i] && str[i] != '\n')
+	{
+		if (str[i] != ' ')
+			return (false);
+		i++;
+	}
+	if (i == 0 && str[i] == '\n')
+		return (false);
+	write(2, COLOR_RED"LINE WITH ONLY SPACES\n"COLOR_RESET, 34);
+	printf("str: -%s-\nlen: %zu\n", str, ft_strlen(str));
+	return (true);
+}
+
 int	read_map_element(t_main *cub)
 {
 	char	*tmp;
@@ -142,6 +183,17 @@ int	read_map_element(t_main *cub)
 		}
 		if (!tmp)
 			break ;
+		//printf("tmp: %s\n", tmp);
+		if (contains_only_spaces(tmp))
+		{
+			free(tmp);
+			cleanup(cub, 1);
+		}
+		if (contains_inv_char(tmp))
+		{
+			free(tmp);
+			cleanup(cub, 1);
+		}
 		cub->u_map.joined_lines = ft_strjoingnl(cub->u_map.joined_lines, tmp);
 		if (!cub->u_map.joined_lines)
 		{

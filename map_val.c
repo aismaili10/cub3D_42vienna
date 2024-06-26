@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/22 22:34:07 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:54:35 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int read_check_txts_clrs(t_main *cub)
 		}
 		if (prep_for_init(tmp, cub) != SUCCESS)
 			cleanup(cub, 1);
-		if (handle_color(tmp, cub) != SUCCESS || handle_texture(tmp, cub) != SUCCESS)
+		if (handle_color(cub) != SUCCESS || handle_texture(cub) != SUCCESS)
 			cleanup(cub, 1);
-		if (handle_texture(tmp, cub) != SUCCESS)
-			cleanup(cub, 1);
+		/* if (handle_texture(tmp, cub) != SUCCESS)
+			cleanup(cub, 1); */
 		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.splited_line[0], 2)) // not just an empty line // a line that isn't an element
 		{
-			write(2, COLOR_RED "Invalid Identifier\n" COLOR_RESET, 20);
+			write(2, COLOR_RED "Invalid Identifier\n" COLOR_RESET, 31);
 			cleanup(cub, 1);
 		}
 		free_str_array(&cub->u_map.splited_line);
