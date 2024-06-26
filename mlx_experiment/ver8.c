@@ -99,6 +99,7 @@ void initialize_game(t_game *game)
 void verLine(t_game *game, int x, int start, int end, int color)
 {
     int y;
+    printf("drawStart: %d, drawEnd: %d\n", start, end);
     for (y = start; y < end; y++)
     {
         if (y >= 0 && y < screenHeight)

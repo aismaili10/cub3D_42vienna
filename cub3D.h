@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 08:42:16 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/26 09:45:24 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,15 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_player {
+    double posX;
+    double posY;
+    double dirX;
+    double dirY;
+    double planeX;
+    double planeY;
+} t_player;
+
 typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the project
 {
 	// mlx init and window
@@ -93,6 +102,7 @@ typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the pro
 	void	*win_ptr;
 	t_img	mlx_img;
 	t_map	u_map;
+	t_player *player;
 }	t_main;
 
 // cleanup
