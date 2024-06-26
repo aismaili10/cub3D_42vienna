@@ -15,18 +15,20 @@
 #define screenHeight 600
 #define MINIMAP_SCALE 5
 #define MINIMAP_SIZE 100
-#define ROT_SPEED 0.05 // Rotation speed in radians
-#define MOVE_SPEED 0.2 // Movement speed
-#define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
-#define FLOOR_COLOR 0x008000    // Green for the floor
+#define ROT_SPEED 0.05         // Rotation speed in radians
+#define MOVE_SPEED 0.2         // Movement speed
+#define CEILING_COLOR 0x87CEEB // Light blue for the ceiling
+#define FLOOR_COLOR 0x008000   // Green for the floor
 
-typedef struct s_map {
+typedef struct s_map
+{
     char **grid;
     int width;
     int height;
 } t_map;
 
-typedef struct s_player {
+typedef struct s_player
+{
     double posX;
     double posY;
     double dirX;
@@ -35,7 +37,8 @@ typedef struct s_player {
     double planeY;
 } t_player;
 
-typedef struct s_game {
+typedef struct s_game
+{
     void *mlx;
     void *win;
     void *img;
@@ -55,8 +58,7 @@ void initialize_map(t_map *map)
         "10100N01",
         "10000001",
         "11111111",
-        NULL
-    };
+        NULL};
 
     int height = 0;
     while (example_map[height])
@@ -69,9 +71,12 @@ void initialize_map(t_map *map)
 
 void initialize_player(t_player *player, t_map *map)
 {
-    for (int y = 0; y < map->height; y++) {
-        for (int x = 0; x < map->width; x++) {
-            if (map->grid[y][x] == 'N') {
+    for (int y = 0; y < map->height; y++)
+    {
+        for (int x = 0; x < map->width; x++)
+        {
+            if (map->grid[y][x] == 'N')
+            {
                 player->posX = x + 0.5;
                 player->posY = y + 0.5;
                 player->dirX = -1;
@@ -111,7 +116,8 @@ void verLine(t_game *game, int x, int start, int end, int color)
 
 void draw_minimap_pixel(t_game *game, int x, int y, int color)
 {
-    if (x >= 0 && x < MINIMAP_SIZE && y >= 0 && y < MINIMAP_SIZE) {
+    if (x >= 0 && x < MINIMAP_SIZE && y >= 0 && y < MINIMAP_SIZE)
+    {
         *(unsigned int *)(game->data_addr + (y * game->size_line + x * (game->bpp / 8))) = color;
     }
 }
@@ -131,8 +137,10 @@ void draw_minimap(t_game *game)
             else
                 color = 0x000000; // Black for empty spaces
 
-            for (int i = 0; i < MINIMAP_SCALE; i++) {
-                for (int j = 0; j < MINIMAP_SCALE; j++) {
+            for (int i = 0; i < MINIMAP_SCALE; i++)
+            {
+                for (int j = 0; j < MINIMAP_SCALE; j++)
+                {
                     int pixel_x = x * MINIMAP_SCALE + i;
                     int pixel_y = y * MINIMAP_SCALE + j;
                     draw_minimap_pixel(game, pixel_x, pixel_y, color);
@@ -148,7 +156,8 @@ void draw_minimap(t_game *game)
 
     // Draw the player's direction
     int line_length = 10; // Length of the direction line
-    for (int i = 0; i < line_length; i++) {
+    for (int i = 0; i < line_length; i++)
+    {
         int step_x = player_x + i * game->player.dirX;
         int step_y = player_y + i * game->player.dirY;
         draw_minimap_pixel(game, step_x, step_y, 0xFF0000); // Red for the direction line
@@ -160,8 +169,8 @@ void draw_rays_on_minimap(t_game *game, double rayDirX, double rayDirY)
     double rayPosX = game->player.posX;
     double rayPosY = game->player.posY;
 
-    //printf("IN DRAW RAYS ON MINIMAP\n");
-    //printf("rayPosX: %f\nrayPosY: %f\n", rayPosX, rayPosY);
+    // printf("IN DRAW RAYS ON MINIMAP\n");
+    // printf("rayPosX: %f\nrayPosY: %f\n", rayPosX, rayPosY);
 
     while (1)
     {
@@ -169,7 +178,8 @@ void draw_rays_on_minimap(t_game *game, double rayDirX, double rayDirY)
         int mapY = (int)rayPosY;
 
         // Ensure mapX and mapY are within bounds
-        if (mapX < 0 || mapX >= game->map.width || mapY < 0 || mapY >= game->map.height) {
+        if (mapX < 0 || mapX >= game->map.width || mapY < 0 || mapY >= game->map.height)
+        {
             printf("OUT OF BOUND\n");
             break;
         }
@@ -178,8 +188,9 @@ void draw_rays_on_minimap(t_game *game, double rayDirX, double rayDirY)
         draw_minimap_pixel(game, mapX * MINIMAP_SCALE, mapY * MINIMAP_SCALE, 0x00FF00); // Green for rays
 
         // Stop if the ray hits a wall
-        if (game->map.grid[mapY][mapX] == '1') {
-            //printf("WALL HIT\n");
+        if (game->map.grid[mapY][mapX] == '1')
+        {
+            // printf("WALL HIT\n");
             break;
         }
 
@@ -187,7 +198,7 @@ void draw_rays_on_minimap(t_game *game, double rayDirX, double rayDirY)
         rayPosX += rayDirX * 0.05;
         rayPosY += rayDirY * 0.05;
     }
-    //printf("mapX: %d\nmapY: %d\n", (int)rayPosX, (int)rayPosY);
+    // printf("mapX: %d\nmapY: %d\n", (int)rayPosX, (int)rayPosY);
 }
 
 void cast_rays(t_game *game)
@@ -263,7 +274,8 @@ void cast_rays(t_game *game)
             }
         }
 
-        if (hit == 0) {
+        if (hit == 0)
+        {
             continue;
         }
 
@@ -275,23 +287,32 @@ void cast_rays(t_game *game)
         int lineHeight = (int)(screenHeight / perpWallDist);
 
         int drawStart = -lineHeight / 2 + screenHeight / 2;
-        if(drawStart < 0) drawStart = 0;
+        if (drawStart < 0)
+            drawStart = 0;
         int drawEnd = lineHeight / 2 + screenHeight / 2;
-        if(drawEnd >= screenHeight) drawEnd = screenHeight - 1;
+        if (drawEnd >= screenHeight)
+            drawEnd = screenHeight - 1;
 
         int color = 0xFF0000; // Default color in case of error
 
         // Debug print to check mapX and mapY before accessing
         if (mapX >= 0 && mapX < game->map.width && mapY >= 0 && mapY < game->map.height)
         {
-            switch(game->map.grid[mapY][mapX])
+            switch (game->map.grid[mapY][mapX])
             {
-                case '1':  color = 0xFF0000;  break;
-                default: color = 0xFFFFFF; break;
+            case '1':
+                color = 0xFF0000;
+                break;
+            default:
+                color = 0xFFFFFF;
+                break;
             }
         }
 
-        if (side == 1) {color = color / 2;}
+        if (side == 1)
+        {
+            color = color / 2;
+        }
 
         verLine(game, x, drawStart, drawEnd, color);
 
@@ -350,6 +371,7 @@ void rotate_player(t_player *player, double angle)
 
 void move_player(t_game *game, double moveX, double moveY)
 {
+    int i = 0;
     int newPosX = (int)(game->player.posX + moveX);
     int newPosY = (int)(game->player.posY + moveY);
 
@@ -361,20 +383,20 @@ void move_player(t_game *game, double moveX, double moveY)
     }
 
     char mapCell = game->map.grid[newPosY][newPosX];
-    //printf("Checking new position: newPosX=%d, newPosY=%d, mapCell=%c\n", newPosX, newPosY, mapCell);
+    // printf("Checking new position: newPosX=%d, newPosY=%d, mapCell=%c\n", newPosX, newPosY, mapCell);
 
     if (mapCell == '0' || mapCell == 'N')
     {
         game->player.posX += moveX;
         game->player.posY += moveY;
-        //printf("Player moved to position: (%f, %f)\n", game->player.posX, game->player.posY); // Debug print
+        // printf("Player moved to position: (%f, %f)\n", game->player.posX, game->player.posY); // Debug print
     }
     else
     {
-        printf("Collision detected, movement blocked\n"); // Debug print
+        printf("Collision detected, movement blocked %d \n", i); // Debug print
+        i++;
     }
 }
-
 
 int close_window(void *param)
 {
@@ -416,7 +438,7 @@ int main()
 
     initialize_game(&game);
     mlx_loop_hook(game.mlx, main_loop, &game);
-    mlx_hook(game.win, 2, 1L<<0, key_hook, &game);
+    mlx_hook(game.win, 2, 1L << 0, key_hook, &game);
     mlx_hook(game.win, 17, 0L, close_window, &game);
     mlx_loop(game.mlx);
     return 0;

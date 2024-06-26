@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 08:54:55 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/26 13:57:04 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,10 @@ void	cleanup(t_main *cub, int stage)
 	}
 	free_map_elements(cub);
 	clean_mlx(cub);
+	if (stage == 2) // in case of exit by ESC
+		free(cub->player);
 	if (stage == 10)
 		printf(COLOR_GREEN"map is valid\n"COLOR_RESET);
 	exit(1);
-	/*if (stage == 1)
-		cleanup_1();
-	if (stage == 2)
-		cleanup_2();*/
 	// ...
 }

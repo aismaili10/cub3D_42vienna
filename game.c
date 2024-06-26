@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/06/26 11:05:11 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:18:08 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@
 	}
 	return (SUCCESS);
 } */
-int close_window(void *param)
+int close_window(t_main *cub)
 {
-	(void)param;
-    exit(0);
+    cleanup(cub, 2);
     return (0);
 }
 
@@ -47,7 +46,7 @@ void verLine(t_main *cub, int x, int drawStart, int drawEnd, int color)
 {
 	int y;
 
-	printf("drawStart: %d, drawEnd: %d\n", drawStart, drawEnd);
+	//printf("drawStart: %d, drawEnd: %d\n", drawStart, drawEnd);
 	y = drawStart;
 	while (y < drawEnd)
 	{
@@ -83,6 +82,69 @@ void	init_player(t_player *player, t_main *cub, t_map u_map)
 		}
 	}
 }
+void	move_player(t_main *cub, double moveX, double moveY)
+{
+	int newPosX;
+	int newPosY;
+	char	mapCell;
+	static int i = 0;
+
+	newPosX = (int)cub->player->posX + moveX;
+	newPosY = (int)cub->player->posY + moveY;
+
+	if (newPosX < 0 || newPosX >= (int)ft_strlen(cub->u_map.map[(int)cub->player->posY])
+		|| newPosY < 0 || newPosY >= (int)ft_strlen(cub->u_map.map[(int)cub->player->posY]))
+		{
+			printf("Out of bounds\n");
+			return ;
+		}
+	mapCell = cub->u_map.map[newPosY][newPosX];
+
+	if (mapCell == '0' || mapCell == 'N') //here we also need check for N,S,E,W
+	{
+		cub->player->posX += moveX;
+		cub->player->posY += moveY;	
+	}
+	else
+	{
+        i++;
+		printf("Collision detected, movement blocked %d \n", i); // Debug print
+	}
+}
+
+void	rotate_player(t_player *player, double angle)
+{
+	double oldDirX;
+	double oldPlaneX;
+
+	oldDirX = player->dirX;
+	oldPlaneX = player->planeX;
+	player->dirX = player->dirX * cos(angle) - player->dirY * sin(angle);
+	player->dirY = oldDirX * sin(angle) + player->dirY * cos(angle);
+
+	player->planeX = player->planeX * cos(angle) - player->planeY * sin(angle);
+	player->planeY = oldPlaneX * sin(angle) + player->planeY * cos(angle);
+}
+
+
+int	key_handle(int keycode, t_main *cub)
+{
+	if (keycode == ESC)
+		cleanup(cub, 2);
+	else if (keycode == KEY_LEFT)
+		rotate_player(cub->player, -ROT_SPEED);
+	else if (keycode == KEY_RIGHT)
+		rotate_player(cub->player, ROT_SPEED);
+	else if (keycode == KEY_W)
+		move_player(cub, cub->player->dirX * MOVE_SPEED, cub->player->dirY * MOVE_SPEED);
+	else if (keycode == KEY_S)
+		move_player(cub, -cub->player->dirX * MOVE_SPEED, -cub->player->dirY * MOVE_SPEED);
+	else if (keycode == KEY_A)
+		move_player(cub, -cub->player->dirY * MOVE_SPEED, cub->player->dirX * MOVE_SPEED);
+	else if (keycode == KEY_D)
+		move_player(cub, cub->player->dirY * MOVE_SPEED, -cub->player->dirX * MOVE_SPEED);
+	return (SUCCESS);
+}
 
 int render_background(t_main *cub)
 {
@@ -98,9 +160,9 @@ int render_background(t_main *cub)
 			while (x < WIN_WIDTH)
 			{
 				if (y < WIN_HEIGHT / 2)
-					pixel_put(&cub->mlx_img, x, y, cub->u_map.f_color);
+					pixel_put(&cub->mlx_img, x, y, 0x0EA5C0);
 				else
-					pixel_put(&cub->mlx_img, x, y, cub->u_map.c_color);
+					pixel_put(&cub->mlx_img, x, y, 0x0F7910);
 				if (x < 5 || x > WIN_WIDTH - 5 || y < 5 || y > WIN_HEIGHT - 5) // not really necessary here, just blackened the edges
 					pixel_put(&cub->mlx_img, x, y, 0x000000);
 				x++;
@@ -186,8 +248,8 @@ void	cast_rays(t_main *cub)
 				mapY += stepY;
 				side = 1;
 			}
-			if (mapX < 0  || mapY < 0)/* || mapX >= (int)ft_strlen(cub->u_map.map[mapY])
-				|| mapY < 0 ||  mapY >= height) */
+			if (mapX < 0 || mapX >= (int)ft_strlen(cub->u_map.map[mapY])
+				|| mapY < 0 ||  mapY >= height)
 			{
 				hit = 1;
 				printf("OUT of BOUND\n");
@@ -204,25 +266,29 @@ void	cast_rays(t_main *cub)
 			perpWallDist = (mapY - cub->player->posY + (1 - stepY) / 2) / rayDirY;
 
 		lineHeight = (int)(WIN_HEIGHT / perpWallDist);
+		//printf("lineHeight: %d\n", lineHeight);
 		drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
 		if (drawStart < 0)
 			drawStart = 0;
 		drawEnd = lineHeight / 2 + WIN_HEIGHT / 2;
 		if (drawEnd >= WIN_HEIGHT)
 			drawEnd = WIN_HEIGHT - 1;
-			
 		int color = 0x00FF00;
-		if (mapX < 0 /* || mapX >= (int)ft_strlen(cub->u_map.map[mapY] */
-				|| mapY < 0 )/* ||  mapY >= height) */
+		if (mapX < 0 || mapX >= (int)ft_strlen(cub->u_map.map[mapY])
+        		|| mapY < 0 ||  mapY >= height)
+    		color = 0xFFFFFF; // default color for out-of-bounds
+		else if (cub->u_map.map[mapY][mapX] == '1')
 		{
-			if (cub->u_map.map[mapY][mapX] == '1')
-				color = 0xFF0000;
-			else
-				color = 0xFFFFFF;
+    		color = 0xFF0000; // color for walls
+		}
+		else
+		{
+    		color = 0x00FF00; // color for empty space
 		}
 		if (side == 1)
 			color = color / 2;
 		verLine(cub, x, drawStart, drawEnd, color);
+		x++;
 	}
 }
 
@@ -244,7 +310,7 @@ int game(t_main *cub)
 	cub->player = player;
 	init_player(cub->player, cub, cub->u_map);
 	mlx_loop_hook(cub->mlx_ptr, &render, cub);
-	//mlx_hook(cub->win_ptr, 2, 1L << 0, key_handle, cub);
+	mlx_hook(cub->win_ptr, 2, 1L << 0, key_handle, cub);
 	//mlx_hook(cub->win_ptr, DestroyNotify, KeyReleaseMask, mlx_loop_end, cub->mlx_ptr);
 	mlx_hook(cub->win_ptr, 17, 0L, close_window, cub);
 	mlx_loop(cub->mlx_ptr);
