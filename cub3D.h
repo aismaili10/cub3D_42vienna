@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/21 16:25:43 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/26 08:42:16 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,24 @@
 #define	SYS_FAIL	-1
 #define	SUCCESS		0
 #define	FAILURE		1
+
+#define WIN_WIDTH	1000
+#define WIN_HEIGHT	800
+#define KEY_ESC 65307
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_LEFT 65363
+#define KEY_RIGHT 65361
+#define screenWidth 800
+#define screenHeight 600
+#define MINIMAP_SCALE 5
+#define MINIMAP_SIZE 100
+#define ROT_SPEED 0.05 // Rotation speed in radians
+#define MOVE_SPEED 0.2 // Movement speed
+#define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
+#define FLOOR_COLOR 0x008000  
 
 
 // colors
@@ -86,6 +104,8 @@ int		handle_color(char *line, t_main *cub);
 int		handle_texture(char *line, t_main *cub);
 int		read_map_element(t_main *cub);
 
+// game
+int game(t_main *cub);
 
 // map_val_utils
 int		str_ary_len(char **str_array);

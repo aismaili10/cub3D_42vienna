@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:23:11 by aszabo            #+#    #+#             */
-/*   Updated: 2024/06/22 13:37:48 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/26 08:55:27 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static int	close_window(t_main *cub)
-{
-	write(1, COLOR_YELLOW"Closing Window\n"COLOR_RESET, 27);
-	cleanup(cub, 2);
-	return (SUCCESS);
-}
-
-int	key_handle(int keycode, t_main *cub)
-{
-	if (keycode == ESC)
-	{
-		write(1, COLOR_YELLOW"Closing Window\n"COLOR_RESET, 27);
-		cleanup(cub, 2);
-	}
-	return (SUCCESS);
-}
 
 int	init_mlx(t_main *cub)
 {
@@ -45,7 +28,7 @@ int	init_mlx(t_main *cub)
 	{
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
 		free(cub->mlx_ptr);
-		free(cub->win_ptr);
+		//free(cub->win_ptr);
 		return (cleanup(cub, 2), SYS_FAIL);
 	}
 	cub->mlx_img.addr = mlx_get_data_addr(cub->mlx_img.img_ptr, 
@@ -54,13 +37,10 @@ int	init_mlx(t_main *cub)
 	{
 		mlx_destroy_image(cub->mlx_ptr, cub->mlx_img.img_ptr);
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
-		free(cub->mlx_img.img_ptr);
+		//free(cub->mlx_img.img_ptr);
 		free(cub->mlx_ptr);
-		free(cub->win_ptr);
+		//free(cub->win_ptr);
 		return (cleanup(cub, 2), SYS_FAIL);
 	}
-	mlx_hook(cub->win_ptr, 2, 1, key_handle, cub);
-	mlx_hook(cub->win_ptr, 17, 0, close_window, cub);
-	mlx_loop(cub->mlx_ptr);
 	return (SUCCESS);
 }
