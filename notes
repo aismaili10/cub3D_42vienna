@@ -24,6 +24,7 @@
 [x] accept newlines/empty lines only at the begin and end of actual map
 [x] remove upper and lower empty lines (contenting only spaces or nothing)
 	---> use substring after having read and joined into one line
+[] empty lines in between elements means not even spaces
 
 [] test extremely small maps
 [] test extremely big maps
