@@ -1,5 +1,31 @@
 # NOTES
 
+## GRAPHICAL IMPLEMENTATION
+
+### RAYCASTING
+
+### KEY HANDLING
+
+[] multiple key press --> with flags??
+[] 
+
+
+#### ROTATION
+
+#### MOVEMENT
+
+
+
+#### 
+
+
+
+
+
+
+
+
+
 ## MAP VALIDITY
 
 ### TODO
@@ -8,10 +34,11 @@
 [x] A Dublicate as last element before the map --> must handle at map read section
 [x] lines with only spaces before main map
 [] must check for valid path for the texture --> if open/execution fails
-[] checks for color assigning
-	[] overflow
-	[] in the correct range 0 - 255
-	[] characters other then numeric and comma in SPECIFIER
+[x] checks for color assigning
+	[x] overflow
+	[x] in the correct range 0 - 255
+	[+] plus minus sign
+	[x] characters other then numeric and comma in SPECIFIER
 
 #### anything regarding 2D map
 [x] map postfix check; careful about "" as map or just ".cub"
@@ -34,7 +61,6 @@
 	[] ft_split_md() - norminette
 	// we won't use this function, because we don't accept tabs
 
-
 ### DONE
 
 [x] Dublicates of Textures
@@ -48,6 +74,7 @@
 
 [] file name/type checks??
 [] path checks??
+
 
 ## command options
 

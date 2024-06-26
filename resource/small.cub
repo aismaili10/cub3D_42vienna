@@ -5,7 +5,7 @@ NO ./path_to_the_north_texture
 SO ./path_to_the_south_texture
 
 
-C 225,30,0
+C 255,300,222
 
 F 220,100,0
 
@@ -15,9 +15,12 @@ WE ./path_to_the_west_texture
 
 
 
-11111111
-1000N011
-11111111
+111111
+100001
+100N1
+1001
 11111
+
+
 
 
