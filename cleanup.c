@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/13 15:56:49 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/26 08:54:55 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ void	free_map_elements(t_main *cub)
 	free_map(cub->u_map.map);
 }
 
+void	clean_mlx(t_main *cub)
+{
+		mlx_destroy_image(cub->mlx_ptr, cub->mlx_img.img_ptr);
+		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
+		mlx_destroy_display(cub->mlx_ptr);
+		/* free(cub->mlx_img.img_ptr);
+		free(cub->win_ptr); */
+		free(cub->mlx_ptr);
+}
+
 void	cleanup(t_main *cub, int stage)
 {
 	(void)cub;
@@ -59,6 +69,7 @@ void	cleanup(t_main *cub, int stage)
 		get_next_line(cub->u_map.fd, 1);
 	}
 	free_map_elements(cub);
+	clean_mlx(cub);
 	if (stage == 10)
 		printf(COLOR_GREEN"map is valid\n"COLOR_RESET);
 	exit(1);
