@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 11:43:54 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/29 13:39:21 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 #define	SUCCESS		0
 #define	FAILURE		1
 
-#define WIN_WIDTH	1000
-#define WIN_HEIGHT	800
+#define WIN_WIDTH	800
+#define WIN_HEIGHT	600
 #define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97

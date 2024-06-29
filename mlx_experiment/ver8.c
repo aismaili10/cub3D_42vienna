@@ -53,11 +53,12 @@ typedef struct s_game
 void initialize_map(t_map *map)
 {
     static char *example_map[] = {
-        "11111111",
-        "10000001",
-        "10100N01",
-        "10000001",
-        "11111111",
+        "11111111111111111111111111111",
+        "10000000100000000000100001",
+        "10100N000000000000000000001",
+        "1000000000000010000000000001",
+        "10000000100000000000000000001",
+        "11111111111111111111111111111",
         NULL};
 
     int height = 0;
@@ -104,7 +105,7 @@ void initialize_game(t_game *game)
 void verLine(t_game *game, int x, int start, int end, int color)
 {
     int y;
-    printf("drawStart: %d, drawEnd: %d\n", start, end);
+    //printf("drawStart: %d, drawEnd: %d\n", start, end);
     for (y = start; y < end; y++)
     {
         if (y >= 0 && y < screenHeight)
@@ -203,6 +204,8 @@ void draw_rays_on_minimap(t_game *game, double rayDirX, double rayDirY)
 
 void cast_rays(t_game *game)
 {
+    int drawStart = 0;
+    int drawEnd = 0;
     for (int x = 0; x < screenWidth; x++)
     {
         double cameraX = 2 * x / (double)screenWidth - 1;
@@ -286,10 +289,10 @@ void cast_rays(t_game *game)
 
         int lineHeight = (int)(screenHeight / perpWallDist);
 
-        int drawStart = -lineHeight / 2 + screenHeight / 2;
+        drawStart = -lineHeight / 2 + screenHeight / 2;
         if (drawStart < 0)
             drawStart = 0;
-        int drawEnd = lineHeight / 2 + screenHeight / 2;
+        drawEnd = lineHeight / 2 + screenHeight / 2;
         if (drawEnd >= screenHeight)
             drawEnd = screenHeight - 1;
 
@@ -319,6 +322,7 @@ void cast_rays(t_game *game)
         // Draw the ray on the minimap
         draw_rays_on_minimap(game, rayDirX, rayDirY);
     }
+    //printf("drawStart: %d, drawEnd: %d\n", drawStart, drawEnd);
 }
 
 void draw_floor_and_ceiling(t_game *game)

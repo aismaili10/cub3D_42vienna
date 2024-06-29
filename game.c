@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/06/26 16:54:13 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/29 13:46:51 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void verLine(t_main *cub, int x, int drawStart, int drawEnd, int color)
 
 void	init_player(t_player *player, t_main *cub, t_map u_map)
 {
-	size_t x;
+	size_t x; // why x and y different types?
 	int y;
 	
 	y = -1;
@@ -70,34 +70,34 @@ void	init_player(t_player *player, t_main *cub, t_map u_map)
 		{
 			if (u_map.map[y][x] == 'N' || u_map.map[y][x] == 'S' || u_map.map[y][x] == 'E' || u_map.map[y][x] == 'W')
 			{
-				player->posX = x + 0.5;
+				player->posX = x + 0.5; // get player position
 				player->posY = y + 0.5;
-				if (u_map.map[y][x] == 'E')
+				if (u_map.map[y][x] == 'W') // west and east might be mixed up
 				{
 					player->dirX = -1;
 					player->dirY = 0;
-					player->planeX = 0;
+					player->planeX = 0; // what is plane x and plane y for?
 					player->planeY = 0.66;
 				}
-				if (u_map.map[y][x] == 'W')
+				if (u_map.map[y][x] == 'E')
 				{
 					player->dirX = 1;
 					player->dirY = 0;
 					player->planeX = 0;
 					player->planeY = -0.66;
 				}
-				if (u_map.map[y][x] == 'S')
+				if (u_map.map[y][x] == 'S') // north and south might be mixed up
 				{
 					player->dirX = 0;
-					player->dirY = 1;
-					player->planeX = 0.66;
+					player->dirY = -1;
+					player->planeX = -0.66;
 					player->planeY = 0;
 				}
 				if (u_map.map[y][x] == 'N')
 				{
 					player->dirX = 0;
-					player->dirY = -1;
-					player->planeX = -0.66;
+					player->dirY = 1;
+					player->planeX = 0.66;
 					player->planeY = 0;
 				}
 				printf("Player initialized at position: (%f, %f)\n", player->posX, player->posY);
