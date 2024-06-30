@@ -6,21 +6,22 @@
 
 ### KEY HANDLING
 
-[] multiple key press --> with flags??
-[] 
+[x] multiple key press
+[] zoom
 
 
 #### ROTATION
+
+
 
 #### MOVEMENT
 
 
 
-#### 
-
-
-
-
+#### MINIMAP
+[] big maps
+[] small maps
+[] maybe arrow
 
 
 
@@ -37,7 +38,7 @@
 [x] checks for color assigning
 	[x] overflow
 	[x] in the correct range 0 - 255
-	[+] plus minus sign
+	[x] plus minus sign
 	[x] characters other then numeric and comma in SPECIFIER
 
 #### anything regarding 2D map
@@ -72,8 +73,8 @@
 
 ### UNSURE
 
-[] file name/type checks??
-[] path checks??
+[x] file name/type checks
+[x] path checks
 
 
 ## command options

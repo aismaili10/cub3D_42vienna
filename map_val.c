@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 17:54:35 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/30 20:50:12 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int read_check_txts_clrs(t_main *cub)
 	return (SUCCESS);
 }
 
-int check_right(char *horiz, char c)
+int check_right(char *horiz, int c)
 {
 	int i;
 
@@ -92,7 +92,7 @@ int check_right(char *horiz, char c)
 	return (false);
 }
 
-int check_left(char *horiz, char c)
+int check_left(char *horiz, int c)
 {
 	int i;
 
@@ -159,22 +159,22 @@ int check_pos(char **map, int r, int c) // we send all 0s and the Player Positio
 {
 	if (!check_left(map[r], c))
 	{
-		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
+		printf("left: check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
 	}
 	if (!check_right(map[r], c))
 	{
-		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
+		printf("right: check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
 	}
 	if (!check_up(map, r, c))
 	{
-		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
+		printf("up: check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
 	}
 	if (!check_down(map, r, c))
 	{
-		printf("check_pos: map[%i]: -%s-\n", r, map[r]);
+		printf("down: check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
 	}
 	return (SUCCESS);
