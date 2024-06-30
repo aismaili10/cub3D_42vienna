@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 17:54:35 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/30 19:45:09 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,17 +315,27 @@ int check_map_element(t_main *cub, char *lines)
 	return (SUCCESS);
 }
 
-bool	is_cub_postfix(char *path) // this function was gone for some reason
+ // this function was gone for some reason
+bool	is_cub_postfix(char *path)
 {
-	int	len;
+	int		len;
+	int		ary_len;
+	char	**dirs_path;
 
-	len = ft_strlen(path) - 1;
+	dirs_path = ft_split(path, '/');
+	if (!dirs_path)
+		return (perror("malloc"), false);
+	ary_len = str_ary_len(dirs_path);
+	if (ary_len > 1)
+		len = ft_strlen(dirs_path[ary_len - 1]) - 1;
+	else
+		len = ft_strlen(path) - 1;
 	if (len < 4)
-		return (false);
-	if (path[len] == 'b' && path[len - 1] == 'u'
-		&& path[len - 2] == 'c' && path[len - 3] == '.')
-		return (true);
-	return (false);
+		return (free(dirs_path), false);
+	if (dirs_path[ary_len - 1][len] == 'b' && dirs_path[ary_len - 1][len - 1] == 'u'
+		&& dirs_path[ary_len - 1][len - 2] == 'c' && dirs_path[ary_len - 1][len - 3] == '.')
+		return (free(dirs_path), true);
+	return (free(dirs_path), false);
 }
 
 int map_val(t_main *cub, char *map_path)
