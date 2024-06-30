@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 17:54:50 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/30 20:12:54 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 #define	SUCCESS		0
 #define	FAILURE		1
 
-#define WIN_WIDTH	1000
-#define WIN_HEIGHT	800
+#define WIN_WIDTH	800
+#define WIN_HEIGHT	600
 #define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97
@@ -47,8 +47,8 @@
 #define screenHeight 600
 #define MINIMAP_SCALE 5
 #define MINIMAP_SIZE 100
-#define ROT_SPEED 0.05 // Rotation speed in radians
-#define MOVE_SPEED 0.2 // Movement speed
+#define ROT_SPEED 0.0025 // Rotation speed in radians
+#define MOVE_SPEED 0.003 // Movement speed
 #define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
 #define FLOOR_COLOR 0x008000  
 
@@ -75,6 +75,8 @@ typedef	struct	s_map
 	char	**splited_line; // free diretly after no using anymore // maybe better name
 	char	*joined_lines;
 	bool	id_ed;
+	int		height;
+	int		width;
 }	t_map;
 
 typedef struct s_img
@@ -86,13 +88,36 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_player {
+    double posX;
+    double posY;
+    double dirX;
+    double dirY;
+    double planeX;
+    double planeY;
+} t_player;
+
+typedef struct s_key_states
+{
+	int left;
+	int right;
+	int w;
+	int s;
+	int a;
+	int d;
+	int	esc;
+}	t_key_states;
+
 typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the project
 {
 	// mlx init and window
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img	mlx_img;
-	t_map	u_map;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	t_img			mlx_img;
+	t_map			u_map;
+	t_player		*player;
+	t_key_states	key_states;
+	
 }	t_main;
 
 // cleanup
