@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/06/29 13:46:51 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/06/30 18:19:39 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* int	close_window(t_main *cub)
 {
 	write(1, COLOR_YELLOW"Closing Window\n"COLOR_RESET, 27);
-	cleanup(cub, 2);
+	cleanup(cub, 3);
 	return (SUCCESS);
 } */
 
@@ -24,13 +24,17 @@
 	if (keycode == ESC)
 	{
 		write(1, COLOR_YELLOW"Closing Window\n"COLOR_RESET, 27);
-		cleanup(cub, 2);
+		cleanup(cub, 3);
 	}
 	return (SUCCESS);
 } */
+
+int key_states[256] = {0}; // Array to hold the state of keys
+
+
 int close_window(t_main *cub)
 {
-    cleanup(cub, 2);
+    cleanup(cub, 3);
     return (0);
 }
 
@@ -89,15 +93,15 @@ void	init_player(t_player *player, t_main *cub, t_map u_map)
 				if (u_map.map[y][x] == 'S') // north and south might be mixed up
 				{
 					player->dirX = 0;
-					player->dirY = -1;
-					player->planeX = -0.66;
+					player->dirY = 1;
+					player->planeX = 0.66;
 					player->planeY = 0;
 				}
 				if (u_map.map[y][x] == 'N')
 				{
 					player->dirX = 0;
-					player->dirY = 1;
-					player->planeX = 0.66;
+					player->dirY = -1;
+					player->planeX = -0.66;
 					player->planeY = 0;
 				}
 				printf("Player initialized at position: (%f, %f)\n", player->posX, player->posY);
@@ -106,15 +110,16 @@ void	init_player(t_player *player, t_main *cub, t_map u_map)
 		}
 	}
 }
+
 void	move_player(t_main *cub, double moveX, double moveY)
 {
-	int newPosX;
-	int newPosY;
+	int	newPosX;
+	int	newPosY;
 	char	mapCell;
 	static int i = 0;
 
-	newPosX = (int)cub->player->posX + moveX;
-	newPosY = (int)cub->player->posY + moveY;
+	newPosX = (int)(cub->player->posX + moveX);
+	newPosY = (int)(cub->player->posY + moveY);
 
 	if (newPosX < 0 || newPosX >= (int)ft_strlen(cub->u_map.map[(int)cub->player->posY])
 		|| newPosY < 0 || newPosY >= (int)ft_strlen(cub->u_map.map[(int)cub->player->posY]))
@@ -127,12 +132,14 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	if (mapCell == '0' || mapCell == 'N' || mapCell == 'S' || mapCell == 'W' ||  mapCell == 'E') //here we also need check for N,S,E,W
 	{
 		cub->player->posX += moveX;
-		cub->player->posY += moveY;	
+		cub->player->posY += moveY;
 	}
 	else
 	{
         i++;
-		printf("Collision detected, movement blocked %d \n", i); // Debug print
+		//printf("moveX: %f and moveY: %f\n",moveX, moveY);
+		printf("Collision detected with %c at map[%i][%i], movement blocked %d\n", mapCell, newPosY, newPosX, i); // Debug print
+		//print_map_elements(&cub->u_map);
 	}
 }
 
@@ -151,10 +158,10 @@ void	rotate_player(t_player *player, double angle)
 }
 
 
-int	key_handle(int keycode, t_main *cub)
+/* int	key_handle(int keycode, t_main *cub)
 {
 	if (keycode == ESC)
-		cleanup(cub, 2);
+		cleanup(cub, 3);
 	else if (keycode == KEY_LEFT)
 		rotate_player(cub->player, -ROT_SPEED);
 	else if (keycode == KEY_RIGHT)
@@ -168,7 +175,7 @@ int	key_handle(int keycode, t_main *cub)
 	else if (keycode == KEY_D)
 		move_player(cub, cub->player->dirY * MOVE_SPEED, -cub->player->dirX * MOVE_SPEED);
 	return (SUCCESS);
-}
+} */
 
 int render_background(t_main *cub)
 {
@@ -184,19 +191,19 @@ int render_background(t_main *cub)
 			while (x < WIN_WIDTH)
 			{
 				if (y < WIN_HEIGHT / 2)
-					pixel_put(&cub->mlx_img, x, y, 0x0EA5C0);
+					pixel_put(&cub->mlx_img, x, y, 0x0EA5C0); // cub->u_map.f_color
 				else
-					pixel_put(&cub->mlx_img, x, y, 0x0F7910);
-				if (x < 5 || x > WIN_WIDTH - 5 || y < 5 || y > WIN_HEIGHT - 5) // not really necessary here, just blackened the edges
-					pixel_put(&cub->mlx_img, x, y, 0x000000);
+					pixel_put(&cub->mlx_img, x, y, 0x0F7910); // cub->u_map.f_color
+				/* if (x < 5 || x > WIN_WIDTH - 5 || y < 5 || y > WIN_HEIGHT - 5) // not really necessary here, just blackened the edges
+					pixel_put(&cub->mlx_img, x, y, 0x000000); */
 				x++;
 			}
 			y++;
 		}
 	}
-	//mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->mlx_img.img_ptr, 0, 0);
 	return (SUCCESS);
 }
+	//mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->mlx_img.img_ptr, 0, 0);
 
 void	cast_rays(t_main *cub)
 {
@@ -276,7 +283,7 @@ void	cast_rays(t_main *cub)
 				|| mapY < 0 ||  mapY >= height)
 			{
 				hit = 1;
-				printf("OUT of BOUND\n");
+				printf("OUT of BOUND with x: %i >= len: %i; y: %i >= height: %i\n", mapX, (int)ft_strlen(cub->u_map.map[mapY]), mapY, height);
 				break;
 			}
 			else if (cub->u_map.map[mapY][mapX] == '1')
@@ -316,10 +323,185 @@ void	cast_rays(t_main *cub)
 	}
 }
 
+int key_down(int keycode, t_main *cub) {
+	if (keycode == KEY_LEFT)
+		cub->key_states.left = 1;
+	if (keycode == KEY_RIGHT)
+		cub->key_states.right = 1;
+	if (keycode == KEY_W)
+		cub->key_states.w = 1;
+	if (keycode == KEY_S)
+		cub->key_states.s = 1;
+	if (keycode == KEY_A)
+		cub->key_states.a = 1;
+	if (keycode == KEY_D)
+		cub->key_states.d = 1;
+	if (keycode == ESC)
+		cub->key_states.esc = 1;
+	return 0;
+}
+
+int key_up(int keycode, t_main *cub) {
+	if (keycode == KEY_LEFT)
+		cub->key_states.left = 0;
+	if (keycode == KEY_RIGHT)
+		cub->key_states.right = 0;
+	if (keycode == KEY_W)
+		cub->key_states.w = 0;
+	if (keycode == KEY_S)
+		cub->key_states.s = 0;
+	if (keycode == KEY_A)
+		cub->key_states.a = 0;
+	if (keycode == KEY_D)
+		cub->key_states.d = 0;
+	return 0;
+}
+
+void process_input(t_main *cub)
+{
+	if (cub->key_states.esc)
+		cleanup(cub, 3);
+	if (cub->key_states.left)
+		rotate_player(cub->player, -ROT_SPEED);
+	else if (cub->key_states.right)
+		rotate_player(cub->player, ROT_SPEED);
+	else if (cub->key_states.w)
+		move_player(cub, cub->player->dirX * MOVE_SPEED, cub->player->dirY * MOVE_SPEED);
+	else if (cub->key_states.s)
+		move_player(cub, -cub->player->dirX * MOVE_SPEED, -cub->player->dirY * MOVE_SPEED);
+	else if (cub->key_states.a)
+		move_player(cub, -cub->player->dirY * MOVE_SPEED, cub->player->dirX * MOVE_SPEED);
+	else if (cub->key_states.d)
+		move_player(cub, cub->player->dirY * MOVE_SPEED, -cub->player->dirX * MOVE_SPEED);
+}
+
+/* void draw_square(t_main *cub, int x, int y, int color) {
+    for (int i = 0; i < MINIMAP_SCALE; i++) {
+        for (int j = 0; j < MINIMAP_SCALE; j++) {
+            pixel_put(&cub->mlx_img, x + i, y + j, color);
+        }
+    }
+}
+
+void draw_minimap(t_main *cub) {
+    int x, y;
+
+    // Draw the map grid
+    for (y = 0; y < cub->u_map.height; y++) {
+        for (x = 0; x < cub->u_map.width; x++) {
+            int color = (cub->u_map.map[y][x] == '1') ? 0x888888 : 0xFFFFFF;
+            draw_square(cub, x * MINIMAP_SCALE, y * MINIMAP_SCALE, color);
+        }
+    }
+
+    // Draw the player
+    int playerX = cub->player->posX * MINIMAP_SCALE;
+    int playerY = cub->player->posY * MINIMAP_SCALE;
+    draw_square(cub, playerX, playerY, 0xFF0000);
+
+    // Draw rays
+    for (int i = 0; i < WIN_WIDTH; i += 10) { // Adjust step for density
+        double cameraX = 2 * i / (double)WIN_WIDTH - 1;
+        double rayDirX = cub->player->dirX + cub->player->planeX * cameraX;
+        double rayDirY = cub->player->dirY + cub->player->planeY * cameraX;
+
+        double rayX = cub->player->posX;
+        double rayY = cub->player->posY;
+
+        while (cub->u_map.map[(int)rayY][(int)rayX] != '1') {
+            rayX += rayDirX * 0.1;
+            rayY += rayDirY * 0.1;
+
+            int minimapX = rayX * MINIMAP_SCALE;
+            int minimapY = rayY * MINIMAP_SCALE;
+            pixel_put(&cub->mlx_img, minimapX, minimapY, 0x00FF00);
+        }
+    }
+} */
+
+#define MINIMAP_WIDTH 50  // Width of minimap in cells
+#define MINIMAP_HEIGHT 50 // Height of minimap in cells
+#define PLAYER_RADIUS 3 // Radius of the player on the minimap
+
+void draw_square(t_main *cub, int x, int y, int color) {
+    for (int i = 0; i < MINIMAP_SCALE; i++) {
+        for (int j = 0; j < MINIMAP_SCALE; j++) {
+            pixel_put(&cub->mlx_img, x + i, y + j, color);
+        }
+    }
+}
+
+void draw_circle(t_main *cub, int cx, int cy, int radius, int color) {
+    int x, y;
+
+    for (y = -radius; y <= radius; y++) {
+        for (x = -radius; x <= radius; x++) {
+            if (x * x + y * y <= radius * radius) {
+                pixel_put(&cub->mlx_img, cx + x, cy + y, color);
+            }
+        }
+    }
+}
+
+/* void draw_minimap(t_main *cub) {
+    int x, y;
+
+    // Draw the map grid
+    for (y = 0; y < cub->u_map.height; y++) {
+        for (x = 0; x < cub->u_map.width; x++) {
+            int color = (cub->u_map.map[y][x] == '1') ? 0x888888 : 0xFFFFFF;
+            draw_square(cub, x * MINIMAP_SCALE, y * MINIMAP_SCALE, color);
+        }
+    }
+
+    // Draw the player as a circle
+    int playerX = cub->player->posX * MINIMAP_SCALE;
+    int playerY = cub->player->posY * MINIMAP_SCALE;
+    draw_circle(cub, playerX, playerY, PLAYER_RADIUS, 0xFF0000);
+} */
+
+
+//#define MINIMAP_SCALE 5   // Scale for minimap size
+
+void draw_minimap(t_main *cub) {
+    int startX, startY, endX, endY;
+    int playerX, playerY;
+
+    // Calculate viewport boundaries
+    playerX = (int)cub->player->posX;
+    playerY = (int)cub->player->posY;
+    startX = playerX - MINIMAP_WIDTH / 2;
+    startY = playerY - MINIMAP_HEIGHT / 2;
+    endX = playerX + MINIMAP_WIDTH / 2;
+    endY = playerY + MINIMAP_HEIGHT / 2;
+
+    // Clamp boundaries to map limits
+    if (startX < 0) startX = 0;
+    if (startY < 0) startY = 0;
+    if (endX >= cub->u_map.width) endX = cub->u_map.width - 1;
+    if (endY >= cub->u_map.height) endY = cub->u_map.height - 1;
+
+    // Draw the minimap grid
+    for (int y = startY; y <= endY; y++) {
+        for (int x = startX; x <= endX; x++) {
+            int color = (cub->u_map.map[y][x] == '1') ? 0x888888 : 0xFFFFFF;
+            draw_square(cub, (x - startX) * MINIMAP_SCALE, (y - startY) * MINIMAP_SCALE, color);
+        }
+    }
+
+    // Draw the player as a circle
+    int px = (cub->player->posX - startX) * MINIMAP_SCALE;
+    int py = (cub->player->posY - startY) * MINIMAP_SCALE;
+    draw_circle(cub, px, py, PLAYER_RADIUS, 0xFF0000);
+}
+
+
 int render(t_main *cub)
 {
+	process_input(cub);  // Process input before rendering
 	render_background(cub);
 	cast_rays(cub);
+	draw_minimap(cub); // Call minimap rendering
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->mlx_img.img_ptr, 0, 0);
 	return (SUCCESS);
 }
@@ -332,9 +514,14 @@ int game(t_main *cub)
 	if (!player)
 		return (FAILURE);
 	cub->player = player;
+	cub->u_map.height = str_ary_len(cub->u_map.map);
+	cub->u_map.width = ft_strlen(cub->u_map.map[0]);
+	cub->key_states = (t_key_states){0}; // Initialize key states
 	init_player(cub->player, cub, cub->u_map);
+	mlx_hook(cub->win_ptr, 2, 1L << 0, key_down, cub);  // Key press
+    mlx_hook(cub->win_ptr, 3, 1L << 1, key_up, cub);    // Key release
 	mlx_loop_hook(cub->mlx_ptr, &render, cub);
-	mlx_hook(cub->win_ptr, 2, 1L << 0, key_handle, cub);
+	//mlx_hook(cub->win_ptr, 2, 1L << 0, key_handle, cub);
 	//mlx_hook(cub->win_ptr, DestroyNotify, KeyReleaseMask, mlx_loop_end, cub->mlx_ptr);
 	mlx_hook(cub->win_ptr, 17, 0L, close_window, cub);
 	mlx_loop(cub->mlx_ptr);
