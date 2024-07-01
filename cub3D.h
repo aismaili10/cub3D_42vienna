@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/30 20:45:20 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:00:32 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@
 #define MINIMAP_SCALE 5
 #define MINIMAP_SIZE 100
 #define ROT_SPEED 0.0025 // Rotation speed in radians
-#define MOVE_SPEED 0.007 // Movement speed
+#define MOVE_SPEED 0.005 // Movement speed
+// #define ROT_SPEED 0.1 // Rotation speed in radians
+// #define MOVE_SPEED 0.1 // Movement speed
 #define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
-#define FLOOR_COLOR 0x008000  
+#define FLOOR_COLOR 0x008000
 
 
 // colors
