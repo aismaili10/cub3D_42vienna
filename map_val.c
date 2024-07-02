@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 13:32:50 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/02 14:15:40 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,6 +338,47 @@ bool	is_cub_postfix(char *path)
 	return (free_str_array(&dirs_path), false);
 }
 
+int	check_texture_path(t_main *cub)
+{
+	int fd;
+
+	if (!cub->u_map.no || !cub->u_map.so || !cub->u_map.we || !cub->u_map.ea)
+	{
+		write(2, COLOR_RED "Texture Path Missing\n" COLOR_RESET, 27);
+		return (INV_MAP);
+	}
+	printf("no: -%s-\n", cub->u_map.no);
+	if ((fd = open(cub->u_map.no, O_RDONLY)) == -1)
+	{
+		perror("open no");
+		return (INV_MAP);
+	}
+	else
+		close(fd);
+	if ((fd = open(cub->u_map.so, O_RDONLY)) == -1)
+	{
+		perror("open so");
+		return (INV_MAP);
+	}
+	else
+		close(fd);
+	if ((fd = open(cub->u_map.we, O_RDONLY)) == -1)
+	{
+		perror("open we");
+		return (INV_MAP);
+	}
+	else
+		close(fd);
+	if ((fd = open(cub->u_map.ea, O_RDONLY)) == -1)
+	{
+		perror("open ea");
+		return (INV_MAP);
+	}
+	else
+		close(fd);
+	return (0);
+}
+
 int map_val(t_main *cub, char *map_path)
 {
 	if (!is_cub_postfix(map_path))
@@ -352,6 +393,8 @@ int map_val(t_main *cub, char *map_path)
 	if (read_map_element(cub) != SUCCESS)
 		cleanup(cub, 2);
 	if (check_map_element(cub, cub->u_map.joined_lines) != SUCCESS)
+		cleanup(cub, 2);
+	if (check_texture_path(cub) != SUCCESS)
 		cleanup(cub, 2);
 	return (SUCCESS);
 }
