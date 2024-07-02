@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/02 13:23:53 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:48:23 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,7 +438,6 @@ void draw_minimap(t_main *cub) {
     draw_circle(cub, px, py, PLAYER_RADIUS, 0xFF0000);
 } */
 
-
 int render(t_main *cub)
 {
 	process_input(cub);  // Process input before rendering
@@ -446,6 +445,60 @@ int render(t_main *cub)
 	cast_rays(cub);
 	// draw_minimap(cub); // Call minimap rendering
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->mlx_img.img_ptr, 0, 0);
+	return (SUCCESS);
+}
+
+int	load_textures(t_main *cub)
+{
+	cub->north->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.no, &cub->north->width, &cub->north->height);
+	if (!cub->north->img_ptr)
+		return (FAILURE);
+	cub->north->addr = mlx_get_data_addr(cub->north->img_ptr, &cub->north->bpp, &cub->north->line_length, &cub->north->endian);
+	cub->south->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.so, &cub->south->width, &cub->south->height);
+	if (!cub->south->img_ptr)
+		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
+	cub->south->addr = mlx_get_data_addr(cub->south->img_ptr, &cub->south->bpp, &cub->south->line_length, &cub->south->endian);
+	cub->west->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.we, &cub->west->width, &cub->west->height);
+	if (!cub->west->img_ptr)
+	{	
+		mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
+		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
+	}	
+	cub->west->addr = mlx_get_data_addr(cub->west->img_ptr, &cub->west->bpp, &cub->west->line_length, &cub->west->endian);
+	cub->east->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.ea, &cub->east->width, &cub->east->height);
+	if (!cub->east->img_ptr)
+	{
+		mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
+		mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
+		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
+	}
+	cub->east->addr = mlx_get_data_addr(cub->east->img_ptr, &cub->east->bpp, &cub->east->line_length, &cub->east->endian);
+	return (SUCCESS);
+}
+
+int	init_textures(t_main *cub)
+{
+	t_texture *west;
+	t_texture *east;
+	t_texture *north;
+	t_texture *south;
+
+	west = malloc(sizeof(t_texture) * 1);
+	if (!west)
+		return (FAILURE);
+	east = malloc(sizeof(t_texture) * 1);
+	if (!east)
+		return (free(west), FAILURE);
+	south = malloc(sizeof(t_texture) * 1);
+	if (!south)
+		return (free(west), free(east), FAILURE);
+	north = malloc(sizeof(t_texture) * 1);
+	if (!north)
+		return (free(west), free(east), free(south), FAILURE);
+	cub->west = west;
+	cub->east = east;
+	cub->north = north;
+	cub->south = south;
 	return (SUCCESS);
 }
 
@@ -460,6 +513,10 @@ int game(t_main *cub)
 	cub->u_map.height = str_ary_len(cub->u_map.map);
 	cub->u_map.width = ft_strlen(cub->u_map.map[0]);
 	cub->key_states = (t_key_states){0}; // Initialize key states
+	if (init_textures(cub) == FAILURE)//still need to free player here probably
+		return (FAILURE);
+	if (load_textures(cub) == FAILURE)
+		return (FAILURE); //maybe put free textures here, or free in cleanup
 	init_player(cub->player, cub, cub->u_map);
 	mlx_hook(cub->win_ptr, 2, 1L << 0, key_down, cub);  // Key press
     mlx_hook(cub->win_ptr, 3, 1L << 1, key_up, cub);    // Key release

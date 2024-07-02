@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 12:22:36 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:48:08 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,17 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_texture
+{
+	void	*img_ptr;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bpp; //bits_per_pixel
+	int		line_length;
+	int		endian;
+}	t_texture;
+
 typedef struct s_player {
     double posX;
     double posY;
@@ -118,12 +129,17 @@ typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the pro
 	t_img			mlx_img;
 	t_map			u_map;
 	t_player		*player;
+	t_texture		*west;
+	t_texture		*east;
+	t_texture		*north;
+	t_texture		*south;
 	t_key_states	key_states;
 	
 }	t_main;
 
 // cleanup
 void	cleanup(t_main *cub, int stage);
+void	free_texture_pointers(t_main *cub);
 
 // map_val
 int		map_val(t_main *cub, char *map_path);

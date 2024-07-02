@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/30 20:21:15 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:51:17 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,22 @@ void	clean_mlx(t_main *cub)
 		free(cub->mlx_ptr);
 }
 
+void	free_texture_pointers(t_main *cub)
+{
+	free(cub->north);
+	free(cub->south);	
+	free(cub->west);
+	free(cub->east);
+}
+
+void	free_texture_mlx(t_main *cub)
+{
+	mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr);
+	mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
+	mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
+	mlx_destroy_image(cub->mlx_ptr, cub->east->img_ptr);
+}
+
 void	cleanup(t_main *cub, int stage)
 {
 	(void)cub;
@@ -73,6 +89,8 @@ void	cleanup(t_main *cub, int stage)
 		free_map_elements(cub);
 	if (stage == 3)
 	{
+		free_texture_mlx(cub);
+		free_texture_pointers(cub);
 		free_map_elements(cub);
 		clean_mlx(cub);
 		free(cub->player);
