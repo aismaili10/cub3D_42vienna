@@ -3,25 +3,31 @@
 ## GRAPHICAL IMPLEMENTATION
 
 ### RAYCASTING
+[] issue when moving perpendicular to the side, side wall not shownwhen too close to side wall
+	--> after the collision, somehow the raycaster miscalculates the drawEnd, some big negative number
+[] remove all ft_strlen() from loops, for efficiancy, see big2.cub
+
 
 ### KEY HANDLING
 
-[] multiple key press --> with flags??
-[] 
+[x] multiple key press
+[] zoom
 
 
 #### ROTATION
+
+
 
 #### MOVEMENT
 
 
 
-#### 
+#### MINIMAP
+[] big maps
+[] small maps
+[] maybe arrow
 
-
-
-
-
+#### TEXTURE
 
 
 
@@ -37,7 +43,7 @@
 [x] checks for color assigning
 	[x] overflow
 	[x] in the correct range 0 - 255
-	[+] plus minus sign
+	[x] plus minus sign
 	[x] characters other then numeric and comma in SPECIFIER
 
 #### anything regarding 2D map
@@ -72,8 +78,8 @@
 
 ### UNSURE
 
-[] file name/type checks??
-[] path checks??
+[x] file name/type checks
+[x] path checks
 
 
 ## command options

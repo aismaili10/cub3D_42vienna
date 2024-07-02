@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:23:11 by aszabo            #+#    #+#             */
-/*   Updated: 2024/06/26 08:55:27 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/06/26 11:37:42 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	init_mlx(t_main *cub)
 	cub->mlx_ptr = mlx_init();
 	if (!cub->mlx_ptr)
 		return (cleanup(cub, 2), SYS_FAIL);
-	cub->win_ptr = mlx_new_window(cub->mlx_ptr, 1000, 800, "cub3D"); //temporary width and height
+	cub->win_ptr = mlx_new_window(cub->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D"); //temporary width and height
 	if (!cub->win_ptr)
 	{
 		free(cub->mlx_ptr);
 		return (cleanup(cub, 2), SYS_FAIL);
 	}
-	cub->mlx_img.img_ptr = mlx_new_image(cub->mlx_ptr, 1000, 800); //temporary width and height
+	cub->mlx_img.img_ptr = mlx_new_image(cub->mlx_ptr, WIN_WIDTH, WIN_HEIGHT); //temporary width and height
 	if (!cub->mlx_img.img_ptr)
 	{
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
