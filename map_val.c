@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 13:27:04 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:32:50 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,11 +331,11 @@ bool	is_cub_postfix(char *path)
 	else
 		len = ft_strlen(path) - 1;
 	if (len < 4)
-		return (free(dirs_path), false);
+		return (free_str_array(&dirs_path), false);
 	if (dirs_path[ary_len - 1][len] == 'b' && dirs_path[ary_len - 1][len - 1] == 'u'
 		&& dirs_path[ary_len - 1][len - 2] == 'c' && dirs_path[ary_len - 1][len - 3] == '.')
-		return (free(dirs_path), true);
-	return (free(dirs_path), false);
+		return (free_str_array(&dirs_path), true);
+	return (free_str_array(&dirs_path), false);
 }
 
 int map_val(t_main *cub, char *map_path)
