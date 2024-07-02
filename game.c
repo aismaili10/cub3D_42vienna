@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/01 22:14:57 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/02 12:20:08 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,6 @@ int render_background(t_main *cub)
 					pixel_put(&cub->mlx_img, x, y, 0x0EA5C0); // cub->u_map.f_color
 				else
 					pixel_put(&cub->mlx_img, x, y, 0x0F7910); // cub->u_map.f_color
-				if (x < 5 || x > WIN_WIDTH - 5 || y < 5 || y > WIN_HEIGHT - 5) // not really necessary here, just blackened the edges
-					pixel_put(&cub->mlx_img, x, y, 0x000000);
 				x++;
 			}
 			y++;
