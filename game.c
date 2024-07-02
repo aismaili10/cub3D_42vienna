@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/02 12:20:08 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:23:53 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,30 +81,30 @@ void	init_player(t_player *player, t_main *cub, t_map u_map)
 					player->dirX = -1;
 					player->dirY = 0;
 					player->planeX = 0; // what is plane x and plane y for?
-					player->planeY = 0.66;
+					player->planeY = -0.66;
 				}
 				if (u_map.map[y][x] == 'E')
 				{
 					player->dirX = 1;
 					player->dirY = 0;
 					player->planeX = 0;
-					player->planeY = -0.66;
+					player->planeY = 0.66;
 				}
 				if (u_map.map[y][x] == 'S') // north and south might be mixed up
 				{
 					player->dirX = 0;
 					player->dirY = 1;
-					player->planeX = 0.66;
+					player->planeX = -0.66;
 					player->planeY = 0;
 				}
 				if (u_map.map[y][x] == 'N')
 				{
 					player->dirX = 0;
 					player->dirY = -1;
-					player->planeX = -0.66;
+					player->planeX = 0.66;
 					player->planeY = 0;
 				}
-				printf("Player initialized at position: (%f, %f)\n", player->posX, player->posY);
+				//printf("Player initialized at position: (%f, %f)\n", player->posX, player->posY);
                 return;
 			}
 		}
@@ -138,7 +138,7 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	{
         i++;
 		//printf("moveX: %f and moveY: %f\n",moveX, moveY);
-		printf("Collision detected with %c at map[%i][%i], movement blocked %d\n", mapCell, newPosY, newPosX, i); // Debug print
+		//printf("Collision detected with %c at map[%i][%i], movement blocked %d\n", mapCell, newPosY, newPosX, i); // Debug print
 		//print_map_elements(&cub->u_map);
 	}
 }
@@ -287,12 +287,12 @@ void	cast_rays(t_main *cub)
 				|| mapY < 0 ||  mapY >= height)
 			{
 				hit = 1;
-				printf("OUT of BOUND with x: %i >= len: %i; y: %i >= height: %i\n", mapX, cub->u_map.width, mapY, height);
+				//printf("OUT of BOUND with x: %i >= len: %i; y: %i >= height: %i\n", mapX, cub->u_map.width, mapY, height);
 				break;
 			}
 			else if (cub->u_map.map[mapY][mapX] == '1')
 			{
-				printf("cub->u_map.map[%i][%i]: %c\n", mapY, mapX, cub->u_map.map[mapY][mapX]);
+				//printf("cub->u_map.map[%i][%i]: %c\n", mapY, mapX, cub->u_map.map[mapY][mapX]);
 				hit = 1;
 			}
 		}
@@ -312,10 +312,7 @@ void	cast_rays(t_main *cub)
 		if (drawEnd >= WIN_HEIGHT || drawEnd < 0)
 			drawEnd = WIN_HEIGHT - 1;
 		int color = 0x00FF00;
-		if (mapX < 0 || mapX >= width
-        		|| mapY < 0 ||  mapY >= height)
-    		color = 0xFFFFFF; // default color for out-of-bounds
-		else if (cub->u_map.map[mapY][mapX] == '1')
+		if (cub->u_map.map[mapY][mapX] == '1')
 		{
     		color = 0xFF0000; // color for walls
 		}
@@ -325,7 +322,7 @@ void	cast_rays(t_main *cub)
 		}
 		if (side == 1)
 			color = color / 2;
-		printf("drawStart: %i and drawEnd: %i\n", drawStart, drawEnd);
+		//printf("drawStart: %i and drawEnd: %i\n", drawStart, drawEnd);
 		verLine(cub, x, drawStart, drawEnd, color);
 		x++;
 	}
@@ -370,17 +367,17 @@ void process_input(t_main *cub)
 	if (cub->key_states.esc)
 		cleanup(cub, 3);
 	if (cub->key_states.left)
-		rotate_player(cub->player, -ROT_SPEED);
-	if (cub->key_states.right)
 		rotate_player(cub->player, ROT_SPEED);
+	if (cub->key_states.right)
+		rotate_player(cub->player, -ROT_SPEED);
 	if (cub->key_states.w)
 		move_player(cub, cub->player->dirX * MOVE_SPEED, cub->player->dirY * MOVE_SPEED);
 	if (cub->key_states.s)
 		move_player(cub, -cub->player->dirX * MOVE_SPEED, -cub->player->dirY * MOVE_SPEED);
 	if (cub->key_states.a)
-		move_player(cub, -cub->player->dirY * MOVE_SPEED, cub->player->dirX * MOVE_SPEED);
-	if (cub->key_states.d)
 		move_player(cub, cub->player->dirY * MOVE_SPEED, -cub->player->dirX * MOVE_SPEED);
+	if (cub->key_states.d)
+		move_player(cub, -cub->player->dirY * MOVE_SPEED, cub->player->dirX * MOVE_SPEED);
 }
 
 /* #define MINIMAP_WIDTH 50  // Width of minimap in cells
@@ -405,11 +402,11 @@ void draw_circle(t_main *cub, int cx, int cy, int radius, int color) {
             }
         }
     }
-} */
+}
 
 //#define MINIMAP_SCALE 5   // Scale for minimap size
 
-/* void draw_minimap(t_main *cub) {
+void draw_minimap(t_main *cub) {
     int startX, startY, endX, endY;
     int playerX, playerY;
 
@@ -447,7 +444,7 @@ int render(t_main *cub)
 	process_input(cub);  // Process input before rendering
 	render_background(cub);
 	cast_rays(cub);
-	//draw_minimap(cub); // Call minimap rendering
+	// draw_minimap(cub); // Call minimap rendering
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->mlx_img.img_ptr, 0, 0);
 	return (SUCCESS);
 }
