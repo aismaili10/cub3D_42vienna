@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/02 15:48:23 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/03 13:14:47 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,12 @@ void	cast_rays(t_main *cub)
 	int drawStart;
 	int drawEnd;
 	int height;
+	int texNum;
+	double wallX;
+	int texX;
+	int texY;
+	int color;
+	int d;
 
 	int	width = (int)ft_strlen(cub->u_map.map[0]);
 	height = 0;
@@ -311,7 +317,8 @@ void	cast_rays(t_main *cub)
 		drawEnd = lineHeight / 2 + WIN_HEIGHT / 2;
 		if (drawEnd >= WIN_HEIGHT || drawEnd < 0)
 			drawEnd = WIN_HEIGHT - 1;
-		int color = 0x00FF00;
+		//int color = 0x00FF00;
+		/* 
 		if (cub->u_map.map[mapY][mapX] == '1')
 		{
     		color = 0xFF0000; // color for walls
@@ -323,7 +330,41 @@ void	cast_rays(t_main *cub)
 		if (side == 1)
 			color = color / 2;
 		//printf("drawStart: %i and drawEnd: %i\n", drawStart, drawEnd);
-		verLine(cub, x, drawStart, drawEnd, color);
+		verLine(cub, x, drawStart, drawEnd, color); */
+		texNum = 0;
+		if (side == 0)
+		{
+			if (rayDirX > 0)
+				texNum = 0;
+			else
+				texNum = 1;
+		}
+		else
+		{
+			if (rayDirY > 0)
+				texNum = 2;
+			else
+				texNum = 3;
+		}
+		if (side == 0)
+			wallX = cub->player->posY + perpWallDist * rayDirY;
+		else
+			wallX = cub->player->posX + perpWallDist * rayDirX;
+		wallX -= floor(wallX);
+		texX = (int)(wallX * (double)TEX_WIDTH);
+		if (side == 0 && rayDirX > 0)
+			texX = TEX_WIDTH - texX - 1;
+		if (side == 1 && rayDirY < 0)
+			texX = TEX_WIDTH - texX - 1;
+		int y = drawStart;
+		while (y < drawEnd)
+		{
+			d = y * 256 - WIN_HEIGHT * 128 + lineHeight * 128;
+			texY = ((d * TEX_HEIGHT) / lineHeight) / 256;
+			color = cub->north->addr[TEX_HEIGHT * texY + texX];
+			verLine(cub, x, y, y + 1, color);
+			y++;
+		}
 		x++;
 	}
 }

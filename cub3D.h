@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 15:48:08 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/03 13:26:45 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 
 #define WIN_WIDTH	800
 #define WIN_HEIGHT	600
+#define TEX_WIDTH	64
+#define TEX_HEIGHT	64
 #define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97
