@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 14:04:20 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:45:37 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,96 @@
 	return (SUCCESS);
 } */
 
+void	get_draw_values(t_player *player, t_render *render)
+{
+	if (render->side == 0)
+			render->perpWallDist = (render->mapX - player->posX + (1 - render->stepX) / 2) / player->rayDirX;
+		else
+			render->perpWallDist = (render->mapY - player->posY + (1 - render->stepY) / 2) / player->rayDirY;
+
+		render->lineHeight = (int)(WIN_HEIGHT / render->perpWallDist);
+		render->drawStart = -render->lineHeight / 2 + WIN_HEIGHT / 2;
+		if (render->drawStart < 0)
+			render->drawStart = 0;
+		render->drawEnd = render->lineHeight / 2 + WIN_HEIGHT / 2;
+		if (render->drawEnd >= WIN_HEIGHT || render->drawEnd < 0)
+			render->drawEnd = WIN_HEIGHT - 1;
+}
+
+void	get_ray_direction(t_player *player, int x)
+{
+	double cameraX;
+
+	cameraX = 2 * x / (double)WIN_WIDTH - 1;
+	player->rayDirX = player->dirX + player->planeX * cameraX;
+	player->rayDirY = player->dirY + player->planeY * cameraX;
+}
+
+void	get_distances(t_player *player, t_render *render)
+{
+	render->mapX = (int)player->posX;
+	render->mapY = (int)player->posY;
+	render->deltaDistX = fabs(1 / player->rayDirX);
+	render->deltaDistY = fabs(1 / player->rayDirY);
+}
+
+void	get_step(t_player *player, t_render *render)
+{
+	if (player->rayDirX < 0)
+	{
+		render->stepX = -1;
+		render->sideDistX = (player->posX - render->mapX) * render->deltaDistX;
+	}
+	else
+	{
+		render->stepX = 1;
+		render->sideDistX = (render->mapX + 1.0 - player->posX) * render->deltaDistX;
+	}
+	if (player->rayDirY < 0)
+	{
+		render->stepY = -1;
+		render->sideDistY = (player->posY - render->mapY) * render->deltaDistY;
+	}
+	else
+	{
+		render->stepY = 1;
+		render->sideDistY = (render->mapY + 1.0 - player->posY) * render->deltaDistY;
+	}
+}
+
+void	hit_wall_loop(t_main *cub, t_render *render)
+{
+	int hit;
+
+	hit = 0;
+	while (hit == 0)
+		{
+			if (render->sideDistX < render->sideDistY)
+			{
+				render->sideDistX += render->deltaDistX;
+				render->mapX += render->stepX;
+				render->side = 0;
+			}
+			else
+			{
+				render->sideDistY += render->deltaDistY;
+				render->mapY += render->stepY;
+				render->side = 1;
+			}
+			/* if (mapX < 0 || mapX >= width
+				|| mapY < 0 ||  mapY >= height)
+			{
+				hit = 1;
+				break;
+			}
+			else  */if (cub->u_map.map[render->mapY][render->mapX] == '1')
+				hit = 1;
+		}
+}
+
 void	cast_rays(t_main *cub)
 {
 	int x;
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int stepX;
-	int stepY;
-	int hit;
-	int side;
-	int mapX;
-	int mapY;
-	int lineHeight;
-	int drawStart;
-	int drawEnd;
-	int height;
 	int texNum;
 	double wallX;
 	int texX;
@@ -74,93 +143,16 @@ void	cast_rays(t_main *cub)
 	int color;
 	int d;
 
-	int	width = (int)ft_strlen(cub->u_map.map[0]);
-	height = 0;
-	while (cub->u_map.map[height])
-    	height++;
-
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
-		// calculate the ray direction
-		cameraX = 2 * x / (double)WIN_WIDTH - 1;
-		rayDirX = cub->player->dirX + cub->player->planeX * cameraX;
-		rayDirY = cub->player->dirY + cub->player->planeY * cameraX;
-
-		mapX = (int)cub->player->posX;
-		mapY = (int)cub->player->posY;
-
-		deltaDistX = fabs(1 / rayDirX);
-		deltaDistY = fabs(1 / rayDirY);
-
-		  // Calculate delta distances
-        // deltaDistX = fabs(1 / (rayDirX != 0 ? rayDirX : 1e-30)); // Avoid division by zero
-        // deltaDistY = fabs(1 / (rayDirY != 0 ? rayDirY : 1e-30)); // Avoid division by zero
-
-		// use ray direction to init stepX and stepY
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (cub->player->posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - cub->player->posX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (cub->player->posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - cub->player->posY) * deltaDistY;
-		}
-		hit = 0;
-		while (hit == 0)
-		{
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if (mapX < 0 || mapX >= width
-				|| mapY < 0 ||  mapY >= height)
-			{
-				hit = 1;
-				//printf("OUT of BOUND with x: %i >= len: %i; y: %i >= height: %i\n", mapX, cub->u_map.width, mapY, height);
-				break;
-			}
-			else if (cub->u_map.map[mapY][mapX] == '1')
-			{
-				//printf("cub->u_map.map[%i][%i]: %c\n", mapY, mapX, cub->u_map.map[mapY][mapX]);
-				hit = 1;
-			}
-		}
-		if (hit == 0)
-			continue ;
-		if (side == 0)
-			perpWallDist = (mapX - cub->player->posX + (1 - stepX) / 2) / rayDirX;
-		else
-			perpWallDist = (mapY - cub->player->posY + (1 - stepY) / 2) / rayDirY;
-
-		lineHeight = (int)(WIN_HEIGHT / perpWallDist);
-		//printf("lineHeight: %d\n", lineHeight);
-		drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		drawEnd = lineHeight / 2 + WIN_HEIGHT / 2;
-		if (drawEnd >= WIN_HEIGHT || drawEnd < 0)
-			drawEnd = WIN_HEIGHT - 1;
+		get_ray_direction(cub->player, x);
+		get_distances(cub->player, cub->render);
+		get_step(cub->player, cub->render);
+		hit_wall_loop(cub, cub->render);
+		get_draw_values(cub->player, cub->render);
+		/* if (hit == 0)
+			continue ; */
 		//int color = 0x00FF00;
 		/* 
 		if (cub->u_map.map[mapY][mapX] == '1')
@@ -176,35 +168,35 @@ void	cast_rays(t_main *cub)
 		//printf("drawStart: %i and drawEnd: %i\n", drawStart, drawEnd);
 		verLine(cub, x, drawStart, drawEnd, color); */
 		texNum = 0;
-		if (side == 0)
+		if (cub->render->side == 0)
 		{
-			if (rayDirX > 0)
+			if (cub->player->rayDirX > 0)
 				texNum = 3;
 			else
 				texNum = 2;
 		}
 		else
 		{
-			if (rayDirY > 0)
+			if (cub->player->rayDirY > 0)
 				texNum = 0;
 			else
 				texNum = 1;
 		}
-		if (side == 0)
-			wallX = cub->player->posY + perpWallDist * rayDirY;
+		if (cub->render->side == 0)
+			wallX = cub->player->posY + cub->render->perpWallDist * cub->player->rayDirY;
 		else
-			wallX = cub->player->posX + perpWallDist * rayDirX;
+			wallX = cub->player->posX + cub->render->perpWallDist * cub->player->rayDirX;
 		wallX -= floor(wallX);
 		texX = (int)(wallX * (double)TEX_WIDTH);
-		if (side == 0 && rayDirX > 0)
+		if (cub->render->side == 0 && cub->player->rayDirX > 0)
 			texX = TEX_WIDTH - texX - 1;
-		if (side == 1 && rayDirY < 0)
+		if (cub->render->side == 1 && cub->player->rayDirY < 0)
 			texX = TEX_WIDTH - texX - 1;
-		int y = drawStart;
-		while (y < drawEnd)
+		int y = cub->render->drawStart;
+		while (y < cub->render->drawEnd)
 		{
-			d = y * 256 - WIN_HEIGHT * 128 + lineHeight * 128;
-			texY = ((d * TEX_HEIGHT) / lineHeight) / 256;
+			d = y * 256 - WIN_HEIGHT * 128 + cub->render->lineHeight * 128;
+			texY = ((d * TEX_HEIGHT) / cub->render->lineHeight) / 256;
 			color = cub->texture_buff[texNum][TEX_HEIGHT * texY + texX];
 			pixel_put(&cub->mlx_img, x, y, color);
 			y++;
@@ -226,11 +218,16 @@ int render(t_main *cub)
 int game(t_main *cub)
 {
 	t_player *player;
+	t_render *render_vals;
 
 	player = malloc(sizeof(t_player));
 	if (!player)
 		return (FAILURE);
+	render_vals = malloc(sizeof(t_render));
+	if (!render_vals)
+		return (free(player), FAILURE);
 	cub->player = player;
+	cub->render = render_vals;
 	cub->u_map.height = str_ary_len(cub->u_map.map);
 	cub->u_map.width = ft_strlen(cub->u_map.map[0]);
 	cub->key_states = (t_key_states){0}; // Initialize key states

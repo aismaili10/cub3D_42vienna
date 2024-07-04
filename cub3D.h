@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 13:54:30 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:32:51 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,23 @@ typedef struct s_texture
 	int		endian;
 }	t_texture;
 
+typedef struct s_render
+{
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	double perpWallDist;
+	int stepX;
+	int stepY;
+	int side;
+	int mapX;
+	int mapY;
+	int lineHeight;
+	int drawStart;
+	int drawEnd;
+} t_render;
+
 typedef struct s_player {
     double posX;
     double posY;
@@ -110,6 +127,8 @@ typedef struct s_player {
     double dirY;
     double planeX;
     double planeY;
+	double rayDirX;
+	double rayDirY;
 } t_player;
 
 typedef struct s_key_states
@@ -131,6 +150,7 @@ typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the pro
 	t_img			mlx_img;
 	t_map			u_map;
 	t_player		*player;
+	t_render		*render;
 	t_texture		*west;
 	t_texture		*east;
 	t_texture		*north;

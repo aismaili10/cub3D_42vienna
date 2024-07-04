@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 14:01:47 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:48:56 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	cleanup(t_main *cub, int stage)
 		free_texture_pointers(cub);
 		free_map_elements(cub);
 		clean_mlx(cub);
+		free(cub->render);
 		free(cub->player);
 	}
 	if (stage == 10)
