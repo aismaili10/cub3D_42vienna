@@ -7,7 +7,7 @@
 	--> after the collision, somehow the raycaster miscalculates the drawEnd, some big negative number
 [] remove all ft_strlen() from loops, for efficiancy, see big2.cub
 
-[] Restrict the movement, now too close to walls
+[x] Restrict the movement, now too close to walls
 
 ### KEY HANDLING
 

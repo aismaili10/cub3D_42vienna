@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 13:48:17 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 19:54:07 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,35 @@
 
 void	move_player(t_main *cub, double moveX, double moveY)
 {
-	int	newPosX;
-	int	newPosY;
+	int		newPosX;
+	int		newPosY;
 	char	mapCell;
-	static int i = 0;
+	double	factor = 20.0;
 
-	newPosX = (int)(cub->player->posX + moveX);
-	newPosY = (int)(cub->player->posY + moveY);
+	newPosX = (int)(cub->player->posX + (factor * moveX));
+	newPosY = (int)(cub->player->posY + (factor * moveY));
 
 	if (newPosX < 0 || newPosX >= cub->u_map.width
-		|| newPosY < 0 || newPosY >= cub->u_map.width)
+		|| newPosY < 0 || newPosY >= cub->u_map.height)
 		{
 			printf("Out of bounds\n");
 			return ;
 		}
 	mapCell = cub->u_map.map[newPosY][newPosX];
 
-	if (mapCell == '0' || mapCell == 'N' || mapCell == 'S' || mapCell == 'W' ||  mapCell == 'E') //here we also need check for N,S,E,W
+	if (ft_strchr("0NSWE", mapCell)) //here we also need check for N,S,E,W
 	{
 		cub->player->posX += moveX;
 		cub->player->posY += moveY;
 	}
-	else
-	{
-        i++;
-		//printf("moveX: %f and moveY: %f\n",moveX, moveY);
-		//printf("Collision detected with %c at map[%i][%i], movement blocked %d\n", mapCell, newPosY, newPosX, i); // Debug print
-		//print_map_elements(&cub->u_map);
-	}
+	// else
+	// {
+	// 	static int i = 0;
+    //     i++;
+	// 	//printf("moveX: %f and moveY: %f\n",moveX, moveY);
+	// 	//printf("Collision detected with %c at map[%i][%i], movement blocked %d\n", mapCell, newPosY, newPosX, i); // Debug print
+	// 	//print_map_elements(&cub->u_map);
+	// }
 }
 
 void	rotate_player(t_player *player, double angle)

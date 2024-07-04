@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 17:43:53 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 19:57:06 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int render(t_main *cub)
 	process_input(cub);  // Process input before rendering
 	render_background(cub);
 	cast_rays(cub);
-	// draw_minimap(cub); // Call minimap rendering
+	draw_minimap(cub); // Call minimap rendering
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->mlx_img.img_ptr, 0, 0);
 	return (SUCCESS);
 }
