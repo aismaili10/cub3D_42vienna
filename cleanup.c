@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 15:51:17 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 14:01:47 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ void	free_texture_mlx(t_main *cub)
 	mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
 	mlx_destroy_image(cub->mlx_ptr, cub->east->img_ptr);
 }
+void	free_texture_buff(t_main *cub)
+{
+	free(cub->texture_buff[0]);
+	free(cub->texture_buff[1]);
+	free(cub->texture_buff[2]);
+	free(cub->texture_buff[3]);
+}
 
 void	cleanup(t_main *cub, int stage)
 {
@@ -89,6 +96,7 @@ void	cleanup(t_main *cub, int stage)
 		free_map_elements(cub);
 	if (stage == 3)
 	{
+		free_texture_buff(cub);
 		free_texture_mlx(cub);
 		free_texture_pointers(cub);
 		free_map_elements(cub);

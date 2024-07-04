@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 12:08:32 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 13:31:53 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 13:50:14 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,22 +111,13 @@ int	create_texture_buffer(t_main *cub)
 	cub->texture_buff[3] = texture_buff[3];
 	return (SUCCESS);
 }
-
-void	print_text_buffer(t_main *cub)
+int	handle_textures(t_main *cub)
 {
-	int i;
-	int j;
-
-	i = 0;
-	while (i < cub->north->height)
-	{
-		j = 0;
-		while (j < cub->north->width)
-		{
-			printf("%i ", cub->texture_buff[0][i * cub->north->width + j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
+	if (init_textures(cub) == FAILURE)//still need to free player here probably
+		return (FAILURE);
+	if (load_textures(cub) == FAILURE)
+		return (FAILURE); //maybe put free textures here, or free in cleanup
+	if (create_texture_buffer(cub) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
 }

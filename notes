@@ -37,6 +37,9 @@
 ### TODO
 
 [] Establish a cleaning strategy
+[] Fix inverted textures
+[] Restrict the movement too close to walls
+[x] Put back ceiling and floor colors in render_background
 [x] A Dublicate as last element before the map --> must handle at map read section
 [x] lines with only spaces before main map
 [] must check for valid path for the texture --> if open/execution fails

@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 14:15:40 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 13:56:10 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,7 +347,6 @@ int	check_texture_path(t_main *cub)
 		write(2, COLOR_RED "Texture Path Missing\n" COLOR_RESET, 27);
 		return (INV_MAP);
 	}
-	printf("no: -%s-\n", cub->u_map.no);
 	if ((fd = open(cub->u_map.no, O_RDONLY)) == -1)
 	{
 		perror("open no");

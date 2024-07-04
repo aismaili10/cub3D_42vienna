@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 13:09:06 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 13:54:30 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,12 @@ int		read_map_element(t_main *cub);
 // game
 int		game(t_main *cub);
 
+//game_utils
+void	init_player(t_player *player, t_main *cub, t_map u_map);
+int 	render_background(t_main *cub);
+int		close_window(t_main *cub);
+void	pixel_put(t_img *mlx_img, int x, int y, int color);
+
 // map_val_utils
 int		str_ary_len(char **str_array);
 void	free_str_array(char ***str_array);
@@ -162,11 +168,20 @@ bool	txts_clrs_found(t_map *u_map);
 //mlx_init
 int		init_mlx(t_main *cub);
 
+//player_movement
+void	move_player(t_main *cub, double moveX, double moveY);
+void	rotate_player(t_player *player, double angle);
+
+//key_events
+void	process_input(t_main *cub);
+int		key_up(int keycode, t_main *cub);
+int		key_down(int keycode, t_main *cub);
+
 //textures
 int	init_textures(t_main *cub);
 int	load_textures(t_main *cub);
+int	handle_textures(t_main *cub);
 int	create_texture_buffer(t_main *cub);
-void	print_text_buffer(t_main *cub);
 
 // debuging
 void	print_map_elements(t_map* u_map);
