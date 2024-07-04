@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 13:56:10 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:57:20 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,36 +343,21 @@ int	check_texture_path(t_main *cub)
 	int fd;
 
 	if (!cub->u_map.no || !cub->u_map.so || !cub->u_map.we || !cub->u_map.ea)
-	{
-		write(2, COLOR_RED "Texture Path Missing\n" COLOR_RESET, 27);
-		return (INV_MAP);
-	}
+		return (write(2, RD "Texture Path Missing\n" CR, 32), INV_MAP);
 	if ((fd = open(cub->u_map.no, O_RDONLY)) == -1)
-	{
-		perror("open no");
-		return (INV_MAP);
-	}
+		return (write(2, RD "Invalid path to NO texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
 	if ((fd = open(cub->u_map.so, O_RDONLY)) == -1)
-	{
-		perror("open so");
-		return (INV_MAP);
-	}
+	return (write(2, RD "Invalid path to SO texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
 	if ((fd = open(cub->u_map.we, O_RDONLY)) == -1)
-	{
-		perror("open we");
-		return (INV_MAP);
-	}
+	return (write(2, RD "Invalid path to WE texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
 	if ((fd = open(cub->u_map.ea, O_RDONLY)) == -1)
-	{
-		perror("open ea");
-		return (INV_MAP);
-	}
+	return (write(2, RD "Invalid path to EA texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
 	return (0);

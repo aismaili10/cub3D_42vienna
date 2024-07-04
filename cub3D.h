@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 16:39:48 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:55:05 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@
 #define COLOR_RED		"\033[0;31m"	// len: 7
 #define COLOR_YELLOW	"\033[0;33m"	// len: 7
 #define COLOR_RESET		"\033[0m"		// len: 4
+#define CR		"\033[0m"		// len: 4
+#define RD		"\033[0;31m"	// len: 7
 
 // keycode
 #define	ESC		65307
