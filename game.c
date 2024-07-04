@@ -6,13 +6,13 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 13:55:32 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 14:04:20 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int key_states[256] = {0}; // Array to hold the state of keys
+// Array to hold the state of keys
 
 /* void verLine(t_main *cub, int x, int drawStart, int drawEnd, int color)
 {
