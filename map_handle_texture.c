@@ -6,13 +6,13 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:08:12 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 16:42:35 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:59:19 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// sp_line is u_map.splited_line
+// sp_line is u_map.spl_ln
 int	init_u_map_txts(char **sp_line, t_map *u_map)
 {
 	int	len;
@@ -62,13 +62,13 @@ int	handle_texture(t_main *cub)
 
 	if (cub->u_map.id_ed)
 		return (SUCCESS);
-	ret = is_texture(cub->u_map.splited_line[0], &cub->u_map);
+	ret = is_texture(cub->u_map.spl_ln[0], &cub->u_map);
 	if (ret == INV_MAP)
 	{
 		write(2, COLOR_RED"WALL Texture Dublicate Encountered\n"COLOR_RESET, 47);
 		return (INV_MAP);
 	}
 	if (ret == true)
-		return (init_u_map_txts(cub->u_map.splited_line, &cub->u_map));
+		return (init_u_map_txts(cub->u_map.spl_ln, &cub->u_map));
 	return (SUCCESS);
 }

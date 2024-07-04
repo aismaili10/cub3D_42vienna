@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 15:47:08 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:58:56 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef	struct	s_map
 	char	*ea;
 	int		f_color;
 	int		c_color;
-	char	**splited_line; // free diretly after no using anymore // maybe better name
+	char	**spl_ln; // free diretly after no using anymore // maybe better name
 	char	*joined_lines;
 	bool	id_ed;
 	int		height;
