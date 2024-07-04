@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 15:48:56 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:07:53 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ void	cleanup(t_main *cub, int stage)
 {
 	(void)cub;
 	(void)stage;
-	printf("in cleanup; stage: %i\n", stage);
-	if (stage == 10)
-		print_map_elements(&cub->u_map);
+	printf("arrived in cleanup with stage: %i\n", stage);
 	if (stage == 1)
 	{
 		get_next_line(cub->u_map.fd, 1);
@@ -106,6 +104,5 @@ void	cleanup(t_main *cub, int stage)
 	}
 	if (stage == 10)
 		printf(COLOR_GREEN"map is valid\n"COLOR_RESET);
-	exit(1);
-	// ...
+	exit(stage);
 }

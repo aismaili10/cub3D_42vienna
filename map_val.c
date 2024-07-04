@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 17:57:20 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:07:41 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int check_down(char **vert, int r, int c)
 	return (false);
 }
 
-int check_pos(char **map, int r, int c) // we send all 0s and the Player Position here
+int check_pos(char **map, int r, int c)
 {
 	if (!check_left(map[r], c))
 	{

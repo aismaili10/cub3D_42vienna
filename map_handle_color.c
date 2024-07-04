@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:05:58 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/26 20:50:19 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 13:47:47 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	rgb_valid(char *rgb)
 		}
 		j++;
 	}
+	if (rgb[0] == '\n')
+		return (false);
 	return (true);
 }
 
@@ -51,18 +53,18 @@ static int	inv_clr_specifier(char **str_rgb)
 	int	i;
 
 	i = 0;
-	//char	*zeros_case;
 	while (str_rgb[i])
 	{
 		if (ft_strlen(rm_zero(str_rgb[i])) > 4)
 		{
-			//printf("bigger then 3\n%zu\n-%s-\n", ft_strlen(rm_zero(str_rgb[i])), str_rgb[i]);			
+			//printf("bigger then 3\n%zu\n-%s-\n", ft_strlen(rm_zero(str_rgb[i])), str_rgb[i]);
+			free_str_array(&str_rgb);	
 			return (write(2, COLOR_RED"ISSUE: RGB Range\n"COLOR_RESET, 29),true);
 		}
 		if (!rgb_valid(str_rgb[i]))
 		{
 			//printf("inv_clr_specifier(): str_rgb[%i]: %s\n", i, str_rgb[i]);
-			return (true);
+			return (free_str_array(&str_rgb), true);
 		}
 		i++;
 	}
@@ -94,15 +96,13 @@ int	comma_check(char *str)
 	{
 		if (str[i] == ',')
 			comma_counter++;
-	// position of commas
 		if (str[i] == ',' && str[i + 1] == ',')
-			return (write(2, COLOR_RED"ISSUE: Consecutive Commas\n"COLOR_RESET, 38), INV_MAP);
+			return (write(2, COLOR_RED"ISSUE: Consecutive Commas\n"
+				COLOR_RESET, 38), INV_MAP);
 		i++;
 	}
-	// number of commas
 	if (comma_counter != 2)
 		return (write(2, COLOR_RED"ISSUE: NUM of Commas\n"COLOR_RESET, 33), INV_MAP);
-	// beginning and end
 	if (str[0] == ',' || str[ft_strlen(str) - 1] == ',')
 		return (write(2, COLOR_RED"ISSUE: Consecutive Commas\n"COLOR_RESET, 38), INV_MAP);
 	return (SUCCESS);
