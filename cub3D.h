@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 12:22:36 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 14:03:07 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 #define	SUCCESS		0
 #define	FAILURE		1
 
-#define WIN_WIDTH	800
-#define WIN_HEIGHT	600
+#define WIN_WIDTH	1000
+#define WIN_HEIGHT	800
 #define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97
@@ -47,7 +47,7 @@
 #define screenHeight 600
 #define MINIMAP_SCALE 5
 #define MINIMAP_SIZE 100
-#define ROT_SPEED 0.0025 // Rotation speed in radians
+#define ROT_SPEED 0.0035 // Rotation speed in radians
 #define MOVE_SPEED 0.01 // Movement speed
 // #define ROT_SPEED 0.1 // Rotation speed in radians
 // #define MOVE_SPEED 0.1 // Movement speed
