@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 15:47:47 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:14:37 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	free_texture_mlx(t_main *cub)
 	mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
 	mlx_destroy_image(cub->mlx_ptr, cub->east->img_ptr);
 }
+
 void	free_texture_buff(t_main *cub)
 {
 	free(cub->texture_buff[0]);

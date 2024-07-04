@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 15:48:39 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:36:10 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,32 @@
 
 int invalid_element(char *line)
 {
-	if (is_whitespace(line[0]) || is_whitespace(line[ft_strlen(line) - 1]))
+	/* if (is_whitespace(line[0]) || is_whitespace(line[ft_strlen(line) - 1]))
 	{
 		write(2, COLOR_RED "Whitespace at Line-Beginning/End\n" COLOR_RESET, 45);
 		return (INV_MAP);
+	} */
+	if (ft_strchr(line, '\t'))
+	{
+		write(2, COLOR_RED "Tab inside Config-File\n" COLOR_RESET, 35);
+		return (INV_MAP);
 	}
 	return (SUCCESS);
+}
+
+bool	is_val_ary_len(t_main *cub)
+{
+	int	ary_len;
+
+	ary_len = str_ary_len(cub->u_map.splited_line);
+	if (ary_len != 2)
+	{
+		if (ary_len == 3 && !ft_strncmp(cub->u_map.splited_line[2], "\n", 2))
+			return (true);
+		else
+			return (false);
+	}
+	return (true);
 }
 
 int prep_for_init(char *line, t_main *cub)
@@ -30,8 +50,9 @@ int prep_for_init(char *line, t_main *cub)
 	cub->u_map.splited_line = ft_split_md(line, " \t");
 	if (!cub->u_map.splited_line && errno)
 		return (free(line), perror("malloc"), SYS_FAIL);
-	if (str_ary_len(cub->u_map.splited_line) != 2 && ft_strncmp(line, "\n", 2))
+	if (!is_val_ary_len(cub) && ft_strncmp(line, "\n", 2))
 	{
+		printf("len str array: %i\n", str_ary_len(cub->u_map.splited_line));
 		write(2, COLOR_YELLOW "WARNING: Map Element Syntax: ", 37);
 		write(2, "IDENTIFIER SPECIFIER\n" COLOR_RESET, 26);
 		return (free(line), INV_MAP);

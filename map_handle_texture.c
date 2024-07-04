@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handle_texture.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:08:12 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/02 14:17:44 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:42:35 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	init_u_map_txts(char **sp_line, t_map *u_map)
 {
 	int	len;
 
-	char *tmp = ft_strtrim(sp_line[1], "\n");
+	char *tmp = ft_strtrim(sp_line[1], " \n");
 	if (!tmp)
 			return (SYS_FAIL);
 	len = ft_strlen(sp_line[0]);

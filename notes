@@ -7,6 +7,7 @@
 	--> after the collision, somehow the raycaster miscalculates the drawEnd, some big negative number
 [] remove all ft_strlen() from loops, for efficiancy, see big2.cub
 
+[] Restrict the movement, now too close to walls
 
 ### KEY HANDLING
 
@@ -36,9 +37,9 @@
 
 ### TODO
 
+[] should we accept space before and after element??
 [] Establish a cleaning strategy
 [] Fix inverted textures
-[] Restrict the movement too close to walls
 [] Do not accept tabs anywhere in the configuration file
 [x] Put back ceiling and floor colors in render_background
 [x] A Dublicate as last element before the map --> must handle at map read section
