@@ -6,28 +6,11 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/03 13:14:47 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 13:24:44 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-/* int	close_window(t_main *cub)
-{
-	write(1, COLOR_YELLOW"Closing Window\n"COLOR_RESET, 27);
-	cleanup(cub, 3);
-	return (SUCCESS);
-} */
-
-/* int	key_handle(int keycode, t_main *cub)
-{
-	if (keycode == ESC)
-	{
-		write(1, COLOR_YELLOW"Closing Window\n"COLOR_RESET, 27);
-		cleanup(cub, 3);
-	}
-	return (SUCCESS);
-} */
 
 int key_states[256] = {0}; // Array to hold the state of keys
 
@@ -335,16 +318,16 @@ void	cast_rays(t_main *cub)
 		if (side == 0)
 		{
 			if (rayDirX > 0)
-				texNum = 0;
+				texNum = 3;
 			else
-				texNum = 1;
+				texNum = 2;
 		}
 		else
 		{
 			if (rayDirY > 0)
-				texNum = 2;
+				texNum = 0;
 			else
-				texNum = 3;
+				texNum = 1;
 		}
 		if (side == 0)
 			wallX = cub->player->posY + perpWallDist * rayDirY;
@@ -361,8 +344,8 @@ void	cast_rays(t_main *cub)
 		{
 			d = y * 256 - WIN_HEIGHT * 128 + lineHeight * 128;
 			texY = ((d * TEX_HEIGHT) / lineHeight) / 256;
-			color = cub->north->addr[TEX_HEIGHT * texY + texX];
-			verLine(cub, x, y, y + 1, color);
+			color = cub->texture_buff[texNum][TEX_HEIGHT * texY + texX];
+			pixel_put(&cub->mlx_img, x, y, color);
 			y++;
 		}
 		x++;
@@ -489,60 +472,6 @@ int render(t_main *cub)
 	return (SUCCESS);
 }
 
-int	load_textures(t_main *cub)
-{
-	cub->north->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.no, &cub->north->width, &cub->north->height);
-	if (!cub->north->img_ptr)
-		return (FAILURE);
-	cub->north->addr = mlx_get_data_addr(cub->north->img_ptr, &cub->north->bpp, &cub->north->line_length, &cub->north->endian);
-	cub->south->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.so, &cub->south->width, &cub->south->height);
-	if (!cub->south->img_ptr)
-		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
-	cub->south->addr = mlx_get_data_addr(cub->south->img_ptr, &cub->south->bpp, &cub->south->line_length, &cub->south->endian);
-	cub->west->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.we, &cub->west->width, &cub->west->height);
-	if (!cub->west->img_ptr)
-	{	
-		mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
-		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
-	}	
-	cub->west->addr = mlx_get_data_addr(cub->west->img_ptr, &cub->west->bpp, &cub->west->line_length, &cub->west->endian);
-	cub->east->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.ea, &cub->east->width, &cub->east->height);
-	if (!cub->east->img_ptr)
-	{
-		mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
-		mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
-		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
-	}
-	cub->east->addr = mlx_get_data_addr(cub->east->img_ptr, &cub->east->bpp, &cub->east->line_length, &cub->east->endian);
-	return (SUCCESS);
-}
-
-int	init_textures(t_main *cub)
-{
-	t_texture *west;
-	t_texture *east;
-	t_texture *north;
-	t_texture *south;
-
-	west = malloc(sizeof(t_texture) * 1);
-	if (!west)
-		return (FAILURE);
-	east = malloc(sizeof(t_texture) * 1);
-	if (!east)
-		return (free(west), FAILURE);
-	south = malloc(sizeof(t_texture) * 1);
-	if (!south)
-		return (free(west), free(east), FAILURE);
-	north = malloc(sizeof(t_texture) * 1);
-	if (!north)
-		return (free(west), free(east), free(south), FAILURE);
-	cub->west = west;
-	cub->east = east;
-	cub->north = north;
-	cub->south = south;
-	return (SUCCESS);
-}
-
 int game(t_main *cub)
 {
 	t_player *player;
@@ -558,6 +487,9 @@ int game(t_main *cub)
 		return (FAILURE);
 	if (load_textures(cub) == FAILURE)
 		return (FAILURE); //maybe put free textures here, or free in cleanup
+	if (create_texture_buffer(cub) == FAILURE)
+		return (FAILURE);
+	//print_text_buffer(cub);
 	init_player(cub->player, cub, cub->u_map);
 	mlx_hook(cub->win_ptr, 2, 1L << 0, key_down, cub);  // Key press
     mlx_hook(cub->win_ptr, 3, 1L << 1, key_up, cub);    // Key release

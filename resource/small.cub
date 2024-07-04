@@ -1,15 +1,15 @@
 
-NO ./textures/messi_arg.xpm
-SO ./textures/messi_barca.xpm
+NO ./textures/north.xpm
+SO ./textures/south.xpm
 
 
 C 255,200,225
 
 F 220,100,0
 
-EA ./textures/messi_miami.xpm
+EA ./textures/east.xpm
 
-WE ./textures/messi_young.xpm
+WE ./textures/west.xpm
 
 
 
@@ -21,7 +21,7 @@ WE ./textures/messi_young.xpm
 100000001
 100000001
 100000001
-1000W0001
+1000E0001
 111111111
 
 

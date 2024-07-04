@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/03 13:26:45 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 13:09:06 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the pro
 	t_texture		*east;
 	t_texture		*north;
 	t_texture		*south;
+	int				*texture_buff[4];
 	t_key_states	key_states;
 	
 }	t_main;
@@ -160,6 +161,12 @@ bool	txts_clrs_found(t_map *u_map);
 
 //mlx_init
 int		init_mlx(t_main *cub);
+
+//textures
+int	init_textures(t_main *cub);
+int	load_textures(t_main *cub);
+int	create_texture_buffer(t_main *cub);
+void	print_text_buffer(t_main *cub);
 
 // debuging
 void	print_map_elements(t_map* u_map);
