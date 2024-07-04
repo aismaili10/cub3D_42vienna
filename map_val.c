@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 13:56:10 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:48:39 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int check_down(char **vert, int r, int c)
 	return (false);
 }
 
-int check_pos(char **map, int r, int c) // we send all 0s and the Player Position here
+int check_pos(char **map, int r, int c)
 {
 	if (!check_left(map[r], c))
 	{

@@ -50,6 +50,10 @@
 	[x] characters other then numeric and comma in SPECIFIER
 
 #### anything regarding 2D map
+[] Do not accept tabs anywhere in the configuration file
+[] 
+[]
+[]
 [x] map postfix check; careful about "" as map or just ".cub"
 [x] reading
 [x] no newlines/empty lines in between actual map
