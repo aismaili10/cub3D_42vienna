@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 18:07:53 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 19:25:51 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_map_elements(t_main *cub)
 	free_textures(&cub->u_map);
 	if (cub->u_map.joined_lines)
 		free(cub->u_map.joined_lines);
-	free_str_array(&cub->u_map.splited_line);
+	free_str_array(&cub->u_map.spl_ln);
 	free_map(cub->u_map.map);
 }
 
@@ -72,6 +72,7 @@ void	free_texture_mlx(t_main *cub)
 	mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
 	mlx_destroy_image(cub->mlx_ptr, cub->east->img_ptr);
 }
+
 void	free_texture_buff(t_main *cub)
 {
 	free(cub->texture_buff[0]);
@@ -85,7 +86,7 @@ void	cleanup(t_main *cub, int stage)
 	(void)cub;
 	(void)stage;
 	printf("arrived in cleanup with stage: %i\n", stage);
-	if (stage == 1)
+	if (stage == -1)
 	{
 		get_next_line(cub->u_map.fd, 1);
 		free_map_elements(cub);

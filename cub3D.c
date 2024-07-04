@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:48:01 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/30 20:26:41 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:59:01 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	assign_default(t_main *cub)
 	cub->u_map.so = NULL;
 	cub->u_map.we = NULL;
 	cub->u_map.ea = NULL;
-	cub->u_map.splited_line = NULL;
+	cub->u_map.spl_ln = NULL;
 	cub->u_map.joined_lines = NULL;
 	cub->u_map.id_ed = false;
 	// other cub members; unknown now

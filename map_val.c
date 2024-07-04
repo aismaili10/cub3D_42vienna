@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 18:07:41 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 19:26:28 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,32 @@
 
 int invalid_element(char *line)
 {
-	if (is_whitespace(line[0]) || is_whitespace(line[ft_strlen(line) - 1]))
+	/* if (is_whitespace(line[0]) || is_whitespace(line[ft_strlen(line) - 1]))
 	{
 		write(2, COLOR_RED "Whitespace at Line-Beginning/End\n" COLOR_RESET, 45);
 		return (INV_MAP);
+	} */
+	if (ft_strchr(line, '\t'))
+	{
+		write(2, COLOR_RED "Tab inside Config-File\n" COLOR_RESET, 35);
+		return (INV_MAP);
 	}
 	return (SUCCESS);
+}
+
+bool	is_val_ary_len(t_main *cub)
+{
+	int	ary_len;
+
+	ary_len = str_ary_len(cub->u_map.spl_ln);
+	if (ary_len != 2)
+	{
+		if (ary_len == 3 && !ft_strncmp(cub->u_map.spl_ln[2], "\n", 2))
+			return (true);
+		else
+			return (false);
+	}
+	return (true);
 }
 
 int prep_for_init(char *line, t_main *cub)
@@ -27,10 +47,10 @@ int prep_for_init(char *line, t_main *cub)
 	errno = 0;
 	if (invalid_element(line) == INV_MAP)
 		return (free(line), INV_MAP);
-	cub->u_map.splited_line = ft_split_md(line, " \t");
-	if (!cub->u_map.splited_line && errno)
+	cub->u_map.spl_ln = ft_split_md(line, " \t");
+	if (!cub->u_map.spl_ln && errno)
 		return (free(line), perror("malloc"), SYS_FAIL);
-	if (str_ary_len(cub->u_map.splited_line) != 2 && ft_strncmp(line, "\n", 2))
+	if (!is_val_ary_len(cub) && ft_strncmp(line, "\n", 2))
 	{
 		write(2, COLOR_YELLOW "WARNING: Map Element Syntax: ", 37);
 		write(2, "IDENTIFIER SPECIFIER\n" COLOR_RESET, 26);
@@ -42,32 +62,29 @@ int prep_for_init(char *line, t_main *cub)
 
 int read_check_txts_clrs(t_main *cub)
 {
-	char *tmp;
+	char	*tmp;
 
-	errno = 0;
 	while (!txts_clrs_found(&cub->u_map))
 	{
 		cub->u_map.id_ed = false;
+		errno = 0;
 		tmp = get_next_line(cub->u_map.fd, 0);
 		if (!tmp && errno)
-			cleanup(cub, 1);
+			cleanup(cub, -1); // -1: free remaining in get_next_line()
 		if (!tmp)
 		{
 			write(2, COLOR_RED "Incomplete Map File\n" COLOR_RESET, 32);
 			cleanup(cub, 0);
 		}
-		if (prep_for_init(tmp, cub) != SUCCESS)
+		if (prep_for_init(tmp, cub) != SUCCESS || handle_color(cub) != SUCCESS
+				|| handle_texture(cub) != SUCCESS)
 			cleanup(cub, 1);
-		if (handle_color(cub) != SUCCESS || handle_texture(cub) != SUCCESS)
-			cleanup(cub, 1);
-		/* if (handle_texture(tmp, cub) != SUCCESS)
-			cleanup(cub, 1); */
-		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.splited_line[0], 2)) // not just an empty line // a line that isn't an element
+		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.spl_ln[0], 2)) // not just an empty line // a line that isn't an element
 		{
 			write(2, COLOR_RED "Invalid Identifier\n" COLOR_RESET, 31);
 			cleanup(cub, 1);
 		}
-		free_str_array(&cub->u_map.splited_line);
+		free_str_array(&cub->u_map.spl_ln);
 	}
 	return (SUCCESS);
 }
@@ -103,7 +120,8 @@ int check_left(char *horiz, int c)
 	{
 		if (horiz[i] == '1')
 			return (true);
-		if (ft_strchr("0NSWE", horiz[i]) && (i == 0 || !ft_strchr("0NSWE1", horiz[i - 1])))
+		if (ft_strchr("0NSWE", horiz[i]) && (i == 0
+				|| !ft_strchr("0NSWE1", horiz[i - 1])))
 		{
 			printf("check_left: horiz[%i] = %c\n", i - 1, horiz[i - 1]);
 			printf("check_left: horiz[%i] = %c\n", i, horiz[i]);

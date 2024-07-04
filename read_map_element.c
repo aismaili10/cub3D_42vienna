@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:03:20 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 14:00:11 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:07:18 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	inv_char_in_map(char c)
 {
-	if (!ft_strchr("\n10NSWE ", c)) // anything besides valid ones
+	if (!ft_strchr("\n10NSWE ", c))
 	{
 		write(2, COLOR_RED"Invalid Character in Map\n"COLOR_RESET, 37);
 		return (INV_MAP);
@@ -26,7 +26,7 @@ bool	map_ended(char *str, int i)
 {
 	while (str[i])
 	{
-		if (str[i] != '\n' && str[i] != ' ') // is not nl or space
+		if (str[i] != '\n' && str[i] != ' ')
 		{
 			printf("str: %s and pos: str[%i]: %c\n", str, i, str[i]);
 			return (false);
@@ -52,7 +52,6 @@ int	first_map_char(char *line)
 	{
 		if (ft_strchr("10NSWE", line[i]))
 		{
-			// retract to the previous newline
 			while (i >= 0 && line[i] != '\n')
 				i--;
 			return (i + 1);
@@ -78,18 +77,15 @@ int	last_map_char(char *line)
 
 char	*rm_empty_top_bottom(char *line)
 {
-	int	first;
-	int	last;
+	char	*n_line;
+	int		first;
+	int		last;
 
 	first = first_map_char(line);
 	last = last_map_char(line) + 1;
-
-	// printf("length: %zu\nfirst: %i\n last: %i\n", ft_strlen(line), first, last);
-	char	*n_line = ft_substr(line, first, last - first);
+	n_line = ft_substr(line, first, last - first);
 	if (!n_line)
 		return (free(line), NULL);
-	// printf("line:\n%s\n", line);
-	// printf("n_line:\n%s\n", n_line);
 	free(line);
 	return (n_line);
 }
@@ -117,12 +113,6 @@ int	nline(char *n_lines)
 		if (n_lines[i] == '\n')
 			line_counter++;
 	}
-	//printf("line_counter value in nline: %i\n", line_counter);
-	/* if (line_counter < 3) // this check is not enough to exclude to small maps
-	{
-		write(2, COLOR_RED"Less than 3 Lines In Map\n"COLOR_RESET, 37);
-		return (INV_MAP);
-	} */
 	return (SUCCESS);
 }
 
@@ -160,38 +150,29 @@ bool	contains_only_spaces(char *str)
 	return (true);
 }
 
+void	go_to_cleanup(t_main *cub, char *tmp)
+{
+	free(tmp);
+	cleanup(cub, 1);
+}
+
 int	read_map_element(t_main *cub)
 {
 	char	*tmp;
-	int		gnl_errno;
 
 	while (1)
 	{
-		gnl_errno = errno;
+		errno = 0;
 		tmp = get_next_line(cub->u_map.fd, 0);
-		if (!tmp && gnl_errno)
-		{
-			get_next_line(cub->u_map.fd, 1);
-			cleanup(cub, 1);
-		}
+		if (!tmp && errno)
+			cleanup(cub, -1); // -1: free remaining in get_next_line()
 		if (!tmp)
 			break ;
-		if (contains_only_spaces(tmp))
-		{
-			free(tmp);
-			cleanup(cub, 1);
-		}
-		if (contains_inv_char(tmp))
-		{
-			free(tmp);
-			cleanup(cub, 1);
-		}
+		if (contains_only_spaces(tmp) || contains_inv_char(tmp))
+			go_to_cleanup(cub, tmp);
 		cub->u_map.joined_lines = ft_strjoingnl(cub->u_map.joined_lines, tmp);
 		if (!cub->u_map.joined_lines)
-		{
-			free(tmp);
-			cleanup(cub, 1);
-		}
+			go_to_cleanup(cub, tmp);
 		free(tmp);
 	}
 	cub->u_map.joined_lines = rm_empty_top_bottom(cub->u_map.joined_lines);
