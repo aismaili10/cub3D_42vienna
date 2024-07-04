@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 19:26:50 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 21:13:31 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #include "libft/gnl/get_next_line.h"
 #include "libft/printf/ft_printf.h"
 
-// return values
+// RETURN VALUES
 #define	INV_MAP		-2
 #define	SYS_FAIL	-1
 #define	SUCCESS		0
@@ -38,6 +38,31 @@
 #define WIN_HEIGHT	600
 #define TEX_WIDTH	64
 #define TEX_HEIGHT	64
+
+#define ROT_SPEED 0.005 // Rotation speed in radians
+#define MOVE_SPEED 0.01 // Movement speed
+// #define ROT_SPEED 0.1 // Rotation speed in radians
+// #define MOVE_SPEED 0.1 // Movement speed
+
+// MINIMAP
+#define MINIMAP_WIDTH 30  // Width of minimap in cells
+#define MINIMAP_HEIGHT 30 // Height of minimap in cells
+#define PLAYER_RADIUS 2 // Radius of the player on the minimap
+#define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
+#define FLOOR_COLOR 0x008000
+#define MINIMAP_SCALE 5
+//#define MINIMAP_SIZE 100
+
+
+// COLORS
+#define COLOR_GREEN		"\033[0;32m"	// len: 7
+#define COLOR_RED		"\033[0;31m"	// len: 7
+#define COLOR_YELLOW	"\033[0;33m"	// len: 7
+#define COLOR_RESET		"\033[0m"		// len: 4
+#define CR				"\033[0m"		// len: 4
+#define RD				"\033[0;31m"	// len: 7
+
+// KEYCODE
 #define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97
@@ -45,28 +70,6 @@
 #define KEY_D 100
 #define KEY_LEFT 65363
 #define KEY_RIGHT 65361
-#define screenWidth 800
-#define screenHeight 600
-#define MINIMAP_SCALE 5
-#define MINIMAP_SIZE 100
-#define ROT_SPEED 0.005 // Rotation speed in radians
-#define MOVE_SPEED 0.01 // Movement speed
-// #define ROT_SPEED 0.1 // Rotation speed in radians
-// #define MOVE_SPEED 0.1 // Movement speed
-#define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
-#define FLOOR_COLOR 0x008000
-
-
-// colors
-#define COLOR_GREEN		"\033[0;32m"	// len: 7
-#define COLOR_RED		"\033[0;31m"	// len: 7
-#define COLOR_YELLOW	"\033[0;33m"	// len: 7
-#define COLOR_RESET		"\033[0m"		// len: 4
-#define CR		"\033[0m"		// len: 4
-#define RD		"\033[0;31m"	// len: 7
-
-// keycode
-#define	ESC		65307
 
 typedef	struct	s_map
 {
@@ -146,7 +149,18 @@ typedef struct s_key_states
 	int	esc;
 }	t_key_states;
 
-typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the project
+typedef struct s_minimap
+{
+	int	start_x;
+	int	start_y;
+	int	end_x;
+	int	end_y;
+	int	player_x;
+	int	player_y;
+}	t_minimap;
+
+
+typedef struct	s_main
 {
 	// mlx init and window
 	void			*mlx_ptr;
@@ -161,7 +175,6 @@ typedef struct	s_main // maybe change name to s_cub3d?? aligns more with the pro
 	t_texture		*south;
 	int				*texture_buff[4];
 	t_key_states	key_states;
-	
 }	t_main;
 
 // cleanup
@@ -201,11 +214,14 @@ void	process_input(t_main *cub);
 int		key_up(int keycode, t_main *cub);
 int		key_down(int keycode, t_main *cub);
 
+//minimap
+void	draw_minimap(t_main *cub);
+
 //textures
-int	init_textures(t_main *cub);
-int	load_textures(t_main *cub);
-int	handle_textures(t_main *cub);
-int	create_texture_buffer(t_main *cub);
+int		init_textures(t_main *cub);
+int		load_textures(t_main *cub);
+int		handle_textures(t_main *cub);
+int		create_texture_buffer(t_main *cub);
 
 // debuging
 void	print_map_elements(t_map* u_map);

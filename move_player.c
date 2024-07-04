@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 19:54:07 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/04 20:36:50 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int key_down(int keycode, t_main *cub)
 		cub->key_states.a = 1;
 	if (keycode == KEY_D)
 		cub->key_states.d = 1;
-	if (keycode == ESC)
+	if (keycode == KEY_ESC)
 		cub->key_states.esc = 1;
 	return 0;
 }

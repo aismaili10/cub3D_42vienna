@@ -20,6 +20,7 @@ SRC =	cub3D.c \
 		textures.c \
 		move_player.c \
 		game_utils.c \
+		minimap.c
 
 OBJDIR = obj/
 OBJ =  $(SRC:%.c=$(OBJDIR)%.o)

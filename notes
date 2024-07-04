@@ -6,6 +6,7 @@
 [] issue when moving perpendicular to the side, side wall not shownwhen too close to side wall
 	--> after the collision, somehow the raycaster miscalculates the drawEnd, some big negative number
 [] remove all ft_strlen() from loops, for efficiancy, see big2.cub
+[] change variable name to all lowercase and shorter names
 
 [x] Restrict the movement, now too close to walls
 
@@ -37,6 +38,7 @@
 
 ### TODO
 
+[] shorten MACRO NAME for colors like Abe
 [] should we accept space before and after element??
 [] Establish a cleaning strategy
 [] Fix inverted textures
