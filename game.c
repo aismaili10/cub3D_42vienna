@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 15:45:37 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:46:58 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,6 @@ void	get_distances(t_player *player, t_render *render)
 	render->mapY = (int)player->posY;
 	render->deltaDistX = fabs(1 / player->rayDirX);
 	render->deltaDistY = fabs(1 / player->rayDirY);
-}
-
-void	get_step(t_player *player, t_render *render)
-{
 	if (player->rayDirX < 0)
 	{
 		render->stepX = -1;
@@ -133,74 +129,65 @@ void	hit_wall_loop(t_main *cub, t_render *render)
 		}
 }
 
-void	cast_rays(t_main *cub)
+void	get_texture_index(t_player *player, t_render *render)
 {
-	int x;
-	int texNum;
-	double wallX;
+	if (render->side == 0)
+		{
+			if (player->rayDirX > 0)
+				render->texIndex = 3;
+			else
+				render->texIndex = 2;
+		}
+		else
+		{
+			if (player->rayDirY > 0)
+				render->texIndex = 0;
+			else
+				render->texIndex = 1;
+		}
+		if (render->side == 0)
+			render->wallX = player->posY + render->perpWallDist * player->rayDirY;
+		else
+			render->wallX = player->posX + render->perpWallDist * player->rayDirX;
+		render->wallX -= floor(render->wallX);
+}
+
+void	draw_loop(t_main *cub, t_player *player, t_render *render, int x)
+{
 	int texX;
 	int texY;
 	int color;
 	int d;
+	int y;
+	
+	texX = (int)(render->wallX * (double)TEX_WIDTH);
+	if (render->side == 0 && player->rayDirX > 0)
+		texX = TEX_WIDTH - texX - 1;
+	if (render->side == 1 && player->rayDirY < 0)
+		texX = TEX_WIDTH - texX - 1;
+	y = render->drawStart;
+	while (y < render->drawEnd)
+	{
+		d = y * 256 - WIN_HEIGHT * 128 + render->lineHeight * 128;
+		texY = ((d * TEX_HEIGHT) / render->lineHeight) / 256;
+		color = cub->texture_buff[render->texIndex][TEX_HEIGHT * texY + texX];
+		pixel_put(&cub->mlx_img, x, y, color);
+		y++;
+	}
+}
+void	cast_rays(t_main *cub)
+{
+	int x;
 
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
 		get_ray_direction(cub->player, x);
 		get_distances(cub->player, cub->render);
-		get_step(cub->player, cub->render);
 		hit_wall_loop(cub, cub->render);
 		get_draw_values(cub->player, cub->render);
-		/* if (hit == 0)
-			continue ; */
-		//int color = 0x00FF00;
-		/* 
-		if (cub->u_map.map[mapY][mapX] == '1')
-		{
-    		color = 0xFF0000; // color for walls
-		}
-		else
-		{
-    		color = 0x00FF00; // color for empty space
-		}
-		if (side == 1)
-			color = color / 2;
-		//printf("drawStart: %i and drawEnd: %i\n", drawStart, drawEnd);
-		verLine(cub, x, drawStart, drawEnd, color); */
-		texNum = 0;
-		if (cub->render->side == 0)
-		{
-			if (cub->player->rayDirX > 0)
-				texNum = 3;
-			else
-				texNum = 2;
-		}
-		else
-		{
-			if (cub->player->rayDirY > 0)
-				texNum = 0;
-			else
-				texNum = 1;
-		}
-		if (cub->render->side == 0)
-			wallX = cub->player->posY + cub->render->perpWallDist * cub->player->rayDirY;
-		else
-			wallX = cub->player->posX + cub->render->perpWallDist * cub->player->rayDirX;
-		wallX -= floor(wallX);
-		texX = (int)(wallX * (double)TEX_WIDTH);
-		if (cub->render->side == 0 && cub->player->rayDirX > 0)
-			texX = TEX_WIDTH - texX - 1;
-		if (cub->render->side == 1 && cub->player->rayDirY < 0)
-			texX = TEX_WIDTH - texX - 1;
-		int y = cub->render->drawStart;
-		while (y < cub->render->drawEnd)
-		{
-			d = y * 256 - WIN_HEIGHT * 128 + cub->render->lineHeight * 128;
-			texY = ((d * TEX_HEIGHT) / cub->render->lineHeight) / 256;
-			color = cub->texture_buff[texNum][TEX_HEIGHT * texY + texX];
-			pixel_put(&cub->mlx_img, x, y, color);
-			y++;
-		}
+		get_texture_index(cub->player, cub->render);
+		draw_loop(cub, cub->player, cub->render, x);
 		x++;
 	}
 }
@@ -243,3 +230,20 @@ int game(t_main *cub)
 	mlx_loop(cub->mlx_ptr);
 	return (SUCCESS);
 }
+
+/* if (hit == 0)
+	continue ; */
+//int color = 0x00FF00;
+/* 
+if (cub->u_map.map[mapY][mapX] == '1')
+{
+	color = 0xFF0000; // color for walls
+}
+else
+{
+	color = 0x00FF00; // color for empty space
+}
+if (side == 1)
+	color = color / 2;	
+	//printf("drawStart: %i and drawEnd: %i\n", drawStart, drawEnd);
+verLine(cub, x, drawStart, drawEnd, color); */

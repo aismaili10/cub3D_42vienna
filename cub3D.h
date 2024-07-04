@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 15:32:51 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:39:48 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 #define screenHeight 600
 #define MINIMAP_SCALE 5
 #define MINIMAP_SIZE 100
-#define ROT_SPEED 0.0025 // Rotation speed in radians
+#define ROT_SPEED 0.005 // Rotation speed in radians
 #define MOVE_SPEED 0.01 // Movement speed
 // #define ROT_SPEED 0.1 // Rotation speed in radians
 // #define MOVE_SPEED 0.1 // Movement speed
@@ -110,6 +110,7 @@ typedef struct s_render
 	double deltaDistX;
 	double deltaDistY;
 	double perpWallDist;
+	double wallX;
 	int stepX;
 	int stepY;
 	int side;
@@ -118,6 +119,7 @@ typedef struct s_render
 	int lineHeight;
 	int drawStart;
 	int drawEnd;
+	int texIndex;
 } t_render;
 
 typedef struct s_player {
