@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:52:47 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 13:57:56 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:01:43 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	init_player(t_player *player, t_main *cub, t_map u_map)
 					player->planeX = 0.66;
 					player->planeY = 0;
 				}
-				//printf("Player initialized at position: (%f, %f)\n", player->posX, player->posY);
                 return;
 			}
 		}
