@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:15:24 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:40:52 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@
 // #define MOVE_SPEED 0.1 // Movement speed
 
 // MINIMAP
-# define MINIMAP_WIDTH 30  // Width of minimap in cells
-# define MINIMAP_HEIGHT 30 // Height of minimap in cells
-# define PLAYER_RADIUS 2 // Radius of the player on the minimap
-# define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
-# define FLOOR_COLOR 0x008000
-# define MINIMAP_SCALE 5
+#define MINIMAP_WIDTH 20  // Width of minimap in cells
+#define MINIMAP_HEIGHT 20 // Height of minimap in cells
+#define PLAYER_RADIUS 2 // Radius of the player on the minimap
+#define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
+#define FLOOR_COLOR 0x008000
+#define MINIMAP_SCALE 5
 //#define MINIMAP_SIZE 100
 
 // COLORS
@@ -151,12 +151,13 @@ typedef struct s_key_states
 
 typedef struct s_minimap
 {
-	int	start_x;
-	int	start_y;
-	int	end_x;
-	int	end_y;
-	int	player_x;
-	int	player_y;
+	int		start_x;
+	int		start_y;
+	int		end_x;
+	int		end_y;
+	int		player_x;
+	int		player_y;
+	float	scale_factor;
 }	t_minimap;
 
 typedef struct s_main

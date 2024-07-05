@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:08:48 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:44:16 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	add_generic_spaces(char **map)
 	int		max_len;
 
 	r = 0;
-	max_len = get_max_len(map) + 1;
+	max_len = get_max_len(map);
 	while (map[r])
 	{
 		temp = malloc(max_len + 1);
