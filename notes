@@ -98,3 +98,18 @@
 ## command options
 
 --leak-check=full --show-leak-kinds=all
+
+==373883== Invalid read of size 4
+==373883==    at 0x40458C: draw_loop (game.c:33)
+==373883==    by 0x404679: cast_rays (game.c:52)
+==373883==    by 0x4046B6: render (game.c:61)
+==373883==    by 0x49D2354: mlx_loop (in /usr/lib/libmlx.so)
+==373883==    by 0x4048E0: game (game.c:93)
+==373883==    by 0x40142B: main (cub3D.c:44)
+==373883==  Address 0x4dd518c is 20 bytes before a block of size 16,384 alloc'd
+==373883==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==373883==    by 0x405368: fill_buffer (textures.c:90)
+==373883==    by 0x405486: create_texture_buffer (textures.c:115)
+==373883==    by 0x405D90: handle_textures (game_utils.c:60)
+==373883==    by 0x4047F0: game (game.c:84)
+==373883==    by 0x40142B: main (cub3D.c:44)
