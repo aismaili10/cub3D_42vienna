@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 12:07:13 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 12:29:52 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,11 @@ int		read_map_element(t_main *cub);
 
 // game
 int		game(t_main *cub);
+void	get_ray_direction(t_player *player, int x);
+void	get_draw_values(t_player *p, t_render *r);
+void	get_distances(t_player *player, t_render *r);
+void	hit_wall_loop(t_main *cub, t_render *render);
+void	get_texture_index(t_player *player, t_render *r);
 
 //player_init
 void	init_player(t_player *player, t_map u_map);

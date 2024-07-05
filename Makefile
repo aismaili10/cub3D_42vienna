@@ -17,11 +17,13 @@ SRC =	cub3D.c \
 		debug.c \
 		mlx_init.c \
 		game.c \
+		game2.c \
 		textures.c \
 		move_player.c \
 		game_utils.c \
 		player_utils.c \
-		minimap.c
+		minimap.c \
+
 
 OBJDIR = obj/
 OBJ =  $(SRC:%.c=$(OBJDIR)%.o)
