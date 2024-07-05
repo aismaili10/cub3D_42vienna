@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:04 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 12:46:54 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 14:47:50 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ void	free_str_array(char ***str_array)
 	}
 	free(*str_array);
 	*str_array = NULL;
-}
-
-bool	is_whitespace(char c)
-{
-	if (c == 9 || (c >= 11 && c <= 13) || c == 32)
-		return (true);
-	return (false);
 }
 
 static bool	found_color(t_map *u_map)

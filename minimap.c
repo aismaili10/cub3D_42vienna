@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 20:49:06 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 12:59:22 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 13:49:37 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	draw_circle(t_main *cub, int cx, int cy, int radius, int color)
 
 void	cal_viewport(t_minimap *mini, t_player *player, t_map *u_map)
 {
-	mini->player_x = (int)player->posX;
-	mini->player_y = (int)player->posY;
+	mini->player_x = (int)player->pos_x;
+	mini->player_y = (int)player->pos_y;
 	mini->start_x = mini->player_x - MINIMAP_WIDTH / 2;
 	mini->start_y = mini->player_y - MINIMAP_HEIGHT / 2;
 	mini->end_x = mini->player_x + MINIMAP_WIDTH / 2;
@@ -100,8 +100,8 @@ void	draw_minimap(t_main *cub)
 
 	cal_viewport(&mini, cub->player, &cub->u_map); // Calculate viewport boundaries
 	draw_minimap_grid(cub, &mini);
-	px = (cub->player->posX - mini.start_x) * MINIMAP_SCALE;
-	py = (cub->player->posY - mini.start_y) * MINIMAP_SCALE;
+	px = (cub->player->pos_x - mini.start_x) * MINIMAP_SCALE;
+	py = (cub->player->pos_y - mini.start_y) * MINIMAP_SCALE;
 	draw_circle(cub, px, py, PLAYER_RADIUS, 0xFF0000);
 }
 

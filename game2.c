@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:26:51 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:29:08 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 14:01:41 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 void	get_draw_values(t_player *p, t_render *r)
 {
 	if (r->side == 0)
-		r->perpWallDist = (r->mapX - p->posX + (1 - r->stepX) / 2) / p->rayDirX;
+		r->perp_dist_wall = (r->map_x - p->pos_x + (1 - r->step_x) / 2)
+			/ p->ray_x;
 	else
-		r->perpWallDist = (r->mapY - p->posY + (1 - r->stepY) / 2) / p->rayDirY;
-	r->lineHeight = (int)(WIN_HEIGHT / r->perpWallDist);
-	r->drawStart = -r->lineHeight / 2 + WIN_HEIGHT / 2;
-	if (r->drawStart < 0)
-		r->drawStart = 0;
-	r->drawEnd = r->lineHeight / 2 + WIN_HEIGHT / 2;
-	if (r->drawEnd >= WIN_HEIGHT || r->drawEnd < 0)
-		r->drawEnd = WIN_HEIGHT - 1;
+		r->perp_dist_wall = (r->map_y - p->pos_y + (1 - r->step_y) / 2)
+			/ p->ray_y;
+	r->lineheight = (int)(WIN_HEIGHT / r->perp_dist_wall);
+	r->draw_start = -r->lineheight / 2 + WIN_HEIGHT / 2;
+	if (r->draw_start < 0)
+		r->draw_start = 0;
+	r->draw_end = r->lineheight / 2 + WIN_HEIGHT / 2;
+	if (r->draw_end >= WIN_HEIGHT || r->draw_end < 0)
+		r->draw_end = WIN_HEIGHT - 1;
 }
 
 void	get_ray_direction(t_player *player, int x)
@@ -32,35 +34,35 @@ void	get_ray_direction(t_player *player, int x)
 	double	cam_x;
 
 	cam_x = 2 * x / (double)WIN_WIDTH - 1;
-	player->rayDirX = player->dirX + player->planeX * cam_x;
-	player->rayDirY = player->dirY + player->planeY * cam_x;
+	player->ray_x = player->dir_x + player->plane_x * cam_x;
+	player->ray_y = player->dir_y + player->plane_y * cam_x;
 }
 
 void	get_distances(t_player *player, t_render *r)
 {
-	r->mapX = (int)player->posX;
-	r->mapY = (int)player->posY;
-	r->deltaDistX = fabs(1 / player->rayDirX);
-	r->deltaDistY = fabs(1 / player->rayDirY);
-	if (player->rayDirX < 0)
+	r->map_x = (int)player->pos_x;
+	r->map_y = (int)player->pos_y;
+	r->delta_x = fabs(1 / player->ray_x);
+	r->delta_y = fabs(1 / player->ray_y);
+	if (player->ray_x < 0)
 	{
-		r->stepX = -1;
-		r->sideDistX = (player->posX - r->mapX) * r->deltaDistX;
+		r->step_x = -1;
+		r->side_dist_x = (player->pos_x - r->map_x) * r->delta_x;
 	}
 	else
 	{
-		r->stepX = 1;
-		r->sideDistX = (r->mapX + 1.0 - player->posX) * r->deltaDistX;
+		r->step_x = 1;
+		r->side_dist_x = (r->map_x + 1.0 - player->pos_x) * r->delta_x;
 	}
-	if (player->rayDirY < 0)
+	if (player->ray_y < 0)
 	{
-		r->stepY = -1;
-		r->sideDistY = (player->posY - r->mapY) * r->deltaDistY;
+		r->step_y = -1;
+		r->side_dist_y = (player->pos_y - r->map_y) * r->delta_y;
 	}
 	else
 	{
-		r->stepY = 1;
-		r->sideDistY = (r->mapY + 1.0 - player->posY) * r->deltaDistY;
+		r->step_y = 1;
+		r->side_dist_y = (r->map_y + 1.0 - player->pos_y) * r->delta_y;
 	}
 }
 
@@ -71,19 +73,19 @@ void	hit_wall_loop(t_main *cub, t_render *render)
 	hit = 0;
 	while (hit == 0)
 	{
-		if (render->sideDistX < render->sideDistY)
+		if (render->side_dist_x < render->side_dist_y)
 		{
-			render->sideDistX += render->deltaDistX;
-			render->mapX += render->stepX;
+			render->side_dist_x += render->delta_x;
+			render->map_x += render->step_x;
 			render->side = 0;
 		}
 		else
 		{
-			render->sideDistY += render->deltaDistY;
-			render->mapY += render->stepY;
+			render->side_dist_y += render->delta_y;
+			render->map_y += render->step_y;
 			render->side = 1;
 		}
-		if (cub->u_map.map[render->mapY][render->mapX] == '1')
+		if (cub->u_map.map[render->map_y][render->map_x] == '1')
 			hit = 1;
 	}
 }
@@ -92,21 +94,21 @@ void	get_texture_index(t_player *player, t_render *r)
 {
 	if (r->side == 0)
 	{
-		if (player->rayDirX > 0)
-			r->texIndex = 3;
+		if (player->ray_x > 0)
+			r->tex_index = 3;
 		else
-			r->texIndex = 2;
+			r->tex_index = 2;
 	}
 	else
 	{
-		if (player->rayDirY > 0)
-			r->texIndex = 0;
+		if (player->ray_y > 0)
+			r->tex_index = 0;
 		else
-			r->texIndex = 1;
+			r->tex_index = 1;
 	}
 	if (r->side == 0)
-		r->wallX = player->posY + r->perpWallDist * player->rayDirY;
+		r->wall_x = player->pos_y + r->perp_dist_wall * player->ray_y;
 	else
-		r->wallX = player->posX + r->perpWallDist * player->rayDirX;
-	r->wallX -= floor(r->wallX);
+		r->wall_x = player->pos_x + r->perp_dist_wall * player->ray_x;
+	r->wall_x -= floor(r->wall_x);
 }

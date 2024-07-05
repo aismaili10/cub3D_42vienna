@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:30:56 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 14:01:16 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ void	draw_loop(t_main *cub, t_player *player, t_render *render, int x)
 	int	d;
 	int	y;
 
-	tex_x = (int)(render->wallX * (double)TEX_WIDTH);
-	if (render->side == 0 && player->rayDirX > 0)
+	tex_x = (int)(render->wall_x * (double)TEX_WIDTH);
+	if (render->side == 0 && player->ray_x > 0)
 		tex_x = TEX_WIDTH - tex_x - 1;
-	if (render->side == 1 && player->rayDirY < 0)
+	if (render->side == 1 && player->ray_y < 0)
 		tex_x = TEX_WIDTH - tex_x - 1;
-	y = render->drawStart;
-	while (y < render->drawEnd)
+	y = render->draw_start;
+	while (y < render->draw_end)
 	{
-		d = y * 256 - WIN_HEIGHT * 128 + render->lineHeight * 128;
-		tex_y = ((d * TEX_HEIGHT) / render->lineHeight) / 256;
-		color = cub->texture_buff[render->texIndex][TEX_HEIGHT * tex_y + tex_x];
+		d = y * 256 - WIN_HEIGHT * 128 + render->lineheight * 128;
+		tex_y = ((d * TEX_HEIGHT) / render->lineheight) / 256;
+		color = cub->texture_buff[render->tex_index][TEX_HEIGHT
+			* tex_y + tex_x];
 		pixel_put(&cub->mlx_img, x, y, color);
 		y++;
 	}

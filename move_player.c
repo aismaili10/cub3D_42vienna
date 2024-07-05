@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 13:07:51 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 13:57:43 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	double	factor;
 
 	factor = 20.0;
-	newpos_x = (int)(cub->player->posX + (factor * moveX));
-	newpos_y = (int)(cub->player->posY + (factor * moveY));
+	newpos_x = (int)(cub->player->pos_x + (factor * moveX));
+	newpos_y = (int)(cub->player->pos_y + (factor * moveY));
 	if (newpos_x < 0 || newpos_x >= cub->u_map.width
 		|| newpos_y < 0 || newpos_y >= cub->u_map.height)
 	{
@@ -31,8 +31,8 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	map_cell = cub->u_map.map[newpos_y][newpos_x];
 	if (ft_strchr("0NSWE", map_cell)) //here we also need check for N,S,E,W
 	{
-		cub->player->posX += moveX;
-		cub->player->posY += moveY;
+		cub->player->pos_x += moveX;
+		cub->player->pos_y += moveY;
 	}
 }
 
@@ -41,12 +41,12 @@ void	rotate_player(t_player *player, double angle)
 	double	old_dir_x;
 	double	old_plane_x;
 
-	old_dir_x = player->dirX;
-	old_plane_x = player->planeX;
-	player->dirX = player->dirX * cos(angle) - player->dirY * sin(angle);
-	player->dirY = old_dir_x * sin(angle) + player->dirY * cos(angle);
-	player->planeX = player->planeX * cos(angle) - player->planeY * sin(angle);
-	player->planeY = old_plane_x * sin(angle) + player->planeY * cos(angle);
+	old_dir_x = player->dir_x;
+	old_plane_x = player->plane_x;
+	player->dir_x = player->dir_x * cos(angle) - player->dir_y * sin(angle);
+	player->dir_y = old_dir_x * sin(angle) + player->dir_y * cos(angle);
+	player->plane_x = player->plane_x * cos(angle) - player->plane_y * sin(angle);
+	player->plane_y = old_plane_x * sin(angle) + player->plane_y * cos(angle);
 }
 
 int	key_down(int keycode, t_main *cub)
@@ -94,15 +94,15 @@ void	process_input(t_main *cub)
 	if (cub->key_states.right)
 		rotate_player(cub->player, -ROT_SPEED);
 	if (cub->key_states.w)
-		move_player(cub, cub->player->dirX * MOVE_SPEED,
-			cub->player->dirY * MOVE_SPEED);
+		move_player(cub, cub->player->dir_x * MOVE_SPEED,
+			cub->player->dir_y * MOVE_SPEED);
 	if (cub->key_states.s)
-		move_player(cub, -cub->player->dirX * MOVE_SPEED,
-			-cub->player->dirY * MOVE_SPEED);
+		move_player(cub, -cub->player->dir_x * MOVE_SPEED,
+			-cub->player->dir_y * MOVE_SPEED);
 	if (cub->key_states.a)
-		move_player(cub, cub->player->dirY * MOVE_SPEED,
-			-cub->player->dirX * MOVE_SPEED);
+		move_player(cub, cub->player->dir_y * MOVE_SPEED,
+			-cub->player->dir_x * MOVE_SPEED);
 	if (cub->key_states.d)
-		move_player(cub, -cub->player->dirY * MOVE_SPEED,
-			cub->player->dirX * MOVE_SPEED);
+		move_player(cub, -cub->player->dir_y * MOVE_SPEED,
+			cub->player->dir_x * MOVE_SPEED);
 }

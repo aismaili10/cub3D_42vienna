@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 13:29:45 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:01:36 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,33 +109,33 @@ typedef struct s_texture
 
 typedef struct s_render
 {
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	double	wallX;
-	int		stepX;
-	int		stepY;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_x;
+	double	delta_y;
+	double	perp_dist_wall;
+	double	wall_x;
+	int		step_x;
+	int		step_y;
 	int		side;
-	int		mapX;
-	int		mapY;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
-	int		texIndex;
+	int		map_x;
+	int		map_y;
+	int		lineheight;
+	int		draw_start;
+	int		draw_end;
+	int		tex_index;
 }	t_render;
 
 typedef struct s_player
 {
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
-	double	rayDirX;
-	double	rayDirY;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	ray_x;
+	double	ray_y;
 }	t_player;
 
 typedef struct s_key_states
@@ -188,6 +188,15 @@ int		map_val(t_main *cub, char *map_path);
 int		handle_color(t_main *cub);
 int		handle_texture(t_main *cub);
 int		read_map_element(t_main *cub);
+int		prep_for_init(char *line, t_main *cub);
+int		read_check_txts_clrs(t_main *cub);
+
+// map_val_pos
+int		check_right(char *horiz, int c);
+int		check_left(char *horiz, int c);
+int		check_up(char **vert, int r, int c);
+int		check_down(char **vert, int r, int c);
+int		check_pos(char **map, int r, int c);
 
 // game
 int		game(t_main *cub);
@@ -207,12 +216,21 @@ void	init_s_n(t_player *player, int index);
 int		render_background(t_main *cub);
 int		close_window(t_main *cub);
 void	pixel_put(t_img *mlx_img, int x, int y, int color);
+int		check_right(char *horiz, int c);
 
 // map_val_utils
 int		str_ary_len(char **str_array);
 void	free_str_array(char ***str_array);
 bool	is_whitespace(char c);
 bool	txts_clrs_found(t_map *u_map);
+bool	is_val_ary_len(t_main *cub);
+bool	is_cub_postfix(char *path);
+int		check_texture_path(t_main *cub);
+int		invalid_element(char *line);
+int		get_max_len(char **map);
+int		read_check_txts_clrs(t_main *cub);
+int		prep_for_init(char *line, t_main *cub);
+int		l_only_space(char **map);
 
 //mlx_init
 int		init_mlx(t_main *cub);

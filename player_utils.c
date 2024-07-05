@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:04:52 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:07:01 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 13:57:44 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 void	init_player_pos(t_player *player, int x, int y)
 {
-	player->posX = x + 0.5;
-	player->posY = y + 0.5;
+	player->pos_x = x + 0.5;
+	player->pos_y = y + 0.5;
 }
 
 void	init_w_e(t_player *player, int index)
 {
 	if (index == 1)
 	{
-		player->dirX = -1;
-		player->dirY = 0;
-		player->planeX = 0;
-		player->planeY = -0.66;
+		player->dir_x = -1;
+		player->dir_y = 0;
+		player->plane_x = 0;
+		player->plane_y = -0.66;
 	}
 	if (index == 2)
 	{
-		player->dirX = 1;
-		player->dirY = 0;
-		player->planeX = 0;
-		player->planeY = 0.66;
+		player->dir_x = 1;
+		player->dir_y = 0;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
 	}
 }
 
@@ -40,17 +40,17 @@ void	init_s_n(t_player *player, int index)
 {
 	if (index == 3)
 	{
-		player->dirX = 0;
-		player->dirY = 1;
-		player->planeX = -0.66;
-		player->planeY = 0;
+		player->dir_x = 0;
+		player->dir_y = 1;
+		player->plane_x = -0.66;
+		player->plane_y = 0;
 	}
 	if (index == 4)
 	{
-		player->dirX = 0;
-		player->dirY = -1;
-		player->planeX = 0.66;
-		player->planeY = 0;
+		player->dir_x = 0;
+		player->dir_y = -1;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
 	}
 }
 
