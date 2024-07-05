@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/04 21:33:54 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:07:51 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,42 @@
 
 void	move_player(t_main *cub, double moveX, double moveY)
 {
-	int		newPosX;
-	int		newPosY;
-	char	mapCell;
-	double	factor = 20.0;
+	int		newpos_x;
+	int		newpos_y;
+	char	map_cell;
+	double	factor;
 
-	newPosX = (int)(cub->player->posX + (factor * moveX));
-	newPosY = (int)(cub->player->posY + (factor * moveY));
-
-	if (newPosX < 0 || newPosX >= cub->u_map.width
-		|| newPosY < 0 || newPosY >= cub->u_map.height)
-		{
-			printf("Out of bounds\n");
-			return ;
-		}
-	mapCell = cub->u_map.map[newPosY][newPosX];
-
-	if (ft_strchr("0NSWE", mapCell)) //here we also need check for N,S,E,W
+	factor = 20.0;
+	newpos_x = (int)(cub->player->posX + (factor * moveX));
+	newpos_y = (int)(cub->player->posY + (factor * moveY));
+	if (newpos_x < 0 || newpos_x >= cub->u_map.width
+		|| newpos_y < 0 || newpos_y >= cub->u_map.height)
+	{
+		printf("Out of bounds\n");
+		return ;
+	}
+	map_cell = cub->u_map.map[newpos_y][newpos_x];
+	if (ft_strchr("0NSWE", map_cell)) //here we also need check for N,S,E,W
 	{
 		cub->player->posX += moveX;
 		cub->player->posY += moveY;
 	}
-	// else
-	// {
-	// 	static int i = 0;
-    //     i++;
-	// 	//printf("moveX: %f and moveY: %f\n",moveX, moveY);
-	// 	//printf("Collision detected with %c at map[%i][%i], movement blocked %d\n", mapCell, newPosY, newPosX, i); // Debug print
-	// 	//print_map_elements(&cub->u_map);
-	// }
 }
 
 void	rotate_player(t_player *player, double angle)
 {
-	double oldDirX;
-	double oldPlaneX;
+	double	old_dir_x;
+	double	old_plane_x;
 
-	oldDirX = player->dirX;
-	oldPlaneX = player->planeX;
+	old_dir_x = player->dirX;
+	old_plane_x = player->planeX;
 	player->dirX = player->dirX * cos(angle) - player->dirY * sin(angle);
-	player->dirY = oldDirX * sin(angle) + player->dirY * cos(angle);
-
+	player->dirY = old_dir_x * sin(angle) + player->dirY * cos(angle);
 	player->planeX = player->planeX * cos(angle) - player->planeY * sin(angle);
-	player->planeY = oldPlaneX * sin(angle) + player->planeY * cos(angle);
+	player->planeY = old_plane_x * sin(angle) + player->planeY * cos(angle);
 }
 
-int key_down(int keycode, t_main *cub) 
+int	key_down(int keycode, t_main *cub)
 {
 	if (keycode == KEY_LEFT)
 		cub->key_states.left = 1;
@@ -75,10 +65,10 @@ int key_down(int keycode, t_main *cub)
 		cub->key_states.d = 1;
 	if (keycode == KEY_ESC)
 		cub->key_states.esc = 1;
-	return 0;
+	return (0);
 }
 
-int key_up(int keycode, t_main *cub) 
+int	key_up(int keycode, t_main *cub)
 {
 	if (keycode == KEY_LEFT)
 		cub->key_states.left = 0;
@@ -92,10 +82,10 @@ int key_up(int keycode, t_main *cub)
 		cub->key_states.a = 0;
 	if (keycode == KEY_D)
 		cub->key_states.d = 0;
-	return 0;
+	return (0);
 }
 
-void process_input(t_main *cub)
+void	process_input(t_main *cub)
 {
 	if (cub->key_states.esc)
 		cleanup(cub, 3);
@@ -104,11 +94,15 @@ void process_input(t_main *cub)
 	if (cub->key_states.right)
 		rotate_player(cub->player, -ROT_SPEED);
 	if (cub->key_states.w)
-		move_player(cub, cub->player->dirX * MOVE_SPEED, cub->player->dirY * MOVE_SPEED);
+		move_player(cub, cub->player->dirX * MOVE_SPEED,
+			cub->player->dirY * MOVE_SPEED);
 	if (cub->key_states.s)
-		move_player(cub, -cub->player->dirX * MOVE_SPEED, -cub->player->dirY * MOVE_SPEED);
+		move_player(cub, -cub->player->dirX * MOVE_SPEED,
+			-cub->player->dirY * MOVE_SPEED);
 	if (cub->key_states.a)
-		move_player(cub, cub->player->dirY * MOVE_SPEED, -cub->player->dirX * MOVE_SPEED);
+		move_player(cub, cub->player->dirY * MOVE_SPEED,
+			-cub->player->dirX * MOVE_SPEED);
 	if (cub->key_states.d)
-		move_player(cub, -cub->player->dirY * MOVE_SPEED, cub->player->dirX * MOVE_SPEED);
+		move_player(cub, -cub->player->dirY * MOVE_SPEED,
+			cub->player->dirX * MOVE_SPEED);
 }
