@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:26:51 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 15:42:05 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:46:03 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ void	get_texture_index(t_player *player, t_render *r)
 	else
 	{
 		if (player->ray_y > 0)
-			r->tex_index = 0;
-		else
 			r->tex_index = 1;
+		else
+			r->tex_index = 0;
 	}
 	if (r->side == 0)
 		r->wall_x = player->pos_y + r->perp_dist_wall * player->ray_y;

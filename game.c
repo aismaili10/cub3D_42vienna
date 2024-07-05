@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 15:41:39 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:45:20 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	draw_loop(t_main *cub, t_player *player, t_render *render, int x)
 	int	y;
 
 	tex_x = (int)(render->wall_x * (double)TEX_WIDTH);
-	if (render->side == 0 && player->ray_x > 0)
+	if (render->side == 0 && player->ray_x < 0)
 		tex_x = TEX_WIDTH - tex_x - 1;
-	if (render->side == 1 && player->ray_y < 0)
+	if (render->side == 1 && player->ray_y > 0)
 		tex_x = TEX_WIDTH - tex_x - 1;
 	y = render->draw_start;
 	while (y < render->draw_end)

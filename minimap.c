@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 20:49:06 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:43:08 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:44:07 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	draw_minimap_grid(t_main *cub, t_minimap *mini)
 void draw_minimap(t_main *cub)
 {
 	t_minimap	mini;
+	int			px;
+	int			py;
 
 	cal_viewport(&mini, cub->player, &cub->u_map); // Calculate viewport boundaries
 	draw_minimap_grid(cub, &mini);
