@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:44:16 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:41:02 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	map_val(t_main *cub, char *map_path)
 		return (perror("open"), -1); // nothing to free / clean at this stage
 	// read the 4 textures and 2 colors
 	if (read_check_txts_clrs(cub) != SUCCESS)
-		cleanup(cub, 1);
+		cleanup(cub, 2);
 	if (read_map_element(cub) != SUCCESS)
 		cleanup(cub, 2);
 	if (check_map_element(cub, cub->u_map.joined_lines) != SUCCESS)

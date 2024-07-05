@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:39:02 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 14:50:04 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 17:46:14 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ int	read_check_txts_clrs(t_main *cub)
 		if (!tmp)
 		{
 			write(2, COLOR_RED "Incomplete Map File\n" COLOR_RESET, 32);
-			cleanup(cub, 0);
+			cleanup(cub, 2);
 		}
 		if (prep_for_init(tmp, cub) != SUCCESS || handle_color(cub) != SUCCESS
 			|| handle_texture(cub) != SUCCESS)
-			cleanup(cub, 1);
+			cleanup(cub, 2);	
 		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.spl_ln[0], 2)) // not just an empty line // a line that isn't an element
 		{
 			write(2, COLOR_RED "Invalid Identifier\n" COLOR_RESET, 31);
-			cleanup(cub, 1);
+			cleanup(cub, 2);
 		}
 		free_str_array(&cub->u_map.spl_ln);
 	}

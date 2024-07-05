@@ -99,17 +99,109 @@
 
 --leak-check=full --show-leak-kinds=all
 
-==373883== Invalid read of size 4
-==373883==    at 0x40458C: draw_loop (game.c:33)
-==373883==    by 0x404679: cast_rays (game.c:52)
-==373883==    by 0x4046B6: render (game.c:61)
-==373883==    by 0x49D2354: mlx_loop (in /usr/lib/libmlx.so)
-==373883==    by 0x4048E0: game (game.c:93)
-==373883==    by 0x40142B: main (cub3D.c:44)
-==373883==  Address 0x4dd518c is 20 bytes before a block of size 16,384 alloc'd
-==373883==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==373883==    by 0x405368: fill_buffer (textures.c:90)
-==373883==    by 0x405486: create_texture_buffer (textures.c:115)
-==373883==    by 0x405D90: handle_textures (game_utils.c:60)
-==373883==    by 0x4047F0: game (game.c:84)
-==373883==    by 0x40142B: main (cub3D.c:44)
+Leaks:
+
+1: Changed WE to We on map
+Same if tabs are after identifier
+Or no identifier
+Or if colors are duplicated
+
+WARNING: Map Element Syntax: IDENTIFIER SPECIFIER
+arrived in cleanup with stage: 2
+==400723== 
+==400723== HEAP SUMMARY:
+==400723==     in use at exit: 346 bytes in 1 blocks
+==400723==   total heap usage: 82 allocs, 81 frees, 127,065 bytes allocated
+==400723== 
+==400723== 346 bytes in 1 blocks are still reachable in loss record 1 of 1
+==400723==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==400723==    by 0x4076BE: last_read (get_next_line.c:87)
+==400723==    by 0x407823: get_next_line (get_next_line.c:114)
+==400723==    by 0x401BA8: read_check_txts_clrs (map_val2.c:71)
+==400723==    by 0x4018AD: map_val (map_val.c:111)
+==400723==    by 0x4013B7: main (cub3D.c:40)
+==400723== 
+==400723== LEAK SUMMARY:
+==400723==    definitely lost: 0 bytes in 0 blocks
+==400723==    indirectly lost: 0 bytes in 0 blocks
+==400723==      possibly lost: 0 bytes in 0 blocks
+==400723==    still reachable: 346 bytes in 1 blocks
+==400723==         suppressed: 0 bytes in 0 blocks
+==400723== 
+==400723== For lists of detected and suppressed errors, rerun with: -s
+==400723== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+2: Newline with one space
+Same leaks with duplicate texture definiton
+Same with tabs on empty line
+
+LINE WITH ONLY SPACES
+arrived in cleanup with stage: 1
+==401571== 
+==401571== HEAP SUMMARY:
+==401571==     in use at exit: 428 bytes in 5 blocks
+==401571==   total heap usage: 87 allocs, 82 frees, 137,498 bytes allocated
+==401571== 
+==401571== 82 bytes in 4 blocks are still reachable in loss record 1 of 2
+==401571==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==401571==    by 0x406C3E: ft_strtrim (ft_strtrim.c:41)
+==401571==    by 0x403D96: init_u_map_txts (map_handle_texture.c:21)
+==401571==    by 0x40417E: handle_texture (map_handle_texture.c:73)
+==401571==    by 0x401C36: read_check_txts_clrs (map_val2.c:80)
+==401571==    by 0x4018AD: map_val (map_val.c:111)
+==401571==    by 0x4013B7: main (cub3D.c:40)
+==401571== 
+==401571== 346 bytes in 1 blocks are still reachable in loss record 2 of 2
+==401571==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==401571==    by 0x4076BE: last_read (get_next_line.c:87)
+==401571==    by 0x407823: get_next_line (get_next_line.c:114)
+==401571==    by 0x403474: read_map_element (read_map_element.c:166)
+==401571==    by 0x4018CD: map_val (map_val.c:113)
+==401571==    by 0x4013B7: main (cub3D.c:40)
+==401571== 
+==401571== LEAK SUMMARY:
+==401571==    definitely lost: 0 bytes in 0 blocks
+==401571==    indirectly lost: 0 bytes in 0 blocks
+==401571==      possibly lost: 0 bytes in 0 blocks
+==401571==    still reachable: 428 bytes in 5 blocks
+==401571==         suppressed: 0 bytes in 0 blocks
+
+3: Tabs at the end of  or inside of map
+
+LINE WITH INVALID CHAR
+arrived in cleanup with stage: 1
+==403744== 
+==403744== HEAP SUMMARY:
+==403744==     in use at exit: 412 bytes in 6 blocks
+==403744==   total heap usage: 185 allocs, 179 frees, 386,502 bytes allocated
+==403744== 
+==403744== 2 bytes in 1 blocks are still reachable in loss record 1 of 3
+==403744==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==403744==    by 0x4076BE: last_read (get_next_line.c:87)
+==403744==    by 0x407823: get_next_line (get_next_line.c:114)
+==403744==    by 0x403474: read_map_element (read_map_element.c:166)
+==403744==    by 0x4018CD: map_val (map_val.c:113)
+==403744==    by 0x4013B7: main (cub3D.c:40)
+==403744== 
+==403744== 82 bytes in 4 blocks are still reachable in loss record 2 of 3
+==403744==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==403744==    by 0x406C3E: ft_strtrim (ft_strtrim.c:41)
+==403744==    by 0x403D96: init_u_map_txts (map_handle_texture.c:21)
+==403744==    by 0x40417E: handle_texture (map_handle_texture.c:73)
+==403744==    by 0x401C36: read_check_txts_clrs (map_val2.c:80)
+==403744==    by 0x4018AD: map_val (map_val.c:111)
+==403744==    by 0x4013B7: main (cub3D.c:40)
+==403744== 
+==403744== 328 bytes in 1 blocks are still reachable in loss record 3 of 3
+==403744==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==403744==    by 0x4079FE: ft_strjoingnl (get_next_line_utils.c:60)
+==403744==    by 0x4034F4: read_map_element (read_map_element.c:173)
+==403744==    by 0x4018CD: map_val (map_val.c:113)
+==403744==    by 0x4013B7: main (cub3D.c:40)
+==403744== 
+==403744== LEAK SUMMARY:
+==403744==    definitely lost: 0 bytes in 0 blocks
+==403744==    indirectly lost: 0 bytes in 0 blocks
+==403744==      possibly lost: 0 bytes in 0 blocks
+==403744==    still reachable: 412 bytes in 6 blocks
+==403744==         suppressed: 0 bytes in 0 blocks
