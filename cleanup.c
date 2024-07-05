@@ -3,64 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 19:25:51 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:28:59 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	free_textures(t_map *u_map)
-{
-	if (u_map->no)
-		free(u_map->no);
-	if (u_map->so)
-		free(u_map->so);
-	if (u_map->we)
-		free(u_map->we);
-	if (u_map->ea)
-		free(u_map->ea);
-}
-
-void	free_map(char **map)
-{
-	int	i;
-
-	i = -1;
-	if (!map)
-		return ;
-	while (map[++i])
-		free(map[i]);
-	free(map);
-}
-
-void	free_map_elements(t_main *cub)
-{
-	if (cub->u_map.fd != -1)
-		close(cub->u_map.fd);
-	free_textures(&cub->u_map);
-	if (cub->u_map.joined_lines)
-		free(cub->u_map.joined_lines);
-	free_str_array(&cub->u_map.spl_ln);
-	free_map(cub->u_map.map);
-}
-
 void	clean_mlx(t_main *cub)
 {
-		mlx_destroy_image(cub->mlx_ptr, cub->mlx_img.img_ptr);
-		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
-		mlx_destroy_display(cub->mlx_ptr);
-		/* free(cub->mlx_img.img_ptr);
-		free(cub->win_ptr); */
-		free(cub->mlx_ptr);
+	mlx_destroy_image(cub->mlx_ptr, cub->mlx_img.img_ptr);
+	mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
+	mlx_destroy_display(cub->mlx_ptr);
+	free(cub->mlx_ptr);
 }
 
 void	free_texture_pointers(t_main *cub)
 {
 	free(cub->north);
-	free(cub->south);	
+	free(cub->south);
 	free(cub->west);
 	free(cub->east);
 }

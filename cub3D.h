@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 13:23:09 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 13:29:45 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,9 @@ typedef struct s_main
 // cleanup
 void	cleanup(t_main *cub, int stage);
 void	free_texture_pointers(t_main *cub);
+void	free_textures(t_map *u_map);
+void	free_map(char **map);
+void	free_map_elements(t_main *cub);
 
 // map_val
 int		map_val(t_main *cub, char *map_path);

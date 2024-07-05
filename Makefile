@@ -11,6 +11,7 @@ SRC =	cub3D.c \
 		map_val.c \
 		map_val_utils.c \
 		cleanup.c \
+		cleanup2.c \
 		read_map_element.c \
 		map_handle_color.c \
 		map_handle_texture.c \
