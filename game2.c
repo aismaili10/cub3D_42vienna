@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:26:51 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:29:08 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 14:57:15 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ void	get_texture_index(t_player *player, t_render *r)
 	else
 	{
 		if (player->rayDirY > 0)
-			r->texIndex = 0;
-		else
 			r->texIndex = 1;
+		else
+			r->texIndex = 0;
 	}
 	if (r->side == 0)
 		r->wallX = player->posY + r->perpWallDist * player->rayDirY;

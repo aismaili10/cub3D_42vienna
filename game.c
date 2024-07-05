@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:30:56 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:38:13 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@ void	draw_loop(t_main *cub, t_player *player, t_render *render, int x)
 	int	d;
 	int	y;
 
+	(void)player;
 	tex_x = (int)(render->wallX * (double)TEX_WIDTH);
-	if (render->side == 0 && player->rayDirX > 0)
+	if (render->side == 0 && player->rayDirX < 0)
 		tex_x = TEX_WIDTH - tex_x - 1;
-	if (render->side == 1 && player->rayDirY < 0)
+	if (render->side == 1 && player->rayDirY > 0)
 		tex_x = TEX_WIDTH - tex_x - 1;
 	y = render->drawStart;
 	while (y < render->drawEnd)
 	{
 		d = y * 256 - WIN_HEIGHT * 128 + render->lineHeight * 128;
 		tex_y = ((d * TEX_HEIGHT) / render->lineHeight) / 256;
+		//printf("tex_x: %i; tex_y: %i\n", tex_x, tex_y);
 		color = cub->texture_buff[render->texIndex][TEX_HEIGHT * tex_y + tex_x];
 		pixel_put(&cub->mlx_img, x, y, color);
 		y++;

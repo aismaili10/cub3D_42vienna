@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 20:49:06 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 13:11:08 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:50:04 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	cal_viewport(t_minimap *mini, t_player *player, t_map *u_map)
 	mini->start_y = mini->player_y - MINIMAP_HEIGHT / 2;
 	mini->end_x = mini->player_x + MINIMAP_WIDTH / 2;
 	mini->end_y = mini->player_y + MINIMAP_HEIGHT / 2;
-	//printf("before: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
+	printf("before: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
 	/* if (mini->start_x < 0)
 		mini->start_x = 0;
 	if (mini->start_y < 0)
@@ -80,7 +80,7 @@ void	cal_viewport(t_minimap *mini, t_player *player, t_map *u_map)
     if (mini->end_x >= u_map->width)
     {
         mini->end_x = u_map->width - 1;
-		if (u_map->width < MINIMAP_WIDTH)
+		if (u_map->width <= MINIMAP_WIDTH)
 	        mini->start_x = 0 /* mini->end_x - u_map->width */;
 		else
 	        mini->start_x = mini->end_x - MINIMAP_WIDTH;
@@ -88,12 +88,12 @@ void	cal_viewport(t_minimap *mini, t_player *player, t_map *u_map)
     if (mini->end_y >= u_map->height)
     {
         mini->end_y = u_map->height - 1;
-		if (u_map->height < MINIMAP_HEIGHT)
+		if (u_map->height <= MINIMAP_HEIGHT)
 	        mini->start_y = 0 /* mini->end_y - u_map->height */;
 		else
 	        mini->start_y = mini->end_y - MINIMAP_HEIGHT;
     }
-	//printf("after: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
+	printf("after: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
 }
 
 void	draw_minimap_grid(t_main *cub, t_minimap *mini)
