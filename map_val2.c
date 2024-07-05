@@ -47,7 +47,7 @@ int	prep_for_init(char *line, t_main *cub)
 	errno = 0;
 	if (invalid_element(line) == INV_MAP)
 		return (free(line), INV_MAP);
-	cub->u_map.spl_ln = ft_split_md(line, " \t");
+	cub->u_map.spl_ln = ft_split(line, ' ');
 	if (!cub->u_map.spl_ln && errno)
 		return (free(line), perror("malloc"), SYS_FAIL);
 	if (!is_val_ary_len(cub) && ft_strncmp(line, "\n", 2))
@@ -74,15 +74,19 @@ int	read_check_txts_clrs(t_main *cub)
 		if (!tmp)
 		{
 			write(2, COLOR_RED "Incomplete Map File\n" COLOR_RESET, 32);
-			cleanup(cub, 0);
+			cleanup(cub, 2);
 		}
 		if (prep_for_init(tmp, cub) != SUCCESS || handle_color(cub) != SUCCESS
 			|| handle_texture(cub) != SUCCESS)
-			cleanup(cub, 1);
+			{
+				// get_next_line(cub->u_map.fd, 1);
+				cleanup(cub, -1);
+			}
 		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.spl_ln[0], 2)) // not just an empty line // a line that isn't an element
 		{
 			write(2, COLOR_RED "Invalid Identifier\n" COLOR_RESET, 31);
-			cleanup(cub, 1);
+			// get_next_line(cub->u_map.fd, 1);
+			cleanup(cub, -1);
 		}
 		free_str_array(&cub->u_map.spl_ln);
 	}

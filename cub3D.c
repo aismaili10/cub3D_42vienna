@@ -39,11 +39,12 @@ int	main(int ac, char *av[])
 	assign_default(&cub);
 	if (map_val(&cub, av[1]) != SUCCESS)
 		return (write(2, COLOR_RED"Invalid Map\n"COLOR_RESET, 24), 2);
-	if (init_mlx(&cub) == -1)
+	/* if (init_mlx(&cub) == -1)
 		return (write(2, COLOR_GREEN"MLX Initialization Failed\n"COLOR_RESET, 32), 3);
 	if (game(&cub) == -1)
-		return (write(2, COLOR_RED"Game Failed\n"COLOR_RESET, 20), 4);
+		return (write(2, COLOR_RED"Game Failed\n"COLOR_RESET, 20), 4); */
 	printf(COLOR_GREEN"Map %s is Valid\n"COLOR_RESET, av[1]);
-	cleanup(&cub, 3);
+	cleanup(&cub, 2);
+	// cleanup(&cub, 3);
 	return (SUCCESS);
 }

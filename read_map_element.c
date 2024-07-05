@@ -153,7 +153,8 @@ bool	contains_only_spaces(char *str)
 void	go_to_cleanup(t_main *cub, char *tmp)
 {
 	free(tmp);
-	cleanup(cub, 1);
+	get_next_line(cub->u_map.fd, 1);
+	cleanup(cub, 2);
 }
 
 int	read_map_element(t_main *cub)

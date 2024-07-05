@@ -20,14 +20,14 @@ SRC =	cub3D.c \
 		map_handle_color2.c \
 		map_handle_texture.c \
 		debug.c \
-		mlx_init.c \
-		game.c \
-		game2.c \
-		textures.c \
-		move_player.c \
-		game_utils.c \
-		player_utils.c \
-		minimap.c \
+		#mlx_init.c \
+		#game.c \
+		#game2.c \
+		#textures.c \
+		#move_player.c \
+		#game_utils.c \
+		#player_utils.c \
+		#minimap.c \
 
 
 OBJDIR = obj/
@@ -48,7 +48,8 @@ $(OBJDIR)%.o : %.c
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF_LIB) $(INCLUDES) $(MLX_FLAGS)
+	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF_LIB) $(INCLUDES)
+#$(MLX_FLAGS)
 
 # Rule for making the libft library
 $(LIBFT):

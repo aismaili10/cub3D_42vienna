@@ -114,6 +114,8 @@ int	map_val(t_main *cub, char *map_path)
 		cleanup(cub, 2);
 	if (check_map_element(cub, cub->u_map.joined_lines) != SUCCESS)
 		cleanup(cub, 2);
+	free(cub->u_map.joined_lines);
+	cub->u_map.joined_lines = NULL;
 	if (check_texture_path(cub) != SUCCESS)
 		cleanup(cub, 2);
 	return (SUCCESS);
