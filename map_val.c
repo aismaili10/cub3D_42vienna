@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 19:26:28 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:32:01 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ int add_generic_spaces(char **map)
 	int max_len;
 
 	r = 0;
-	max_len = get_max_len(map) + 1;
+	max_len = get_max_len(map);
 	while (map[r])
 	{
 		temp = malloc(max_len + 1);
