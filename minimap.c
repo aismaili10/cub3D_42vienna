@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 20:49:06 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:44:07 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:04:35 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	cal_viewport(t_minimap *mini, t_player *player, t_map *u_map)
 	mini->start_y = mini->player_y - MINIMAP_HEIGHT / 2;
 	mini->end_x = mini->player_x + MINIMAP_WIDTH / 2;
 	mini->end_y = mini->player_y + MINIMAP_HEIGHT / 2;
-	printf("before: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
+	// printf("before: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
 	/* if (mini->start_x < 0)
 		mini->start_x = 0;
 	if (mini->start_y < 0)
@@ -92,7 +92,7 @@ void	cal_viewport(t_minimap *mini, t_player *player, t_map *u_map)
 		else
 	        mini->start_y = mini->end_y - MINIMAP_HEIGHT;
     }
-	printf("after: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
+	// printf("after: start_x: %i; start_y: %i; end_x: %i; end_y: %i\n", mini->start_x, mini->start_y, mini->end_x, mini->end_y);
 }
 
 void	draw_minimap_grid(t_main *cub, t_minimap *mini)

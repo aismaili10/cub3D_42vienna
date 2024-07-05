@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:40:52 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:03:25 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ typedef struct s_main
 
 // cleanup
 void	cleanup(t_main *cub, int stage);
+void	clean_mlx(t_main *cub);
 void	free_texture_pointers(t_main *cub);
 void	free_textures(t_map *u_map);
 void	free_map(char **map);
