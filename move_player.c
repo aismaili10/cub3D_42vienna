@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 17:12:54 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 17:20:20 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	char	map_cell;
 	double	factor;
 
-	factor = 20.0;
+	factor = 10.0;
 	newpos_x = (int)(cub->player->pos_x + (factor * moveX));
 	newpos_y = (int)(cub->player->pos_y + (factor * moveY));
 	if (newpos_x < 0 || newpos_x >= cub->u_map.width
