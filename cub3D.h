@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 21:13:31 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:07:13 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,13 @@ int		read_map_element(t_main *cub);
 // game
 int		game(t_main *cub);
 
+//player_init
+void	init_player(t_player *player, t_map u_map);
+void	init_player_pos(t_player *player, int x, int y);
+void	init_w_e(t_player *player, int index);
+void	init_s_n(t_player *player, int index);
+
 //game_utils
-void	init_player(t_player *player, t_main *cub, t_map u_map);
 int 	render_background(t_main *cub);
 int		close_window(t_main *cub);
 void	pixel_put(t_img *mlx_img, int x, int y, int color);
