@@ -6,41 +6,41 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 13:11:59 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:54:25 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	CUB3D_H
-#define	CUB3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <stdbool.h>
-#include <errno.h>
-#include <mlx.h>
-#include <math.h>
-#include <X11/keysym.h>
-#include <X11/X.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <errno.h>
+# include <mlx.h>
+# include <math.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
 
-#include "libft/libft.h"
-#include "libft/gnl/get_next_line.h"
-#include "libft/printf/ft_printf.h"
+# include "libft/libft.h"
+# include "libft/gnl/get_next_line.h"
+# include "libft/printf/ft_printf.h"
 
 // RETURN VALUES
-#define	INV_MAP		-2
-#define	SYS_FAIL	-1
-#define	SUCCESS		0
-#define	FAILURE		1
+# define INV_MAP		-2
+# define SYS_FAIL	-1
+# define SUCCESS		0
+# define FAILURE		1
 
-#define WIN_WIDTH	800
-#define WIN_HEIGHT	600
-#define TEX_WIDTH	64
-#define TEX_HEIGHT	64
+# define WIN_WIDTH	800
+# define WIN_HEIGHT	600
+# define TEX_WIDTH	64
+# define TEX_HEIGHT	64
 
-#define ROT_SPEED 0.005 // Rotation speed in radians
-#define MOVE_SPEED 0.01 // Movement speed
+# define ROT_SPEED 0.005 // Rotation speed in radians
+# define MOVE_SPEED 0.01 // Movement speed
 // #define ROT_SPEED 0.1 // Rotation speed in radians
 // #define MOVE_SPEED 0.1 // Movement speed
 
@@ -53,25 +53,24 @@
 #define MINIMAP_SCALE 5
 //#define MINIMAP_SIZE 100
 
-
 // COLORS
-#define COLOR_GREEN		"\033[0;32m"	// len: 7
-#define COLOR_RED		"\033[0;31m"	// len: 7
-#define COLOR_YELLOW	"\033[0;33m"	// len: 7
-#define COLOR_RESET		"\033[0m"		// len: 4
-#define CR				"\033[0m"		// len: 4
-#define RD				"\033[0;31m"	// len: 7
+# define COLOR_GREEN		"\033[0;32m"	// len: 7
+# define COLOR_RED		"\033[0;31m"	// len: 7
+# define COLOR_YELLOW	"\033[0;33m"	// len: 7
+# define COLOR_RESET		"\033[0m"		// len: 4
+# define CR				"\033[0m"		// len: 4
+# define RD				"\033[0;31m"	// len: 7
 
 // KEYCODE
-#define KEY_ESC 65307
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-#define KEY_LEFT 65363
-#define KEY_RIGHT 65361
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_LEFT 65363
+# define KEY_RIGHT 65361
 
-typedef	struct	s_map
+typedef struct s_map
 {
 	int		fd; // close directly after done with the map file
 	char	**map; // !! should be null terminated to free easily
@@ -110,42 +109,43 @@ typedef struct s_texture
 
 typedef struct s_render
 {
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	double wallX;
-	int stepX;
-	int stepY;
-	int side;
-	int mapX;
-	int mapY;
-	int lineHeight;
-	int drawStart;
-	int drawEnd;
-	int texIndex;
-} t_render;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	double	wallX;
+	int		stepX;
+	int		stepY;
+	int		side;
+	int		mapX;
+	int		mapY;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	int		texIndex;
+}	t_render;
 
-typedef struct s_player {
-    double posX;
-    double posY;
-    double dirX;
-    double dirY;
-    double planeX;
-    double planeY;
-	double rayDirX;
-	double rayDirY;
-} t_player;
+typedef struct s_player
+{
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+	double	rayDirX;
+	double	rayDirY;
+}	t_player;
 
 typedef struct s_key_states
 {
-	int left;
-	int right;
-	int w;
-	int s;
-	int a;
-	int d;
+	int	left;
+	int	right;
+	int	w;
+	int	s;
+	int	a;
+	int	d;
 	int	esc;
 }	t_key_states;
 
@@ -160,8 +160,7 @@ typedef struct s_minimap
 	float	scale_factor;
 }	t_minimap;
 
-
-typedef struct	s_main
+typedef struct s_main
 {
 	// mlx init and window
 	void			*mlx_ptr;
@@ -181,6 +180,9 @@ typedef struct	s_main
 // cleanup
 void	cleanup(t_main *cub, int stage);
 void	free_texture_pointers(t_main *cub);
+void	free_textures(t_map *u_map);
+void	free_map(char **map);
+void	free_map_elements(t_main *cub);
 
 // map_val
 int		map_val(t_main *cub, char *map_path);
@@ -190,10 +192,20 @@ int		read_map_element(t_main *cub);
 
 // game
 int		game(t_main *cub);
+void	get_ray_direction(t_player *player, int x);
+void	get_draw_values(t_player *p, t_render *r);
+void	get_distances(t_player *player, t_render *r);
+void	hit_wall_loop(t_main *cub, t_render *render);
+void	get_texture_index(t_player *player, t_render *r);
+
+//player_init
+void	init_player(t_player *player, t_map u_map);
+void	init_player_pos(t_player *player, int x, int y);
+void	init_w_e(t_player *player, int index);
+void	init_s_n(t_player *player, int index);
 
 //game_utils
-void	init_player(t_player *player, t_main *cub, t_map u_map);
-int 	render_background(t_main *cub);
+int		render_background(t_main *cub);
 int		close_window(t_main *cub);
 void	pixel_put(t_img *mlx_img, int x, int y, int color);
 

@@ -6,13 +6,13 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 12:32:01 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:54:55 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int invalid_element(char *line)
+int	invalid_element(char *line)
 {
 	/* if (is_whitespace(line[0]) || is_whitespace(line[ft_strlen(line) - 1]))
 	{
@@ -42,7 +42,7 @@ bool	is_val_ary_len(t_main *cub)
 	return (true);
 }
 
-int prep_for_init(char *line, t_main *cub)
+int	prep_for_init(char *line, t_main *cub)
 {
 	errno = 0;
 	if (invalid_element(line) == INV_MAP)
@@ -60,7 +60,7 @@ int prep_for_init(char *line, t_main *cub)
 	return (SUCCESS);
 }
 
-int read_check_txts_clrs(t_main *cub)
+int	read_check_txts_clrs(t_main *cub)
 {
 	char	*tmp;
 
@@ -77,7 +77,7 @@ int read_check_txts_clrs(t_main *cub)
 			cleanup(cub, 0);
 		}
 		if (prep_for_init(tmp, cub) != SUCCESS || handle_color(cub) != SUCCESS
-				|| handle_texture(cub) != SUCCESS)
+			|| handle_texture(cub) != SUCCESS)
 			cleanup(cub, 1);
 		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.spl_ln[0], 2)) // not just an empty line // a line that isn't an element
 		{
@@ -89,9 +89,9 @@ int read_check_txts_clrs(t_main *cub)
 	return (SUCCESS);
 }
 
-int check_right(char *horiz, int c)
+int	check_right(char *horiz, int c)
 {
-	int i;
+	int	i;
 
 	i = c;
 	while (horiz[i])
@@ -109,9 +109,9 @@ int check_right(char *horiz, int c)
 	return (false);
 }
 
-int check_left(char *horiz, int c)
+int	check_left(char *horiz, int c)
 {
-	int i;
+	int	i;
 
 	if (c < 1)
 		return (false);
@@ -134,16 +134,17 @@ int check_left(char *horiz, int c)
 
 int check_up(char **vert, int r, int c)
 {
-	int i;
+	int	i;
 
 	i = r;
 	while (i >= 0)
 	{
 		if (vert[i][c] == '1')
 			return (true);
-		if (ft_strchr("0NSWE", vert[i][c]) && (i == 0 || !ft_strchr("0NSWE1", vert[i - 1][c])))
+		if (ft_strchr("0NSWE", vert[i][c]) &&
+			(i == 0 || !ft_strchr("0NSWE1", vert[i - 1][c])))
 		{
-			printf("check_up: vert[%i][%i]: %c\n", i-1, c, vert[i-1][c]);
+			printf("check_up: vert[%i][%i]: %c\n", i - 1, c, vert[i - 1][c]);
 			printf("check_up: vert[%i][%i]: %c\n", i, c, vert[i][c]);
 			return (false);
 		}
@@ -154,18 +155,19 @@ int check_up(char **vert, int r, int c)
 
 int check_down(char **vert, int r, int c)
 {
-	int i;
+	int	i;
 
 	i = r;
 	while (vert[i])
 	{
 		if (vert[i][c] == '1')
 			return (true);
-		if (ft_strchr("0NSWE", vert[i][c]) && (!vert[i + 1] || !ft_strchr("0NSWE1", vert[i + 1][c])))
+		if (ft_strchr("0NSWE", vert[i][c]) &&
+			(!vert[i + 1] || !ft_strchr("0NSWE1", vert[i + 1][c])))
 		{
-			printf("check_down: vert[%i][%i]: %c\n", i-1, c, vert[i-1][c]);
+			printf("check_down: vert[%i][%i]: %c\n", i - 1, c, vert[i - 1][c]);
 			printf("check_down: vert[%i][%i]: %c\n", i, c, vert[i][c]);
-			printf("check_down: vert[%i][%i]: %c\n", i+1, c, vert[i+1][c]);
+			printf("check_down: vert[%i][%i]: %c\n", i + 1, c, vert[i + 1][c]);
 			return (false);
 		}
 		i++;
@@ -200,9 +202,9 @@ int check_pos(char **map, int r, int c)
 
 int closed_walls(char **map)
 {
-	int i;
-	int j;
-	int p_counter;
+	int	i;
+	int	j;
+	int	p_counter;
 
 	p_counter = 0;
 	i = 0;
@@ -211,7 +213,8 @@ int closed_walls(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (ft_strchr("0NSWE", map[i][j]) && check_pos(map, i, j) != SUCCESS)
+			if (ft_strchr("0NSWE", map[i][j])
+				&& check_pos(map, i, j) != SUCCESS)
 				return (INV_MAP);
 			if (ft_strchr("NSWE", map[i][j]))
 				p_counter++;
@@ -222,15 +225,15 @@ int closed_walls(char **map)
 	if (p_counter != 1)
 	{
 		printf("Player count: %i\n", p_counter);
-		return (write(2, COLOR_RED "ERROR: PLAYER PLACEMENT\n" COLOR_RESET, 36), INV_MAP);
+		return (write(2, RD "ERROR: PLAYER PLACEMENT\n" CR, 36), INV_MAP);
 	}
 	return (SUCCESS);
 }
 
 int get_max_len(char **map)
 {
-	int max;
-	int r;
+	int	max;
+	int	r;
 
 	r = 0;
 	max = 0;
@@ -245,7 +248,7 @@ int get_max_len(char **map)
 
 int add_spaces(char *str, int max)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(str);
 	while (len < max)
@@ -259,9 +262,9 @@ int add_spaces(char *str, int max)
 
 int add_generic_spaces(char **map)
 {
-	char *temp;
-	int r;
-	int max_len;
+	char	*temp;
+	int		r;
+	int		max_len;
 
 	r = 0;
 	max_len = get_max_len(map);
@@ -350,32 +353,38 @@ bool	is_cub_postfix(char *path)
 		len = ft_strlen(path) - 1;
 	if (len < 4)
 		return (free_str_array(&dirs_path), false);
-	if (dirs_path[ary_len - 1][len] == 'b' && dirs_path[ary_len - 1][len - 1] == 'u'
-		&& dirs_path[ary_len - 1][len - 2] == 'c' && dirs_path[ary_len - 1][len - 3] == '.')
+	if (dirs_path[ary_len - 1][len] == 'b'
+		&& dirs_path[ary_len - 1][len - 1] == 'u'
+		&& dirs_path[ary_len - 1][len - 2] == 'c' &&
+			dirs_path[ary_len - 1][len - 3] == '.')
 		return (free_str_array(&dirs_path), true);
 	return (free_str_array(&dirs_path), false);
 }
 
 int	check_texture_path(t_main *cub)
 {
-	int fd;
+	int	fd;
 
 	if (!cub->u_map.no || !cub->u_map.so || !cub->u_map.we || !cub->u_map.ea)
 		return (write(2, RD "Texture Path Missing\n" CR, 32), INV_MAP);
-	if ((fd = open(cub->u_map.no, O_RDONLY)) == -1)
+	fd = open(cub->u_map.no, O_RDONLY);
+	if (fd == -1)
 		return (write(2, RD "Invalid path to NO texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
-	if ((fd = open(cub->u_map.so, O_RDONLY)) == -1)
-	return (write(2, RD "Invalid path to SO texture\n" CR, 39), INV_MAP);
+	fd = open(cub->u_map.so, O_RDONLY);
+	if (fd == -1)
+		return (write(2, RD "Invalid path to SO texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
-	if ((fd = open(cub->u_map.we, O_RDONLY)) == -1)
-	return (write(2, RD "Invalid path to WE texture\n" CR, 39), INV_MAP);
+	fd = open(cub->u_map.we, O_RDONLY);
+	if (fd == -1)
+		return (write(2, RD "Invalid path to WE texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
-	if ((fd = open(cub->u_map.ea, O_RDONLY)) == -1)
-	return (write(2, RD "Invalid path to EA texture\n" CR, 39), INV_MAP);
+	fd = open(cub->u_map.ea, O_RDONLY);
+	if (fd == -1)
+		return (write(2, RD "Invalid path to EA texture\n" CR, 39), INV_MAP);
 	else
 		close(fd);
 	return (0);
@@ -384,7 +393,7 @@ int	check_texture_path(t_main *cub)
 int map_val(t_main *cub, char *map_path)
 {
 	if (!is_cub_postfix(map_path))
-		return (write(2, COLOR_RED"Invalid File Postfix\n"COLOR_RESET, 33), INV_MAP);
+		return (write(2, RD"Invalid File Postfix\n"CR, 33), INV_MAP);
 	cub->u_map.fd = open(map_path, O_RDONLY);
 	if (cub->u_map.fd == -1)
 		return (perror("open"), -1); // nothing to free / clean at this stage
