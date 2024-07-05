@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handle_texture.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:08:12 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 17:59:19 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:01:55 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 // sp_line is u_map.spl_ln
 int	init_u_map_txts(char **sp_line, t_map *u_map)
 {
-	int	len;
+	int		len;
+	char	*tmp;
 
-	char *tmp = ft_strtrim(sp_line[1], " \n");
+	tmp = ft_strtrim(sp_line[1], " \n");
 	if (!tmp)
-			return (SYS_FAIL);
+		return (SYS_FAIL);
 	len = ft_strlen(sp_line[0]);
 	if (!ft_strncmp(sp_line[0], "NO", len))
 		u_map->no = tmp;
@@ -65,7 +66,7 @@ int	handle_texture(t_main *cub)
 	ret = is_texture(cub->u_map.spl_ln[0], &cub->u_map);
 	if (ret == INV_MAP)
 	{
-		write(2, COLOR_RED"WALL Texture Dublicate Encountered\n"COLOR_RESET, 47);
+		write(2, RD"WALL Texture Dublicate Encountered\n"CR, 47);
 		return (INV_MAP);
 	}
 	if (ret == true)

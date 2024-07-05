@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   map_val_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:04 by aismaili          #+#    #+#             */
-/*   Updated: 2024/06/19 20:36:34 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:46:54 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3D.h"
 

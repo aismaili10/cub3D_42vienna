@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 12:08:32 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:38:14 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 12:42:41 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	load_textures_2(t_main *cub)
 	cub->west->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.we,
 			&cub->west->width, &cub->west->height);
 	if (!cub->west->img_ptr)
-	{	
+	{
 		mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
 		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
-	}	
+	}
 	cub->west->addr = mlx_get_data_addr(cub->west->img_ptr, &cub->west->bpp,
 			&cub->west->line_length, &cub->west->endian);
 	cub->east->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.ea,
@@ -126,16 +126,5 @@ int	create_texture_buffer(t_main *cub)
 	cub->texture_buff[1] = texture_buff[1];
 	cub->texture_buff[2] = texture_buff[2];
 	cub->texture_buff[3] = texture_buff[3];
-	return (SUCCESS);
-}
-
-int	handle_textures(t_main *cub)
-{
-	if (init_textures(cub) == FAILURE) //still need to free player here probably
-		return (FAILURE);
-	if (load_textures(cub) == FAILURE)
-		return (FAILURE); //maybe put free textures here, or free in cleanup
-	if (create_texture_buffer(cub) == FAILURE)
-		return (FAILURE);
 	return (SUCCESS);
 }

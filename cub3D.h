@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 12:29:52 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 12:43:23 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void	init_w_e(t_player *player, int index);
 void	init_s_n(t_player *player, int index);
 
 //game_utils
-int 	render_background(t_main *cub);
+int		render_background(t_main *cub);
 int		close_window(t_main *cub);
 void	pixel_put(t_img *mlx_img, int x, int y, int color);
 

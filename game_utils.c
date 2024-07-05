@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:52:47 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:07:59 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 12:42:23 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,16 @@ int	render_background(t_main *cub)
 			y++;
 		}
 	}
+	return (SUCCESS);
+}
+
+int	handle_textures(t_main *cub)
+{
+	if (init_textures(cub) == FAILURE) //still need to free player here probably
+		return (FAILURE);
+	if (load_textures(cub) == FAILURE)
+		return (FAILURE); //maybe put free textures here, or free in cleanup
+	if (create_texture_buffer(cub) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }

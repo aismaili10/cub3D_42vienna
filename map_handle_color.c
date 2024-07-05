@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handle_color.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:05:58 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 21:51:47 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:44:47 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,15 @@ int	comma_check(char *str)
 			comma_counter++;
 		if (str[i] == ',' && str[i + 1] == ',')
 			return (write(2, COLOR_RED"ISSUE: Consecutive Commas\n"
-				COLOR_RESET, 38), INV_MAP);
+					COLOR_RESET, 38), INV_MAP);
 		i++;
 	}
 	if (comma_counter != 2)
 		return (write(2, COLOR_RED"ISSUE: NUM of Commas\n"
-			COLOR_RESET, 33), INV_MAP);
+				COLOR_RESET, 33), INV_MAP);
 	if (str[0] == ',' || str[ft_strlen(str) - 1] == ',')
 		return (write(2, COLOR_RED"ISSUE: Consecutive Commas\n"
-			COLOR_RESET, 38), INV_MAP);
+				COLOR_RESET, 38), INV_MAP);
 	return (SUCCESS);
 }
 
