@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:01:36 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:15:24 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,12 @@ int		get_max_len(char **map);
 int		read_check_txts_clrs(t_main *cub);
 int		prep_for_init(char *line, t_main *cub);
 int		l_only_space(char **map);
+
+//map_handle_color
+int		init_u_map_clr(t_map *u_map);
+int		comma_check(char *str);
+int		inv_range(int *rgb);
+char	*rm_zero(char *num);
 
 //mlx_init
 int		init_mlx(t_main *cub);

@@ -17,6 +17,7 @@ SRC =	cub3D.c \
 		cleanup2.c \
 		read_map_element.c \
 		map_handle_color.c \
+		map_handle_color2.c \
 		map_handle_texture.c \
 		debug.c \
 		mlx_init.c \

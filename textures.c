@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 12:08:32 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:42:41 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:05:52 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	load_textures_2(t_main *cub)
 
 int	load_textures(t_main *cub)
 {
-	cub->north->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.no, 
+	cub->north->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.no,
 			&cub->north->width, &cub->north->height);
 	if (!cub->north->img_ptr)
 		return (FAILURE);

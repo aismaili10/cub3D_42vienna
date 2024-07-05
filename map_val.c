@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 14:50:39 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:08:48 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int	map_val(t_main *cub, char *map_path)
 	// read the 4 textures and 2 colors
 	if (read_check_txts_clrs(cub) != SUCCESS)
 		cleanup(cub, 1);
-	// print_map_elements(&cub->u_map);
 	if (read_map_element(cub) != SUCCESS)
 		cleanup(cub, 2);
 	if (check_map_element(cub, cub->u_map.joined_lines) != SUCCESS)
