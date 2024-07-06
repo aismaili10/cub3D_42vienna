@@ -6,13 +6,13 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 20:05:43 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 20:06:01 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 20:28:27 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-char *get_file_name(char *path)
+char	*get_file_name(char *path)
 {
 	int		i;
 	int		j;

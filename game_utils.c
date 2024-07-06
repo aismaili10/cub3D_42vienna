@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:52:47 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 17:09:30 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 20:14:59 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,36 @@ int	render_background(t_main *cub)
 	return (SUCCESS);
 }
 
+int	check_texture_size(t_main *cub)
+{
+	if (cub->north->width < TEX_WIDTH || cub->north->height < TEX_HEIGHT
+		|| cub->north->width > TEX_WIDTH || cub->north->height > TEX_HEIGHT)
+		return (FAILURE);
+	if (cub->south->width < TEX_WIDTH || cub->south->height < TEX_HEIGHT
+		|| cub->south->width > TEX_WIDTH || cub->south->height > TEX_HEIGHT)
+		return (FAILURE);
+	if (cub->east->width < TEX_WIDTH || cub->east->height < TEX_HEIGHT
+		|| cub->east->width > TEX_WIDTH || cub->east->height > TEX_HEIGHT)
+		return (FAILURE);
+	if (cub->west->width < TEX_WIDTH || cub->west->height < TEX_HEIGHT
+		|| cub->west->width > TEX_WIDTH || cub->west->height > TEX_HEIGHT)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
 int	handle_textures(t_main *cub)
 {
 	if (init_textures(cub) == FAILURE)
 		return (FAILURE);
 	if (load_textures(cub) == FAILURE)
 	{
-		perror("Error\nTexture loading failed");
+		write(2, RD "Error\nInvalid texture path\n" CR, 40);
+		return (free_texture_pointers(cub), FAILURE);
+	}
+	if (check_texture_size(cub) == FAILURE)
+	{
+		write(2, RD "Error\nInvalid texture size\n" CR, 40);
+		free_texture_mlx(cub);
 		return (free_texture_pointers(cub), FAILURE);
 	}
 	if (create_texture_buffer(cub) == FAILURE)
