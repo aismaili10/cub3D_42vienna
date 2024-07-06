@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 15:24:33 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:35:25 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@
 // #define MOVE_SPEED 0.1 // Movement speed
 
 // MINIMAP
-#define MINIMAP_WIDTH	20  // Width of minimap in cells
-#define MINIMAP_HEIGHT	20 // Height of minimap in cells
-#define PLAYER_RADIUS	2 // Radius of the player on the minimap
-#define CEILING_COLOR	0x87CEEB  // Light blue for the ceiling
-#define FLOOR_COLOR		0x008000
-#define MINIMAP_SCALE	5
+# define MINIMAP_WIDTH	20  // Width of minimap in cells
+# define MINIMAP_HEIGHT	20 // Height of minimap in cells
+# define PLAYER_RADIUS	2 // Radius of the player on the minimap
+# define CEILING_COLOR	0x87CEEB  // Light blue for the ceiling
+# define FLOOR_COLOR		0x008000
+# define MINIMAP_SCALE	5
 //#define MINIMAP_SIZE 100
 
 // COLORS
@@ -78,7 +78,7 @@ typedef struct s_map
 	char	*ea;
 	int		f_color;
 	int		c_color;
-	char	**spl_ln; // free diretly after no using anymore // maybe better name
+	char	**spl_ln;
 	char	*joined_lines;
 	bool	id_ed;
 	int		height;
@@ -194,7 +194,6 @@ int		read_check_txts_clrs(t_main *cub);
 int		nline(char *n_lines);
 char	*rm_empty_top_bottom(char *line);
 
-
 // map_val_pos
 int		check_right(char *horiz, int c);
 int		check_left(char *horiz, int c);
@@ -263,8 +262,5 @@ int		init_textures(t_main *cub);
 int		load_textures(t_main *cub);
 int		handle_textures(t_main *cub);
 int		create_texture_buffer(t_main *cub);
-
-// debuging
-void	print_map_elements(t_map* u_map);
 
 #endif

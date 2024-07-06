@@ -21,7 +21,6 @@ SRC =	cub3D.c \
 		map_handle_color.c \
 		map_handle_color2.c \
 		map_handle_texture.c \
-		debug.c \
 		mlx_init.c \
 		game.c \
 		game2.c \
