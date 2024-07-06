@@ -94,6 +94,14 @@
 [x] file name/type checks
 [x] path checks
 
+Marco:
+TODO:
+
+1) write error msg with Error\n and then the message
+2) check for empty lines after the map (tgey "should not" be valid)
+3) Validate xpm image size. they must be 64x64.
+4) Validate for xpm extension
+5) If the palyer is duplicated, remove "Walls Not Closed!"
 
 ## command options
 
