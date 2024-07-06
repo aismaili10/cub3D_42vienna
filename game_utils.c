@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:52:47 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 15:33:46 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 17:09:30 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ int	handle_textures(t_main *cub)
 	if (init_textures(cub) == FAILURE)
 		return (FAILURE);
 	if (load_textures(cub) == FAILURE)
+	{
+		perror("Error\nTexture loading failed");
 		return (free_texture_pointers(cub), FAILURE);
+	}
 	if (create_texture_buffer(cub) == FAILURE)
 	{
 		free_texture_mlx(cub);
