@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 20:06:44 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 20:39:52 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ int		init_mlx(t_main *cub);
 //player_movement
 void	move_player(t_main *cub, double moveX, double moveY);
 void	rotate_player(t_player *player, double angle);
+int		check_edge(t_map *u_map, t_player *player, int newpos_x, int newpos_y);
 
 //key_events
 void	process_input(t_main *cub);

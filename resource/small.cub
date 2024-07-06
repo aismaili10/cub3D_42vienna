@@ -5,7 +5,7 @@ SO ./textures/south.xpm
 
 C 155,200,220
 
-F 222,100,120
+F 220,100,12
 
  EA ./textures/east.xpm
 

@@ -6,61 +6,11 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 20:21:39 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 23:02:10 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	check_edge(t_map *u_map, t_player *player, int newpos_x, int newpos_y)
-{
-	// is it that edge case?
-	// if old pos is diagonal to new_pos
-	// then check for the walls
-	if (newpos_x == (int)player->pos_x + 1 && newpos_y == (int)player->pos_y + 1)
-	{
-		if (u_map->map[newpos_y][newpos_x - 1] == '1' && u_map->map[newpos_y - 1][newpos_x] == '1')
-		{
-			printf("IN CHECK EDGE: ABOUT TO RETURN FALSE\n");
-			printf("newpos_x: %d, newpos_y: %d\n", newpos_x, newpos_y);
-			printf("player->pos_x: %d, player->pos_y: %d\n", (int)player->pos_x, (int)player->pos_y);
-			return (false);
-		}
-	}
-	else if (newpos_x == (int)player->pos_x + 1 && newpos_y == (int)player->pos_y + 1)
-	{
-		if (u_map->map[newpos_y - 1][newpos_x] == '1' && u_map->map[newpos_y][newpos_x - 1] == '1')
-		{
-			printf("IN CHECK EDGE: ABOUT TO RETURN FALSE\n");
-			printf("newpos_x: %d, newpos_y: %d\n", newpos_x, newpos_y);
-			printf("player->pos_x: %d, player->pos_y: %d\n", (int)player->pos_x, (int)player->pos_y);
-			return (false);
-		}
-	}
-	else if (newpos_x == (int)player->pos_x - 1 && newpos_y == (int)player->pos_y - 1)
-	{
-		if (u_map->map[newpos_y][newpos_x + 1] == '1' && u_map->map[newpos_y - 1][newpos_x] == '1')
-		{
-			printf("IN CHECK EDGE: ABOUT TO RETURN FALSE\n");
-			printf("newpos_x: %d, newpos_y: %d\n", newpos_x, newpos_y);
-			printf("player->pos_x: %d, player->pos_y: %d\n", (int)player->pos_x, (int)player->pos_y);
-			return (false);
-		}
-	}
-	else if (newpos_x == (int)player->pos_x - 1 && newpos_y == (int)player->pos_y + 1)
-	{
-		if (u_map->map[newpos_y][newpos_x + 1] == '1' && u_map->map[newpos_y - 1][newpos_x] == '1')
-		{
-			printf("IN CHECK EDGE: ABOUT TO RETURN FALSE\n");
-			printf("newpos_x: %d, newpos_y: %d\n", newpos_x, newpos_y);
-			printf("player->pos_x: %d, player->pos_y: %d\n", (int)player->pos_x, (int)player->pos_y);
-			return (false);
-		}
-	}
-	printf("newpos_x: %d, newpos_y: %d\n", newpos_x, newpos_y);
-	printf("player->pos_x: %d, player->pos_y: %d\n", (int)player->pos_x - 1, (int)player->pos_y);
-	return (true);
-}
 
 void	move_player(t_main *cub, double moveX, double moveY)
 {
@@ -70,20 +20,20 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	double	factor;
 
 	factor = 10.0;
-	newpos_x = (int)(cub->player->pos_x + (factor * moveX));
-	newpos_y = (int)(cub->player->pos_y + (factor * moveY));
+	newpos_x = (int)(cub->player->pos_x + moveX * factor);
+	newpos_y = (int)(cub->player->pos_y + moveY * factor);
+	map_cell = cub->u_map.map[newpos_y][newpos_x];
 	if (newpos_x < 0 || newpos_x >= cub->u_map.width
 		|| newpos_y < 0 || newpos_y >= cub->u_map.height)
-	{
 		return ;
-	}
-	map_cell = cub->u_map.map[newpos_y][newpos_x];
-	if (ft_strchr("0NSWE", map_cell) && check_edge(&cub->u_map, cub->player, newpos_x, newpos_x))
+	if (ft_strchr("0NSWE", map_cell)
+		&& check_edge(&cub->u_map, cub->player, newpos_x, newpos_x))
 	{
 		cub->player->pos_x += moveX;
 		cub->player->pos_y += moveY;
 	}
 }
+
 
 void	rotate_player(t_player *player, double angle)
 {

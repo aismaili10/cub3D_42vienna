@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:04:52 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 14:22:51 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 22:09:18 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,33 @@ void	init_player(t_player *player, t_map u_map)
 			}
 		}
 	}
+}
+
+int	check_edge(t_map *u_map, t_player *p, int newpos_x, int newpos_y)
+{
+	if (newpos_x == (int)p->pos_x + 1 && newpos_y == (int)p->pos_y + 1)
+	{
+		if (u_map->map[newpos_y - 1][newpos_x] == '1'
+			&& u_map->map[newpos_y][newpos_x - 1] == '1')
+			return (false);
+	}
+	else if (newpos_x == (int)p->pos_x + 1 && newpos_y == (int)p->pos_y - 1)
+	{
+		if (u_map->map[newpos_y][newpos_x - 1] == '1'
+			&& u_map->map[newpos_y + 1][newpos_x] == '1')
+			return (false);
+	}
+	else if (newpos_x == (int)p->pos_x - 1 && newpos_y == (int)p->pos_y - 1)
+	{
+		if (u_map->map[newpos_y][newpos_x + 1] == '1'
+			&& u_map->map[newpos_y + 1][newpos_x] == '1')
+			return (false);
+	}
+	else if (newpos_x == (int)p->pos_x - 1 && newpos_y == (int)p->pos_y + 1)
+	{
+		if (u_map->map[newpos_y][newpos_x + 1] == '1'
+			&& u_map->map[newpos_y - 1][newpos_x] == '1')
+			return (false);
+	}
+	return (true);
 }
