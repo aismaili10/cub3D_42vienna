@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:04:52 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 13:57:44 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 14:22:51 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void	init_player(t_player *player, t_map u_map)
 			|| u_map.map[y][x] == 'E' || u_map.map[y][x] == 'W')
 			{
 				init_player_pos(player, x, y);
-				if (u_map.map[y][x] == 'W') // west and east might be mixed up
+				if (u_map.map[y][x] == 'W')
 					init_w_e(player, 1);
 				if (u_map.map[y][x] == 'E')
 					init_w_e(player, 2);
-				if (u_map.map[y][x] == 'S') // north and south might be mixed up
+				if (u_map.map[y][x] == 'S')
 					init_s_n(player, 3);
 				if (u_map.map[y][x] == 'N')
 					init_s_n(player, 4);

@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:44:16 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 13:43:49 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ int	closed_walls(char **map)
 		i++;
 	}
 	if (p_counter != 1)
-	{
-		printf("Player count: %i\n", p_counter);
 		return (write(2, RD "ERROR: PLAYER PLACEMENT\n" CR, 36), INV_MAP);
-	}
 	return (SUCCESS);
 }
 
@@ -70,8 +67,6 @@ int	add_generic_spaces(char **map)
 		if (!temp)
 			return (perror("malloc"), SYS_FAIL);
 		ft_strlcpy(temp, map[r], ft_strlen(map[r]) + 1);
-		// printf("temp: %s\n", temp);
-		// printf(" map: %s\n", map[r]);
 		add_spaces(temp, max_len);
 		free(map[r]);
 		map[r] = temp;
@@ -82,19 +77,15 @@ int	add_generic_spaces(char **map)
 
 int	check_map_element(t_main *cub, char *lines)
 {
-	// printf("lines: %s\n", lines);
-	// printf("n_lines: %s\n", lines);
 	cub->u_map.map = ft_split(lines, '\n');
 	if (!cub->u_map.map)
 		return (perror("malloc"), FAILURE);
-	// if we DON'T ACCEPT lines with only spaces in the actual map, we look for them here after split
-	//print_map_elements(&cub->u_map);
 	if (l_only_space(cub->u_map.map) != SUCCESS)
 		return (FAILURE);
 	add_generic_spaces(cub->u_map.map);
 	if (closed_walls(cub->u_map.map) != SUCCESS)
 	{
-		write(2, COLOR_RED "Walls Not Closed!\n" COLOR_RESET, 30);
+		write(2, RD "Walls Not Closed!\n" CR, 30);
 		return (INV_MAP);
 	}
 	return (SUCCESS);
@@ -106,8 +97,7 @@ int	map_val(t_main *cub, char *map_path)
 		return (write(2, RD"Invalid File Postfix\n"CR, 33), INV_MAP);
 	cub->u_map.fd = open(map_path, O_RDONLY);
 	if (cub->u_map.fd == -1)
-		return (perror("open"), -1); // nothing to free / clean at this stage
-	// read the 4 textures and 2 colors
+		return (perror("open"), -1);
 	if (read_check_txts_clrs(cub) != SUCCESS)
 		cleanup(cub, 1);
 	if (read_map_element(cub) != SUCCESS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 08:22:53 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 16:58:53 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:29:57 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	draw_loop(t_main *cub, t_player *player, t_render *render, int x)
 	{
 		d = y * 256 - WIN_HEIGHT * 128 + render->lineheight * 128;
 		tex_y = ((d * TEX_HEIGHT) / render->lineheight) / 256;
-		//tex_y = tex_y % TEX_HEIGHT;
-		/* if (tex_x < 0 || tex_y < 0 || tex_x >= TEX_WIDTH || tex_y >= TEX_HEIGHT)
-			printf("tex_x: %i, tex_y: %i\n", tex_x, tex_y); */
 		if (tex_y < 0)
 			tex_y = 0;
 		color = cub->texture_buff[render->tex_index][TEX_HEIGHT
@@ -87,15 +84,13 @@ int	game(t_main *cub)
 	cub->render = render_vals;
 	cub->u_map.height = str_ary_len(cub->u_map.map);
 	cub->u_map.width = ft_strlen(cub->u_map.map[0]);
-	cub->key_states = (t_key_states){0}; // Initialize key states
+	cub->key_states = (t_key_states){0};
 	if (handle_textures(cub) == FAILURE)
-		return (FAILURE);
+		return (free(player), free(render_vals), FAILURE);
 	init_player(cub->player, cub->u_map);
-	mlx_hook(cub->win_ptr, 2, 1L << 0, key_down, cub);// Key press
-    mlx_hook(cub->win_ptr, 3, 1L << 1, key_up, cub);// Key release
+	mlx_hook(cub->win_ptr, 2, 1L << 0, key_down, cub);
+	mlx_hook(cub->win_ptr, 3, 1L << 1, key_up, cub);
 	mlx_loop_hook(cub->mlx_ptr, &render, cub);
-	// mlx_hook(cub->win_ptr, 2, 1L << 0, key_handle, cub);
-	//mlx_hook(cub->win_ptr, DestroyNotify, KeyReleaseMask, mlx_loop_end, cub->mlx_ptr);
 	mlx_hook(cub->win_ptr, 17, 0L, close_window, cub);
 	mlx_loop(cub->mlx_ptr);
 	return (SUCCESS);

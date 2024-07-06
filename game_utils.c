@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:52:47 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 12:42:23 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:24:16 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ int	handle_textures(t_main *cub)
 	if (init_textures(cub) == FAILURE) //still need to free player here probably
 		return (FAILURE);
 	if (load_textures(cub) == FAILURE)
-		return (FAILURE); //maybe put free textures here, or free in cleanup
+		return (free_texture_pointers(cub), FAILURE); //maybe put free textures here, or free in cleanup
 	if (create_texture_buffer(cub) == FAILURE)
-		return (FAILURE);
+	{
+		free_texture_mlx(cub);
+		return (free_texture_pointers(cub), FAILURE);
+	}
 	return (SUCCESS);
 }

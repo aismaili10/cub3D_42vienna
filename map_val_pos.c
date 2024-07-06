@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val_pos.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:42:42 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 15:00:11 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 14:06:10 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ int	check_right(char *horiz, int c)
 	{
 		if (horiz[i] == '1')
 			return (true);
-		if (ft_strchr("0NSWE", horiz[i]) && !ft_strchr("0NSWE1", horiz[i + 1])) // tricky here
+		if (ft_strchr("0NSWE", horiz[i]) && !ft_strchr("0NSWE1", horiz[i + 1]))
 		{
-			printf("check_right: horiz[%i] = %c\n", i + 1, horiz[i + 1]);
-			printf("check_right: horiz[%i] = %c\n", i, horiz[i]);
+			write(2, RD "Invalid 2D Map\n" CR, 27);
 			return (false);
 		}
 		i++;
@@ -46,8 +45,7 @@ int	check_left(char *horiz, int c)
 		if (ft_strchr("0NSWE", horiz[i]) && (i == 0
 				|| !ft_strchr("0NSWE1", horiz[i - 1])))
 		{
-			printf("check_left: horiz[%i] = %c\n", i - 1, horiz[i - 1]);
-			printf("check_left: horiz[%i] = %c\n", i, horiz[i]);
+			write(2, RD "Invalid 2D Map\n" CR, 27);
 			return (false);
 		}
 		i--;
@@ -67,8 +65,7 @@ int	check_up(char **vert, int r, int c)
 		if (ft_strchr("0NSWE", vert[i][c]) &&
 			(i == 0 || !ft_strchr("0NSWE1", vert[i - 1][c])))
 		{
-			printf("check_up: vert[%i][%i]: %c\n", i - 1, c, vert[i - 1][c]);
-			printf("check_up: vert[%i][%i]: %c\n", i, c, vert[i][c]);
+			write(2, RD "Invalid 2D Map\n" CR, 27);
 			return (false);
 		}
 		i--;
@@ -88,9 +85,7 @@ int	check_down(char **vert, int r, int c)
 		if (ft_strchr("0NSWE", vert[i][c]) &&
 			(!vert[i + 1] || !ft_strchr("0NSWE1", vert[i + 1][c])))
 		{
-			printf("check_down: vert[%i][%i]: %c\n", i - 1, c, vert[i - 1][c]);
-			printf("check_down: vert[%i][%i]: %c\n", i, c, vert[i][c]);
-			printf("check_down: vert[%i][%i]: %c\n", i + 1, c, vert[i + 1][c]);
+			write(2, RD "Invalid 2D Map\n" CR, 27);
 			return (false);
 		}
 		i++;
@@ -102,22 +97,18 @@ int	check_pos(char **map, int r, int c)
 {
 	if (!check_left(map[r], c))
 	{
-		printf("left: check_pos: map[%i]: -%s-\n", r, map[r]);//do we need these prints??
 		return (INV_MAP);
 	}
 	if (!check_right(map[r], c))
 	{
-		printf("right: check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
 	}
 	if (!check_up(map, r, c))
 	{
-		printf("up: check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
 	}
 	if (!check_down(map, r, c))
 	{
-		printf("down: check_pos: map[%i]: -%s-\n", r, map[r]);
 		return (INV_MAP);
 	}
 	return (SUCCESS);

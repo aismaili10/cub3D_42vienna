@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 17:20:20 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 14:31:25 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	move_player(t_main *cub, double moveX, double moveY)
 		return ;
 	}
 	map_cell = cub->u_map.map[newpos_y][newpos_x];
-	if (ft_strchr("0NSWE", map_cell)) //here we also need check for N,S,E,W
+	if (ft_strchr("0NSWE", map_cell))
 	{
 		cub->player->pos_x += moveX;
 		cub->player->pos_y += moveY;

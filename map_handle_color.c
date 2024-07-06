@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handle_color.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:05:58 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 15:17:50 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 13:02:25 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	handle_color(t_main *cub)
 	ret = is_color(cub->u_map.spl_ln[0], &cub->u_map);
 	if (ret == INV_MAP)
 	{
-		return (write(2, COLOR_RED"C/F Color Dublicate Encountered\n"
-				COLOR_RESET, 44), INV_MAP);
+		return (write(2, RD"C/F Color Dublicate Encountered\n"
+				CR, 44), INV_MAP);
 	}
 	if (ret)
 	{

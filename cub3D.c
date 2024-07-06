@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:48:01 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/04 17:59:01 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 14:53:11 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	assign_default(t_main *cub)
 {
-	// u_map
 	cub->u_map.fd = -1;
 	cub->u_map.c_color = -1;
 	cub->u_map.f_color = -1;
@@ -26,8 +25,6 @@ void	assign_default(t_main *cub)
 	cub->u_map.spl_ln = NULL;
 	cub->u_map.joined_lines = NULL;
 	cub->u_map.id_ed = false;
-	// other cub members; unknown now
-	// ...
 }
 
 int	main(int ac, char *av[])
@@ -35,16 +32,19 @@ int	main(int ac, char *av[])
 	t_main	cub;
 
 	if (ac != 2)
-		return (write(2, COLOR_YELLOW"Usage:\n./cub3D path_to_map_file\n"COLOR_RESET, 44), 1);
+		return (write(2, CY"Usage:\n./cub3D path_to_map_file\n"CR, 44), 1);
 	assign_default(&cub);
 	if (map_val(&cub, av[1]) != SUCCESS)
-		return (write(2, COLOR_RED"Invalid Map\n"COLOR_RESET, 24), 2);
-	/* if (init_mlx(&cub) == -1)
-		return (write(2, COLOR_GREEN"MLX Initialization Failed\n"COLOR_RESET, 32), 3);
-	if (game(&cub) == -1)
-		return (write(2, COLOR_RED"Game Failed\n"COLOR_RESET, 20), 4); */
-	printf(COLOR_GREEN"Map %s is Valid\n"COLOR_RESET, av[1]);
-	cleanup(&cub, 2);
-	// cleanup(&cub, 3);
+		return (write(2, RD"Invalid Map\n"CR, 24), 2);
+	if (init_mlx(&cub) != SUCCESS)
+	{
+		write(2, CG"MLX Initialization Failed\n"CR, 32);
+		cleanup(&cub, 2);
+	}
+	if (game(&cub) == FAILURE)
+	{
+		cleanup(&cub, 4);
+		return (write(2, RD"Game Failed\n"CR, 20), 4);
+	}
 	return (SUCCESS);
 }

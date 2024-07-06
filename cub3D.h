@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 17:03:59 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:24:33 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <errno.h>
-// # include <mlx.h>
+# include <mlx.h>
 # include <math.h>
-// # include <X11/keysym.h>
-// # include <X11/X.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
 
 # include "libft/libft.h"
 # include "libft/gnl/get_next_line.h"
@@ -30,7 +30,7 @@
 
 // RETURN VALUES
 # define INV_MAP		-2
-# define SYS_FAIL	-1
+# define SYS_FAIL		-1
 # define SUCCESS		0
 # define FAILURE		1
 
@@ -39,36 +39,34 @@
 # define TEX_WIDTH	64
 # define TEX_HEIGHT	64
 
-# define ROT_SPEED 0.005 // Rotation speed in radians
-# define MOVE_SPEED 0.01 // Movement speed
+# define ROT_SPEED	0.005 // Rotation speed in radians
+# define MOVE_SPEED	0.01 // Movement speed
 // #define ROT_SPEED 0.1 // Rotation speed in radians
 // #define MOVE_SPEED 0.1 // Movement speed
 
 // MINIMAP
-#define MINIMAP_WIDTH 20  // Width of minimap in cells
-#define MINIMAP_HEIGHT 20 // Height of minimap in cells
-#define PLAYER_RADIUS 2 // Radius of the player on the minimap
-#define CEILING_COLOR 0x87CEEB  // Light blue for the ceiling
-#define FLOOR_COLOR 0x008000
-#define MINIMAP_SCALE 5
+#define MINIMAP_WIDTH	20  // Width of minimap in cells
+#define MINIMAP_HEIGHT	20 // Height of minimap in cells
+#define PLAYER_RADIUS	2 // Radius of the player on the minimap
+#define CEILING_COLOR	0x87CEEB  // Light blue for the ceiling
+#define FLOOR_COLOR		0x008000
+#define MINIMAP_SCALE	5
 //#define MINIMAP_SIZE 100
 
 // COLORS
-# define COLOR_GREEN		"\033[0;32m"	// len: 7
-# define COLOR_RED		"\033[0;31m"	// len: 7
-# define COLOR_YELLOW	"\033[0;33m"	// len: 7
-# define COLOR_RESET		"\033[0m"		// len: 4
+# define CG				"\033[0;32m"	// len: 7
+# define CY				"\033[0;33m"	// len: 7
 # define CR				"\033[0m"		// len: 4
 # define RD				"\033[0;31m"	// len: 7
 
 // KEYCODE
-# define KEY_ESC 65307
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65363
-# define KEY_RIGHT 65361
+# define KEY_ESC	65307
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
+# define KEY_LEFT	65363
+# define KEY_RIGHT	65361
 
 typedef struct s_map
 {
@@ -182,6 +180,7 @@ void	cleanup(t_main *cub, int stage);
 void	clean_mlx(t_main *cub);
 void	free_texture_pointers(t_main *cub);
 void	free_textures(t_map *u_map);
+void	free_texture_mlx(t_main *cub);
 void	free_map(char **map);
 void	free_map_elements(t_main *cub);
 
@@ -192,6 +191,9 @@ int		handle_texture(t_main *cub);
 int		read_map_element(t_main *cub);
 int		prep_for_init(char *line, t_main *cub);
 int		read_check_txts_clrs(t_main *cub);
+int		nline(char *n_lines);
+char	*rm_empty_top_bottom(char *line);
+
 
 // map_val_pos
 int		check_right(char *horiz, int c);
@@ -254,6 +256,7 @@ int		key_down(int keycode, t_main *cub);
 
 //minimap
 void	draw_minimap(t_main *cub);
+void	cal_viewport(t_minimap *mini, t_player *player, t_map *u_map);
 
 //textures
 int		init_textures(t_main *cub);

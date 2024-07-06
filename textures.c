@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 12:08:32 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/05 15:05:52 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:25:03 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,25 @@ int	load_textures_2(t_main *cub)
 	cub->west->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.we,
 			&cub->west->width, &cub->west->height);
 	if (!cub->west->img_ptr)
-	{
-		mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
-		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
-	}
+		return (FAILURE);
 	cub->west->addr = mlx_get_data_addr(cub->west->img_ptr, &cub->west->bpp,
 			&cub->west->line_length, &cub->west->endian);
+	if (!cub->west->addr)
+		return (mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr), FAILURE);
 	cub->east->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.ea,
 			&cub->east->width, &cub->east->height);
 	if (!cub->east->img_ptr)
 	{
-		mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr);
 		mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
-		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
+		return (FAILURE);
 	}
 	cub->east->addr = mlx_get_data_addr(cub->east->img_ptr, &cub->east->bpp,
 			&cub->east->line_length, &cub->east->endian);
+	if (!cub->east->addr)
+	{
+		mlx_destroy_image(cub->mlx_ptr, cub->west->img_ptr);
+		return (mlx_destroy_image(cub->mlx_ptr, cub->east->img_ptr), FAILURE);
+	}
 	return (SUCCESS);
 }
 
@@ -44,14 +47,24 @@ int	load_textures(t_main *cub)
 		return (FAILURE);
 	cub->north->addr = mlx_get_data_addr(cub->north->img_ptr, &cub->north->bpp,
 			&cub->north->line_length, &cub->north->endian);
+	if (!cub->north->addr)
+		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
 	cub->south->img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, cub->u_map.so,
 			&cub->south->width, &cub->south->height);
 	if (!cub->south->img_ptr)
 		return (mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr), FAILURE);
 	cub->south->addr = mlx_get_data_addr(cub->south->img_ptr, &cub->south->bpp,
 			&cub->south->line_length, &cub->south->endian);
+	if (!cub->south->addr)
+	{
+		mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr);
+		return (mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr), FAILURE);
+	}
 	if (load_textures_2(cub) == FAILURE)
-		return (FAILURE);
+	{
+		mlx_destroy_image(cub->mlx_ptr, cub->north->img_ptr);
+		return (mlx_destroy_image(cub->mlx_ptr, cub->south->img_ptr), FAILURE);
+	}
 	return (SUCCESS);
 }
 
