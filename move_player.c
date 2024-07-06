@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 15:39:11 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 17:48:57 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+/* int	check_edge(t_map *u_map, t_player *player, int newpos_x, int newpos_y)
+{
+	// is it that edge case?
+	// if old pos is diagonal to new_pos
+	if (newpos_x == player->pos_x + 1 && newpos_y == player->pos_y + 1)
+	{
+		if (u_map->map[newpos_y][newpos_x - 1] == '1' && u_map->map[newpos_y - 1][newpos_x] == '1')
+			return (false);
+	}
+	else if (newpos_x == player->pos_x + 1 && newpos_y == player->pos_y - 1)
+	{
+		if (u_map->map[newpos_y - 1][newpos_x] == '1' && u_map->map[newpos_y - 1][newpos_x] == '1')
+			return (false);
+	}
+	else if (newpos_x == player->pos_x - 1 && newpos_y == player->pos_y - 1)
+	{
+		if (u_map->map[newpos_y][newpos_x - 1] == '1' && u_map->map[newpos_y - 1][newpos_x] == '1')
+			return (false);
+	}
+	else if (newpos_x == player->pos_x - 1 && newpos_y == player->pos_y - 1)
+	{
+		if (u_map->map[newpos_y][newpos_x - 1] == '1' && u_map->map[newpos_y - 1][newpos_x] == '1')
+			return (false);
+	}
+	// then check for the walls
+} */
 
 void	move_player(t_main *cub, double moveX, double moveY)
 {
@@ -28,7 +55,7 @@ void	move_player(t_main *cub, double moveX, double moveY)
 		return ;
 	}
 	map_cell = cub->u_map.map[newpos_y][newpos_x];
-	if (ft_strchr("0NSWE", map_cell))
+	if (ft_strchr("0NSWE", map_cell) /* && check_edge(cub->player, map_cell) */)
 	{
 		cub->player->pos_x += moveX;
 		cub->player->pos_y += moveY;
