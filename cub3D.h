@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 15:35:25 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 20:06:44 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ int		prep_for_init(char *line, t_main *cub);
 int		read_check_txts_clrs(t_main *cub);
 int		nline(char *n_lines);
 char	*rm_empty_top_bottom(char *line);
+int		check_xpm_extension(t_main *cub);
 
 // map_val_pos
 int		check_right(char *horiz, int c);

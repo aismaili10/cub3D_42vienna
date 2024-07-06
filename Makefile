@@ -13,6 +13,7 @@ SRC =	cub3D.c \
 		map_val_utils.c \
 		map_val_utils2.c \
 		map_val_pos.c \
+		map_val_xpm.c \
 		cleanup.c \
 		cleanup2.c \
 		read_map_element.c \

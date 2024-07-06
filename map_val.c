@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 13:43:49 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 20:06:09 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	check_map_element(t_main *cub, char *lines)
 int	map_val(t_main *cub, char *map_path)
 {
 	if (!is_cub_postfix(map_path))
-		return (write(2, RD"Invalid File Postfix\n"CR, 33), INV_MAP);
+		return (write(2, RD"Error\nInvalid File Postfix\n"CR, 33), INV_MAP);
 	cub->u_map.fd = open(map_path, O_RDONLY);
 	if (cub->u_map.fd == -1)
 		return (perror("open"), -1);
@@ -106,6 +106,8 @@ int	map_val(t_main *cub, char *map_path)
 		cleanup(cub, 2);
 	free(cub->u_map.joined_lines);
 	cub->u_map.joined_lines = NULL;
+	if (check_xpm_extension(cub) != SUCCESS)
+		cleanup(cub, 2);
 	if (check_texture_path(cub) != SUCCESS)
 		cleanup(cub, 2);
 	return (SUCCESS);
