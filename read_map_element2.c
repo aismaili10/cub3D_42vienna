@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 13:49:14 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 15:35:21 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:40:20 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ bool	map_ended(char *str, int i)
 	while (str[i])
 	{
 		if (str[i] != '\n' && str[i] != ' ')
-		{
-			printf("str: %s and pos: str[%i]: %c\n", str, i, str[i]);
 			return (false);
-		}
 		i++;
 	}
 	return (true);

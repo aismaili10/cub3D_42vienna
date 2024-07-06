@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:27 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 14:54:03 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:38:17 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	free_texture_buff(t_main *cub)
 
 void	cleanup(t_main *cub, int stage)
 {
-	printf("arrived in cleanup with stage: %i\n", stage);
 	if (stage == -1)
 	{
 		get_next_line(cub->u_map.fd, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 14:31:25 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:39:11 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	if (newpos_x < 0 || newpos_x >= cub->u_map.width
 		|| newpos_y < 0 || newpos_y >= cub->u_map.height)
 	{
-		printf("Out of bounds\n");
 		return ;
 	}
 	map_cell = cub->u_map.map[newpos_y][newpos_x];

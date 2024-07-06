@@ -6,7 +6,7 @@
 /*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:46:26 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 15:33:11 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:39:06 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	l_only_space(char **map)
 	{
 		if (has_only_space(map[i]))
 		{
-			printf("l_only_space: map[%i]: %s\n", i, map[i]);
 			write(2, RD"LINE WITH ONLY SPACES IN 2D-MAP DETECTED\n"CR, 53);
 			return (INV_MAP);
 		}
