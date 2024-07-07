@@ -6,13 +6,13 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 23:02:10 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 10:57:15 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	move_player(t_main *cub, double moveX, double moveY)
+void	move_player(t_main *cub, double move_x, double move_y)
 {
 	int		newpos_x;
 	int		newpos_y;
@@ -20,20 +20,19 @@ void	move_player(t_main *cub, double moveX, double moveY)
 	double	factor;
 
 	factor = 10.0;
-	newpos_x = (int)(cub->player->pos_x + moveX * factor);
-	newpos_y = (int)(cub->player->pos_y + moveY * factor);
-	map_cell = cub->u_map.map[newpos_y][newpos_x];
+	newpos_x = (int)(cub->player->pos_x + move_x * factor);
+	newpos_y = (int)(cub->player->pos_y + move_y * factor);
 	if (newpos_x < 0 || newpos_x >= cub->u_map.width
 		|| newpos_y < 0 || newpos_y >= cub->u_map.height)
 		return ;
+	map_cell = cub->u_map.map[newpos_y][newpos_x];
 	if (ft_strchr("0NSWE", map_cell)
-		&& check_edge(&cub->u_map, cub->player, newpos_x, newpos_x))
+		&& check_edge(&cub->u_map, cub->player, newpos_x, newpos_y))
 	{
-		cub->player->pos_x += moveX;
-		cub->player->pos_y += moveY;
+		cub->player->pos_x += move_x;
+		cub->player->pos_y += move_y;
 	}
 }
-
 
 void	rotate_player(t_player *player, double angle)
 {

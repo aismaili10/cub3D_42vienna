@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:49:02 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 20:39:52 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 10:53:11 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define TEX_HEIGHT	64
 
 # define ROT_SPEED	0.005 // Rotation speed in radians
-# define MOVE_SPEED	0.01 // Movement speed
+# define MOVE_SPEED	0.005 // Movement speed
 // #define ROT_SPEED 0.1 // Rotation speed in radians
 // #define MOVE_SPEED 0.1 // Movement speed
 

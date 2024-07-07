@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:03:20 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 13:52:33 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 11:03:59 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	contains_inv_char(char *str)
 	{
 		if (!ft_strchr("10NSWE \n", str[i]))
 		{
-			write(2, RD"LINE WITH INVALID CHAR\n"CR, 35);
+			write(2, RD"Error\nLine with Invalid Char\n"CR, 41);
 			return (true);
 		}
 		i++;
@@ -42,7 +42,7 @@ bool	contains_only_spaces(char *str)
 	}
 	if (i == 0 && str[i] == '\n')
 		return (false);
-	write(2, RD"LINE WITH ONLY SPACES\n"CR, 34);
+	write(2, RD"Error\nLine with only Spaces\n"CR, 40);
 	return (true);
 }
 

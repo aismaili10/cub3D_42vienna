@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:36:15 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 20:06:09 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/07 11:01:18 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	closed_walls(char **map)
 		i++;
 	}
 	if (p_counter != 1)
-		return (write(2, RD "ERROR: PLAYER PLACEMENT\n" CR, 36), INV_MAP);
+		return (write(2, RD "Error\nPlayer Placement\n" CR, 35), INV_MAP);
 	return (SUCCESS);
 }
 
@@ -85,7 +85,7 @@ int	check_map_element(t_main *cub, char *lines)
 	add_generic_spaces(cub->u_map.map);
 	if (closed_walls(cub->u_map.map) != SUCCESS)
 	{
-		write(2, RD "Walls Not Closed!\n" CR, 30);
+		write(2, RD "Error\nInvalid Map\n" CR, 30);
 		return (INV_MAP);
 	}
 	return (SUCCESS);
@@ -94,7 +94,10 @@ int	check_map_element(t_main *cub, char *lines)
 int	map_val(t_main *cub, char *map_path)
 {
 	if (!is_cub_postfix(map_path))
-		return (write(2, RD"Error\nInvalid File Postfix\n"CR, 33), INV_MAP);
+	{
+		write(2, RD"Error\nInvalid File Postfix\n"CR, 39);
+		exit(INV_MAP);
+	}
 	cub->u_map.fd = open(map_path, O_RDONLY);
 	if (cub->u_map.fd == -1)
 		return (perror("open"), -1);

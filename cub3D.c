@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:48:01 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/06 14:53:11 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 09:55:44 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ int	main(int ac, char *av[])
 		return (write(2, CY"Usage:\n./cub3D path_to_map_file\n"CR, 44), 1);
 	assign_default(&cub);
 	if (map_val(&cub, av[1]) != SUCCESS)
-		return (write(2, RD"Invalid Map\n"CR, 24), 2);
+		return (write(2, RD"Error\nInvalid Map\n"CR, 30), 2);
 	if (init_mlx(&cub) != SUCCESS)
 	{
-		write(2, CG"MLX Initialization Failed\n"CR, 32);
+		write(2, CG"Error\nMLX Initialization Failed\n"CR, 38);
 		cleanup(&cub, 2);
 	}
 	if (game(&cub) == FAILURE)
 	{
-		cleanup(&cub, 4);
-		return (write(2, RD"Game Failed\n"CR, 20), 4);
+		write(2, RD"Error\nGame Failed\n"CR, 30);
+		return (cleanup(&cub, 4), 10);
 	}
 	return (SUCCESS);
 }

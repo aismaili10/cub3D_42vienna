@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_val_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:46:26 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 15:39:06 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/07 10:59:38 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	l_only_space(char **map)
 	{
 		if (has_only_space(map[i]))
 		{
-			write(2, RD"LINE WITH ONLY SPACES IN 2D-MAP DETECTED\n"CR, 53);
+			write(2, RD"Error\nONLY SPACES LINE IN 2D-MAP DETECTED\n"CR, 54);
 			return (INV_MAP);
 		}
 		i++;

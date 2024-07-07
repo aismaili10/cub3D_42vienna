@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:39:02 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 13:44:20 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 11:01:56 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	invalid_element(char *line)
 {
 	if (ft_strchr(line, '\t'))
 	{
-		write(2, RD "Tab inside Config-File\n" CR, 35);
+		write(2, RD "Error\nTab inside Config-File\n" CR, 41);
 		return (INV_MAP);
 	}
 	return (SUCCESS);
@@ -47,7 +47,7 @@ int	prep_for_init(char *line, t_main *cub)
 		return (free(line), perror("malloc"), SYS_FAIL);
 	if (!is_val_ary_len(cub) && ft_strncmp(line, "\n", 2))
 	{
-		write(2, CY"WARNING: Map Element Syntax: ", 37);
+		write(2, CY"Error\nMap Element Syntax: ", 34);
 		write(2, "IDENTIFIER SPECIFIER\n" CR, 26);
 		return (free(line), INV_MAP);
 	}
@@ -68,7 +68,7 @@ int	read_check_txts_clrs(t_main *cub)
 			cleanup(cub, 2);
 		if (!tmp)
 		{
-			write(2, RD "Incomplete Map File\n" CR, 32);
+			write(2, RD "Error\nIncomplete Map File\n" CR, 38);
 			cleanup(cub, 2);
 		}
 		if (prep_for_init(tmp, cub) != SUCCESS || handle_color(cub) != SUCCESS
@@ -76,7 +76,7 @@ int	read_check_txts_clrs(t_main *cub)
 			cleanup(cub, -1);
 		if (!cub->u_map.id_ed && ft_strncmp("\n", cub->u_map.spl_ln[0], 2))
 		{
-			write(2, RD "Invalid Identifier\n" CR, 31);
+			write(2, RD "Error\nInvalid Identifier\n" CR, 37);
 			cleanup(cub, -1);
 		}
 		free_str_array(&cub->u_map.spl_ln);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handle_texture.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:08:12 by aismaili          #+#    #+#             */
-/*   Updated: 2024/07/05 13:01:55 by aszabo           ###   ########.fr       */
+/*   Updated: 2024/07/07 10:06:53 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	handle_texture(t_main *cub)
 	ret = is_texture(cub->u_map.spl_ln[0], &cub->u_map);
 	if (ret == INV_MAP)
 	{
-		write(2, RD"WALL Texture Dublicate Encountered\n"CR, 47);
+		write(2, RD"Error\nWALL Texture Dublicate Encountered\n"CR, 53);
 		return (INV_MAP);
 	}
 	if (ret == true)

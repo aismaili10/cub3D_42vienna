@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:42:42 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 14:06:10 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 10:13:03 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_right(char *horiz, int c)
 			return (true);
 		if (ft_strchr("0NSWE", horiz[i]) && !ft_strchr("0NSWE1", horiz[i + 1]))
 		{
-			write(2, RD "Invalid 2D Map\n" CR, 27);
+			write(2, RD "Error\nInvalid 2D Map\n" CR, 33);
 			return (false);
 		}
 		i++;
@@ -45,7 +45,7 @@ int	check_left(char *horiz, int c)
 		if (ft_strchr("0NSWE", horiz[i]) && (i == 0
 				|| !ft_strchr("0NSWE1", horiz[i - 1])))
 		{
-			write(2, RD "Invalid 2D Map\n" CR, 27);
+			write(2, RD "Error\nInvalid 2D Map\n" CR, 33);
 			return (false);
 		}
 		i--;
@@ -65,7 +65,7 @@ int	check_up(char **vert, int r, int c)
 		if (ft_strchr("0NSWE", vert[i][c]) &&
 			(i == 0 || !ft_strchr("0NSWE1", vert[i - 1][c])))
 		{
-			write(2, RD "Invalid 2D Map\n" CR, 27);
+			write(2, RD "Error\nInvalid 2D Map\n" CR, 33);
 			return (false);
 		}
 		i--;
@@ -85,7 +85,7 @@ int	check_down(char **vert, int r, int c)
 		if (ft_strchr("0NSWE", vert[i][c]) &&
 			(!vert[i + 1] || !ft_strchr("0NSWE1", vert[i + 1][c])))
 		{
-			write(2, RD "Invalid 2D Map\n" CR, 27);
+			write(2, RD "Error\nInvalid 2D Map\n" CR, 33);
 			return (false);
 		}
 		i++;
