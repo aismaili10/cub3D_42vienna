@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszabo <aszabo@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:45:44 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/06 23:02:10 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 10:59:03 by aszabo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ void	move_player(t_main *cub, double moveX, double moveY)
 		|| newpos_y < 0 || newpos_y >= cub->u_map.height)
 		return ;
 	if (ft_strchr("0NSWE", map_cell)
-		&& check_edge(&cub->u_map, cub->player, newpos_x, newpos_x))
+		&& check_edge(&cub->u_map, cub->player, newpos_x, newpos_y))
 	{
 		cub->player->pos_x += moveX;
 		cub->player->pos_y += moveY;
 	}
 }
-
 
 void	rotate_player(t_player *player, double angle)
 {
