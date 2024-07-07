@@ -6,7 +6,7 @@
 /*   By: aismaili <aismaili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:46:26 by aszabo            #+#    #+#             */
-/*   Updated: 2024/07/07 10:59:38 by aismaili         ###   ########.fr       */
+/*   Updated: 2024/07/07 11:07:41 by aismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,25 @@ int	check_texture_path(t_main *cub)
 	int	fd;
 
 	if (!cub->u_map.no || !cub->u_map.so || !cub->u_map.we || !cub->u_map.ea)
-		return (write(2, RD "Texture Path Missing\n" CR, 32), INV_MAP);
+		return (write(2, RD "Error\nTexture Path Missing\n" CR, 37), INV_MAP);
 	fd = open(cub->u_map.no, O_RDONLY);
 	if (fd == -1)
-		return (write(2, RD "Invalid path to NO texture\n" CR, 39), INV_MAP);
+		return (write(2, RD "Error\nInvalid path to NO texture\n" CR, 45), -2);
 	else
 		close(fd);
 	fd = open(cub->u_map.so, O_RDONLY);
 	if (fd == -1)
-		return (write(2, RD "Invalid path to SO texture\n" CR, 39), INV_MAP);
+		return (write(2, RD "Error\nInvalid path to SO texture\n" CR, 45), -2);
 	else
 		close(fd);
 	fd = open(cub->u_map.we, O_RDONLY);
 	if (fd == -1)
-		return (write(2, RD "Invalid path to WE texture\n" CR, 39), INV_MAP);
+		return (write(2, RD "Error\nInvalid path to WE texture\n" CR, 45), -2);
 	else
 		close(fd);
 	fd = open(cub->u_map.ea, O_RDONLY);
 	if (fd == -1)
-		return (write(2, RD "Invalid path to EA texture\n" CR, 39), INV_MAP);
+		return (write(2, RD "Error\nInvalid path to EA texture\n" CR, 45), -2);
 	else
 		close(fd);
 	return (0);
